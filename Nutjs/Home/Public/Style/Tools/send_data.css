@@ -1,0 +1,41 @@
+@CHARSET "UTF-8";
+li{
+    list-style:none;
+}
+h1{
+    font-size: 3em;
+}
+#tool,#showData,#takeDate{
+    width:60%;
+    min-width:700px;
+    border:3px solid #ccc;
+    padding:30px;
+    margin:20px auto;
+}
+#tool li{
+    min-height:20px;
+    margin:0 0 5px 0;
+}
+#tool label{
+    margin:0 20px;
+}
+.text-align-up{
+    padding:0 0 0 2em;
+}
+.child-align-center{
+    text-align: center;
+}
+#sendMsg{
+    margin:-24px 0 0 5em;
+}
+#tool input[type="text"],#tool textarea{
+    width:80%;
+}
+#takeDate{
+    border:none;
+    padding:0;
+    margin:10px auto -50px auto;
+    text-indent: -1em;
+}
+
+

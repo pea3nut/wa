@@ -1,0 +1,27 @@
+*{
+	margin:0;
+	padding:0;
+}
+body{
+	text-align:center;
+	font-size:14px;
+	font-family:
+} 
+a{
+	text-decoration:none;
+}
+a:hover{
+	text-decoration:underline;
+	color:orange;
+}
+ul li{
+	list-style-type:none;
+}   
+input:{
+	font-size:14px;
+}
+
+input:focus{
+	border:1px solid #1E90FF;
+	background-color: #E6E6FA;
+}

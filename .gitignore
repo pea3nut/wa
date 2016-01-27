@@ -1,0 +1,6 @@
+/.settings/*
+/.idea/*
+/Nutjs/Runtime/*
+.buildpath
+.project
+composer.json

@@ -1,0 +1,1 @@
+<img alt="code" width="300px" src="{:U('Service/verifycode')}" />
