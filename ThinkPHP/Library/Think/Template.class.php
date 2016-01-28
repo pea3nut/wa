@@ -122,9 +122,8 @@ class  Template {
      * @return string
      */
     protected function compiler($tmplContent) {
-        // 模版编译过滤标签，替换各种__XXX__常量
-        //这里在开始解析一遍，末尾再解析一遍，可以确保include等特殊标签页支持__XXX__常量
-        //var_dump($tmplContent);
+        //PeA:模版编译过滤标签，替换各种__XXX__常量
+        //PeA:这里在开始解析一遍，解析完布局和继承解析一遍，末尾再解析一遍，可以确保include等特殊标签页支持__XXX__常量
         Hook::listen('template_filter',$tmplContent);
         //模板解析
         $tmplContent =  $this->parse($tmplContent);
@@ -231,6 +230,8 @@ class  Template {
             $content    =   $this->parseExtend($content);
         // 解析布局
         $content    =   $this->parseLayout($content);
+        //PeA:模版编译过滤标签，替换各种__XXX__常量
+        Hook::listen('template_filter',$content);
         // 读取模板中的include标签
         $find       =   preg_match_all('/'.$this->config['taglib_begin'].'include\s(.+?)\s*?\/'.$this->config['taglib_end'].'/is',$content,$matches);
         if($find) {
