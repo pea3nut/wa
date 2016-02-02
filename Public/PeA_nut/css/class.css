@@ -6,3 +6,11 @@
     background-color: #fff;
     color:#666;
 }
+
+.figure-ul{}
+.figure-ul ul{
+    padding-left:1em;
+}
+.figure-ul img{
+    margin:0 0 5px 1.2em;
+}
