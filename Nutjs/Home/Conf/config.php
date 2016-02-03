@@ -29,4 +29,15 @@ return array(
     'URL_ROUTE_RULES'=>array(
 //        '' => '',
     ),
+    //关闭多模块访问，使用单模块设计
+    'MULTI_MODULE' => false,
+    'DEFAULT_MODULE' => 'Home',
+    //开启参数绑定
+    'URL_PARAMS_BIND_TYPE' => 1,
+    //域名部署
+    'APP_SUB_DOMAIN_DEPLOY' => 1,
+    'APP_SUB_DOMAIN_RULES' => array(
+        'service'   => 'Home/Service',
+        'nutjs.org' => 'Exploit',
+    )
 );

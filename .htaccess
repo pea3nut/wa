@@ -6,3 +6,8 @@
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteRule ^(.*)$ index.php/$1 [QSA,PT,L]
 </IfModule>
+
+<Files *.tpl>
+    Order Allow,Deny
+    Deny from all
+</Files>
