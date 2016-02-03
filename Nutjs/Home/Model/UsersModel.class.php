@@ -21,12 +21,26 @@ class UsersModel extends Model{
 	 * */
 	protected $uid=null;
 	/**
-	 * 数据表中所有字段
+	 * 数据表中的字段信息
 	 * 实际使用是应手动的调用filed()方法来指定要操作的字段
  	 * @var Array
 	 * @access protected
 	 * */
-	protected $fields=array('state','uid','qq','password');
+	protected $fields=array(
+	    'state','uid','qq','password',
+	    '_type' => array(
+	        'state'    => 'char',
+	        'uid'      => 'char',
+	        'qq'       => 'varchar',
+	        'password' => 'varchar',
+	    ),
+	);
+	/**
+	 * 只读字段，一旦写入就不允许再修改了
+ 	 * @var Array
+	 * @access protected
+	 * */
+	protected $readonlyField=array('uid','qq');
 	/**
 	 * 数据表的主键
  	 * @var String

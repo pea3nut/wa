@@ -30,6 +30,12 @@ class InviteCodeModel extends Model{
 	 * */
 	protected $fields=array('invite_code','uid','date');
 	/**
+	 * 只读字段，一旦写入就不允许再修改了
+	 * @var Array
+	 * @access protected
+	 * */
+	protected $readonlyField=array('invite_code');
+	/**
 	 * 数据表的主键
 	 * @var String
 	 * @access protected

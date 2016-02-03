@@ -38,11 +38,7 @@ class SignInService{
      * */
     protected function checkUsername($username){
         $mo=new UsersModel();
-        $mo->where(array(
-            'uid'=>$username,
-            'qq'=>$username,
-            '_logic'=>'OR',
-        ));
+        $mo->where(array('uid|qq'=>$username));
         $this->uid=$mo->getField('uid');
         if(empty($this->uid)){
             return false;
