@@ -5,6 +5,10 @@
     margin:50px 0 -5px 0;
     background-color: #fff;
     color:#666;
+    font-size: 0.8em;
+}
+.copyright p{
+    margin-bottom:0;
 }
 
 .figure-ul{}
