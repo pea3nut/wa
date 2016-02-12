@@ -154,8 +154,22 @@ function test_uid($uid,$token){
 function get_sql_date(){
     return date('Y-m-d H:i:s');
 }
-
-
+/**
+ * 渲染输出Markdown文件，渲染前会对源码进行htmlspecialchars编码
+ * @param String $path 要渲染的文件路径
+ * @return String 渲染成的HTML字符串
+ * */
+function decode_markdown($path){
+    //获取文件内容
+    $md=file_get_contents($path);
+    //过滤HTML字符
+    $md=htmlspecialchars($md);
+    //渲染Markdown
+    include '.\Public\Library\Michelf\Markdown.inc.php';
+    $html = \Michelf\Markdown::defaultTransform($md);
+    //返回
+    return $html;
+};
 
 
 
