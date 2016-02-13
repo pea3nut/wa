@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2016-01-27 06:02:33
+-- Generation Time: 2016-02-13 04:13:49
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -19,6 +19,21 @@ SET time_zone = "+00:00";
 --
 -- Database: `web_association`
 --
+CREATE DATABASE IF NOT EXISTS `web_association` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `web_association`;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `wa_clock`
+--
+
+CREATE TABLE IF NOT EXISTS `wa_clock` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` char(5) NOT NULL COMMENT '签到用户的协会编号',
+  `date` date NOT NULL COMMENT '签到时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -70,8 +85,8 @@ CREATE TABLE IF NOT EXISTS `wa_msg` (
 
 CREATE TABLE IF NOT EXISTS `wa_nuts` (
   `uid` char(5) NOT NULL COMMENT '协会编号',
-  `nuts` int(8) unsigned NOT NULL COMMENT '当前的果仁',
-  `cumulative` int(8) unsigned NOT NULL COMMENT '累计获得的果仁',
+  `nuts` int(8) unsigned NOT NULL DEFAULT '0' COMMENT '当前的果仁',
+  `cumulative` int(8) unsigned NOT NULL DEFAULT '0' COMMENT '累计获得的果仁',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -94,7 +109,8 @@ CREATE TABLE IF NOT EXISTS `wa_token` (
 --
 
 INSERT INTO `wa_token` (`uid`, `token`, `date`) VALUES
-('D308', 'IbzQUlClPlAqG1pFeJAa', '2016-01-27 01:20:31'),
+('A233', 'a71dYOBCa2bXkt5HznbO', '2016-02-13 10:44:58'),
+('D308', 'q2BsomGnA0bmeQ203cKp', '2016-02-03 15:11:45'),
 ('D383', 'zMSYEwo6RQZ5wbN9uwo0', '2016-01-27 13:01:44'),
 ('D893', 'mWv4Rs6dIoMNJG7yhPcH', '2016-01-27 12:54:42');
 

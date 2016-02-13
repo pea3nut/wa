@@ -154,6 +154,13 @@ function test_uid($uid,$token){
 function get_sql_date(){
     return date('Y-m-d H:i:s');
 }
+/**
+ * 以一个友好的格式返回的当前年月日
+ * @return String Y-m-d
+ * */
+function get_sql_short_date(){
+    return date('Y-m-d');
+}
 
 
 
