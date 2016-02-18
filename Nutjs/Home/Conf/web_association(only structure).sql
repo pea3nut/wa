@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2016-01-26 15:07:57
+-- Generation Time: 2016-02-18 14:46:01
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -19,8 +19,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `web_association`
 --
-CREATE DATABASE IF NOT EXISTS `web_association` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `web_association`;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `wa_clock`
+--
+
+CREATE TABLE IF NOT EXISTS `wa_clock` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` char(5) NOT NULL COMMENT '签到用户的协会编号',
+  `date` date NOT NULL COMMENT '签到时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -34,21 +45,6 @@ CREATE TABLE IF NOT EXISTS `wa_invite_code` (
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '使用时间',
   PRIMARY KEY (`invite_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- 转存表中的数据 `wa_invite_code`
---
-
-INSERT INTO `wa_invite_code` (`invite_code`, `uid`, `date`) VALUES
-('Ut4be', '', '0000-00-00 00:00:00'),
-('uxvR3', '', '0000-00-00 00:00:00'),
-('uZJsN', '', '0000-00-00 00:00:00'),
-('V2KDn', '', '0000-00-00 00:00:00'),
-('v6YHK', '', '0000-00-00 00:00:00'),
-('X00Gj', '', '0000-00-00 00:00:00'),
-('yaYsV', '', '0000-00-00 00:00:00'),
-('z2BLJ', '', '0000-00-00 00:00:00'),
-('zs7OC', '', '0000-00-00 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -72,8 +68,8 @@ CREATE TABLE IF NOT EXISTS `wa_msg` (
 
 CREATE TABLE IF NOT EXISTS `wa_nuts` (
   `uid` char(5) NOT NULL COMMENT '协会编号',
-  `nuts` int(8) unsigned NOT NULL COMMENT '当前的果仁',
-  `cumulative` int(8) unsigned NOT NULL COMMENT '累计获得的果仁',
+  `nuts` int(8) unsigned NOT NULL DEFAULT '0' COMMENT '当前的果仁',
+  `cumulative` int(8) unsigned NOT NULL DEFAULT '0' COMMENT '累计获得的果仁',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -114,6 +110,7 @@ CREATE TABLE IF NOT EXISTS `wa_users` (
 CREATE TABLE IF NOT EXISTS `wa_user_inf` (
   `uid` char(5) NOT NULL COMMENT '协会编号',
   `name` varchar(20) NOT NULL COMMENT '用户姓名',
+  `nickname` varchar(64) NOT NULL COMMENT '昵称',
   `gender` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '性别：1=男 2=女',
   `age` int(1) unsigned NOT NULL COMMENT '年龄',
   `phone` varchar(16) NOT NULL COMMENT '手机号',

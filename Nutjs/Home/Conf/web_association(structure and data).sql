@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2016-01-27 06:02:33
+-- Generation Time: 2016-02-18 14:44:36
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -19,6 +19,19 @@ SET time_zone = "+00:00";
 --
 -- Database: `web_association`
 --
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `wa_clock`
+--
+
+CREATE TABLE IF NOT EXISTS `wa_clock` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `uid` char(5) NOT NULL COMMENT '签到用户的协会编号',
+  `date` date NOT NULL COMMENT '签到时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
 
@@ -70,8 +83,8 @@ CREATE TABLE IF NOT EXISTS `wa_msg` (
 
 CREATE TABLE IF NOT EXISTS `wa_nuts` (
   `uid` char(5) NOT NULL COMMENT '协会编号',
-  `nuts` int(8) unsigned NOT NULL COMMENT '当前的果仁',
-  `cumulative` int(8) unsigned NOT NULL COMMENT '累计获得的果仁',
+  `nuts` int(8) unsigned NOT NULL DEFAULT '0' COMMENT '当前的果仁',
+  `cumulative` int(8) unsigned NOT NULL DEFAULT '0' COMMENT '累计获得的果仁',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -94,7 +107,8 @@ CREATE TABLE IF NOT EXISTS `wa_token` (
 --
 
 INSERT INTO `wa_token` (`uid`, `token`, `date`) VALUES
-('D308', 'IbzQUlClPlAqG1pFeJAa', '2016-01-27 01:20:31'),
+('A233', 'a71dYOBCa2bXkt5HznbO', '2016-02-13 10:44:58'),
+('D308', 'q2BsomGnA0bmeQ203cKp', '2016-02-03 15:11:45'),
 ('D383', 'zMSYEwo6RQZ5wbN9uwo0', '2016-01-27 13:01:44'),
 ('D893', 'mWv4Rs6dIoMNJG7yhPcH', '2016-01-27 12:54:42');
 
@@ -117,7 +131,8 @@ CREATE TABLE IF NOT EXISTS `wa_users` (
 --
 
 INSERT INTO `wa_users` (`state`, `uid`, `qq`, `password`) VALUES
-('200', 'D308', '626954412', '$1$/x0.an/.$EwX7jv.s/lWoR0QARAqDY1'),
+('200', 'A001', '1600976855', '$1$iU..Dz0.$c4VNX58nRF8jDIfP6Uk8L.'),
+('200', 'A233', '626954412', '$1$/x0.an/.$EwX7jv.s/lWoR0QARAqDY1'),
 ('100', 'D383', '1600976855', '$1$iU..Dz0.$c4VNX58nRF8jDIfP6Uk8L.'),
 ('200', 'D893', '1612826240', '$1$es1.PE5.$1xGBQgCoTVd.IGVAruX1M1');
 
@@ -130,6 +145,7 @@ INSERT INTO `wa_users` (`state`, `uid`, `qq`, `password`) VALUES
 CREATE TABLE IF NOT EXISTS `wa_user_inf` (
   `uid` char(5) NOT NULL COMMENT '协会编号',
   `name` varchar(20) NOT NULL COMMENT '用户姓名',
+  `nickname` varchar(64) NOT NULL COMMENT '昵称',
   `gender` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '性别：1=男 2=女',
   `age` int(1) unsigned NOT NULL COMMENT '年龄',
   `phone` varchar(16) NOT NULL COMMENT '手机号',
@@ -142,9 +158,10 @@ CREATE TABLE IF NOT EXISTS `wa_user_inf` (
 -- 转存表中的数据 `wa_user_inf`
 --
 
-INSERT INTO `wa_user_inf` (`uid`, `name`, `gender`, `age`, `phone`, `school`, `wechat`) VALUES
-('D308', '花生', 1, 21, '15336392006', 'ql', 'pea3nut'),
-('D893', '张岩', 2, 19, '17854257608', 'sk', 'ZYqing964083');
+INSERT INTO `wa_user_inf` (`uid`, `name`, `nickname`, `gender`, `age`, `phone`, `school`, `wechat`) VALUES
+('A001', '李想', '柠檬', 2, 15, '17854252332', 'ql', ''),
+('A233', '刘伯源', '花生PeA', 1, 21, '15336392006', 'ql', 'pea3nut'),
+('D893', '张岩', '', 2, 19, '17854257608', 'sk', 'ZYqing964083');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

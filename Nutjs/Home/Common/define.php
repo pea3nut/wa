@@ -4,6 +4,7 @@ define('RegExp_username'	,'/^(\w\d{3})|(\d{5,11})$/' ,true);
 define('RegExp_password'	,'/^[\w@!#$%\^&\*\.~]{6,22}$/' ,true);
 define('RegExp_uid'			,'/^\w\d{3}$/' ,true);
 define('RegExp_name'		,'/^[\x{4e00}-\x{9fa5}]+$/u' ,true);
+define('RegExp_nickname'	,'/^[\x{4e00}-\x{9fa5}\w \@\#]+$/u' ,true);
 define('RegExp_school'		,'/^((ql)|(sk)|(sy))$/' ,true);
 define('RegExp_phone'		,'/^(\d{11}|\d{8})$/u' ,true);
 define('RegExp_wechat'		,'/^(\w{5,16})?$/' ,true);

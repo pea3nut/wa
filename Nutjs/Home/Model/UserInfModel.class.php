@@ -24,6 +24,9 @@ use Think\Model;
  *
  * <dt>wechat</dt>
  * <dd>varchar(16) 用户微信号，可以留空</dd>
+ *
+ * <dt>nickname</dt>
+ * <dd>varchar(20) 用户的昵称</dd>
  * */
 class UserInfModel extends Model{
 	/**
@@ -32,7 +35,7 @@ class UserInfModel extends Model{
  	 * @var Array
 	 * @access protected
 	 * */
-	protected $fields=array('uid','name','gender','age','phone','school','wechat');
+	protected $fields=array('uid','name','nickname','gender','age','phone','school','wechat');
 	/**
 	 * 只读字段，一旦写入就不允许再修改了
 	 * @var Array
@@ -59,5 +62,6 @@ class UserInfModel extends Model{
 		array('phone'	,RegExp_phone	,EC_5535	,self::MUST_VALIDATE	,'regex'	,self::MODEL_BOTH),
 		array('school'	,RegExp_school	,EC_5536	,self::MUST_VALIDATE	,'regex'	,self::MODEL_BOTH),
 		array('wechat'	,RegExp_wechat	,EC_5537	,self::VALUE_VALIDATE	,'regex'	,self::MODEL_BOTH),
+		array('nickname',RegExp_nickname,EC_5538	,self::VALUE_VALIDATE	,'regex'	,self::MODEL_BOTH),
 	);
 }
