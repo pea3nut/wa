@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2016-02-13 04:15:35
+-- Generation Time: 2016-02-18 14:46:01
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `web_association`
 --
-CREATE DATABASE IF NOT EXISTS `web_association` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `web_association`;
 
 -- --------------------------------------------------------
 
@@ -112,6 +110,7 @@ CREATE TABLE IF NOT EXISTS `wa_users` (
 CREATE TABLE IF NOT EXISTS `wa_user_inf` (
   `uid` char(5) NOT NULL COMMENT '协会编号',
   `name` varchar(20) NOT NULL COMMENT '用户姓名',
+  `nickname` varchar(64) NOT NULL COMMENT '昵称',
   `gender` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '性别：1=男 2=女',
   `age` int(1) unsigned NOT NULL COMMENT '年龄',
   `phone` varchar(16) NOT NULL COMMENT '手机号',

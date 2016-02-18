@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2016-02-13 04:13:49
+-- Generation Time: 2016-02-18 14:44:36
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -19,8 +19,6 @@ SET time_zone = "+00:00";
 --
 -- Database: `web_association`
 --
-CREATE DATABASE IF NOT EXISTS `web_association` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
-USE `web_association`;
 
 -- --------------------------------------------------------
 
@@ -133,7 +131,8 @@ CREATE TABLE IF NOT EXISTS `wa_users` (
 --
 
 INSERT INTO `wa_users` (`state`, `uid`, `qq`, `password`) VALUES
-('200', 'D308', '626954412', '$1$/x0.an/.$EwX7jv.s/lWoR0QARAqDY1'),
+('200', 'A001', '1600976855', '$1$iU..Dz0.$c4VNX58nRF8jDIfP6Uk8L.'),
+('200', 'A233', '626954412', '$1$/x0.an/.$EwX7jv.s/lWoR0QARAqDY1'),
 ('100', 'D383', '1600976855', '$1$iU..Dz0.$c4VNX58nRF8jDIfP6Uk8L.'),
 ('200', 'D893', '1612826240', '$1$es1.PE5.$1xGBQgCoTVd.IGVAruX1M1');
 
@@ -146,6 +145,7 @@ INSERT INTO `wa_users` (`state`, `uid`, `qq`, `password`) VALUES
 CREATE TABLE IF NOT EXISTS `wa_user_inf` (
   `uid` char(5) NOT NULL COMMENT '协会编号',
   `name` varchar(20) NOT NULL COMMENT '用户姓名',
+  `nickname` varchar(64) NOT NULL COMMENT '昵称',
   `gender` int(1) unsigned NOT NULL DEFAULT '0' COMMENT '性别：1=男 2=女',
   `age` int(1) unsigned NOT NULL COMMENT '年龄',
   `phone` varchar(16) NOT NULL COMMENT '手机号',
@@ -158,9 +158,10 @@ CREATE TABLE IF NOT EXISTS `wa_user_inf` (
 -- 转存表中的数据 `wa_user_inf`
 --
 
-INSERT INTO `wa_user_inf` (`uid`, `name`, `gender`, `age`, `phone`, `school`, `wechat`) VALUES
-('D308', '花生', 1, 21, '15336392006', 'ql', 'pea3nut'),
-('D893', '张岩', 2, 19, '17854257608', 'sk', 'ZYqing964083');
+INSERT INTO `wa_user_inf` (`uid`, `name`, `nickname`, `gender`, `age`, `phone`, `school`, `wechat`) VALUES
+('A001', '李想', '柠檬', 2, 15, '17854252332', 'ql', ''),
+('A233', '刘伯源', '花生PeA', 1, 21, '15336392006', 'ql', 'pea3nut'),
+('D893', '张岩', '', 2, 19, '17854257608', 'sk', 'ZYqing964083');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

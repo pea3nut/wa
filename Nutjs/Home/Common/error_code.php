@@ -88,6 +88,7 @@ return array(
     '5535' => 'phone格式不正确',
     '5536' => 'school格式不正确',
     '5537' => 'wechat格式不正确',
+    '5538' => 'nickname格式不正确',
     //UsersModel
     '5631' => 'uid格式不正确',
     '5632' => 'state格式不正确',
