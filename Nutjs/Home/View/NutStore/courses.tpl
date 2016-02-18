@@ -43,7 +43,7 @@
                 <include file="__INCLUDE__/courses-preface.tpl" />
             </div>
             <!-- 课程列表 -->
-            <div id="courses_list" class="tab-pane panel panel-default">
+            <div id="courses_list" class="tab-pane">
                 <include file="__INCLUDE__/courses-list.tpl" />
             </div>
             <!-- 课程评论 -->
@@ -54,7 +54,7 @@
                 <include file="__INCLUDE__/courses-discuss.tpl" />
             </div>
             <!-- 课程更新日志 -->
-            <div id="log" class="tab-pane panel panel-default">
+            <div id="log" class="tab-pane">
                 <include file="__INCLUDE__/courses-log.tpl" />
             </div>
         </div>
