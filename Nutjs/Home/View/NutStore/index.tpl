@@ -31,6 +31,8 @@
    <!-- 作品列表-->
    <include file="__INCLUDE__/index-list.tpl" />
 </article>
+<!-- 引入版权信息 -->
+<include file="./Public/PeA_nut/inc/nutjs.footer.tpl" />
 </body>
 <!-- 引入JS文件 -->
 <load href="__PUBLIC__/Library/bootstrap-3.3.5/js/jquery-1.9.1.min.js" />

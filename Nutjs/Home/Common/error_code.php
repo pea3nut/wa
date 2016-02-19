@@ -25,6 +25,8 @@ B 错误发生的文件
         6 -> UsersModel.class.php
         7 -> ClockModel.class.php
         8 -> NutsModel.class.php
+        9 -> NsWorksListModel.class.php
+        A -> NsBuyModel.class.php
 C 错误类型
     3 -> 字段格式错误
     4 -> 用户操作不合法，如无权限操作、验证码不符、确认密码字段不相同
@@ -104,4 +106,16 @@ return array(
     '5833' => 'cumulative格式不正确',
     '5834' => 'uid格式不正确（统计模式）',
     '5835' => 'nuts格式不正确（统计模式）',
+    //NsWorksListModel
+    '5931' => 'author_uid格式不正确',
+    '5932' => 'works_state格式不正确',
+    '5933' => 'section_number格式不正确',
+    '5934' => 'price格式不正确',
+    '5935' => 'update_number格式不正确',
+    '5936' => 'update_number格式不正确',
+    //NsBuyModel
+    '5A31' => 'uid格式不正确',
+    '5A32' => 'works_id格式不正确',
+    '5A33' => 'score字段必须是数字',
+    '5A34' => 'score字段必须在0-10以内',
 );
