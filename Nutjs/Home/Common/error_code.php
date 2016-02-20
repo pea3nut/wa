@@ -27,6 +27,7 @@ B 错误发生的文件
         8 -> NutsModel.class.php
         9 -> NsWorksListModel.class.php
         A -> NsBuyModel.class.php
+        B -> NsSectionModel.class.php
 C 错误类型
     3 -> 字段格式错误
     4 -> 用户操作不合法，如无权限操作、验证码不符、确认密码字段不相同
@@ -118,4 +119,7 @@ return array(
     '5A32' => 'works_id格式不正确',
     '5A33' => 'score字段必须是数字',
     '5A34' => 'score字段必须在0-10以内',
+    //NsSectionModel
+    '5B31' => 'works_id字段必须是数字',
+    '5B32' => 'section_id字段必须是数字',
 );

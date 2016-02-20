@@ -26,22 +26,22 @@
 <br /><br /><br /><br />
 <!-- 正文 -->
 <div class="container text-body">
-   <!-- 渲染输出指定markdown-->
     <article class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">已购买的课程</div>
             <ul class="list-group">
-                <li class="list-group-item"><a href="###">Cras justo odio<span class="pull-right">2016-2-13</span></a></li>
-                <li class="list-group-item"><a href="###">Dapibus ac facilisis in<span class="pull-right">2016-2-13</span></a></li>
-                <li class="list-group-item"><a href="###">Morbi leo risus<span class="pull-right">2016-2-13</span></a></li>
+                <volist name="buy_data" id="buy">
+                    <li class="list-group-item"><a href="###">{$buy.works_id}<span class="pull-right">2016-2-13</span></a></li>
+                </volist>
             </ul>
             <div class="panel-footer text-right">共 3 门</div>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">我投稿的课程</div>
             <ul class="list-group">
-                <li class="list-group-item"><a href="###">Porta ac consectetur ac<span class="pull-right">2016-2-13</span></a></li>
-                <li class="list-group-item"><a href="###">Vestibulum at eros<span class="pull-right">2016-2-13</span></a></li>
+                <volist name="submit_data" id="submit">
+                    <li class="list-group-item"><a href="###">{$submit.works_name}<span class="pull-right">{$submit.create_date}</span></a></li>
+                </volist>
             </ul>
             <div class="panel-footer text-right">共 2 门</div>
         </div>

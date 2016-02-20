@@ -32,15 +32,15 @@
         <div class="panel-body ">
             <div class="form-group">
                 <label>课程名称：</label>
-                <input type="email" class="form-control" value="Git协作基本流程" />
+                <input type="email" class="form-control" value="{$works_inf.works_name}" />
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">课程简介：</label>
-                <textarea class="form-control" rows="3">本课程面向已有Git基础的同学，讲解Git协作流以及如何使用Git参与协会网站建设。在购买观看此课程前，请确保你已经有基本的Git基础，本课程仅会讲解协会开发Git工作流以及遇到某些特殊的情况如何处理，不会太多的涉及基础的Git操作。</textarea>
+                <textarea class="form-control" rows="3">{$works_inf.works_intro}</textarea>
             </div>
             <div class="form-inline">
-                <label><a href="###">Markdown文件</a>：</label><input type="button" class="form-control btn btn-info" value="重新上传" />
-                <label>售价：</label><input type="number" class="form-control input-sm" value="2469" />果仁
+                <label><a href="{:U(CONTROLLER_NAME.'/body/'.$works_inf['id'].'/0')}">Markdown文件</a>：</label><input type="button" class="form-control btn btn-info" value="重新上传" />
+                <label>售价：</label><input type="number" class="form-control input-sm" value="{$works_inf.price}" />果仁
             </div>
         </div>
     </div>
@@ -48,30 +48,15 @@
     <div class="panel panel-default">
         <div class="panel-heading">课程列表</div>
             <ul class="list-group form-inline">
+            <volist name="section_list" id="section">
                 <li class="list-group-item ">
-                    <label>标题：</label><input type="text" class="form-control input-sm" value="Git分支使用情景" />
-                    <label>序号：</label><input type="number" class="form-control input-sm" value="1" />
-                    <label><a href="###">Markdown文件</a>：</label><input type="button" class="form-control btn btn-info" value="重新上传" />
+                    <label>标题：</label><input type="text" class="form-control input-sm" value="{$section.section_name}" />
+                    <label>序号：</label><input type="number" class="form-control input-sm" value="{$section.section_id}" />
+                    <label><a href="{:U(CONTROLLER_NAME.'/body/'.$section['works_id'].'/'.$section['section_id'])}">Markdown文件</a>：</label><input type="button" class="form-control btn btn-info" value="重新上传" />
                 </li>
-                <li class="list-group-item ">
-                    <label>标题：</label><input type="text" class="form-control input-sm" value="git rebase -i 命令详解" />
-                    <label>序号：</label><input type="number" class="form-control input-sm" value="2" />
-                    <label><a href="###">Markdown文件</a>：</label><input type="button" class="form-control btn btn-info" value="重新上传" />
-                </li>
-                <li class="list-group-item ">
-                    <label>标题：</label><input type="text" class="form-control input-sm" value="Github网站pull repuset功能" />
-                    <label>序号：</label><input type="number" class="form-control input-sm" value="3" />
-                    <label><a href="###">Markdown文件</a>：</label><input type="button" class="form-control btn btn-info" value="重新上传" />
-                </li>
-                <li class="list-group-item ">
-                    <label>标题：</label><input type="text" class="form-control input-sm" value="rebase远程分支" />
-                    <label>序号：</label><input type="number" class="form-control input-sm" value="4" />
-                    <label><a href="###">Markdown文件</a>：</label><input type="button" class="form-control btn btn-info" value="重新上传" />
-                </li>
-                <li class="list-group-item ">
-                    <label>标题：</label><input type="text" class="form-control input-sm" value="Git工作流" />
-                    <label>序号：</label><input type="number" class="form-control input-sm" value="5" />
-                    <label><a href="###">Markdown文件</a>：</label><input type="button" class="form-control btn btn-info" value="重新上传" />
+            </volist>
+                <li class="list-group-item text-right">
+                    <input type="button" class="form-control btn btn-success" value="新建" />
                 </li>
             </ul>
     </div>
@@ -80,12 +65,12 @@
     <div class="panel panel-default">
         <div class="panel-heading">更新课程：</div>
         <div class="panel-body">
-            <img src="__IMAGE__/git.jpg" alt="" width="100%" />
+            <img src="__IMAGE__/article/{$works_inf.id}.jpg" alt="" style="width:100%;" />
         </div>
         <div class="panel-body">
             <div class="form-group">
                 <label for="exampleInputEmail1">本次更新说明：</label>
-                <textarea class="form-control" rows="2">更新实例代码部分的小bug</textarea>
+                <textarea class="form-control" rows="2">Fix bug.</textarea>
             </div>
             <button class="btn btn-info pull-right">保存</button>
         </div>

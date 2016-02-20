@@ -27,7 +27,7 @@
 <!-- 正文 -->
 <article class="container text-body">
    <!-- 渲染输出指定markdown-->
-   {$markdown}
+   {$markdown|default="<h1>没有内容</h1>"}
 </article>
 <!-- 引入版权信息 -->
 <include file="./Public/PeA_nut/inc/nutjs.footer.tpl" />

@@ -160,6 +160,8 @@ function get_sql_date(){
  * @return String 渲染成的HTML字符串
  * */
 function decode_markdown($path){
+    //检测文件是否存在
+    if(!file_exists($path)) return;
     //获取文件内容
     $md=file_get_contents($path);
     //过滤HTML字符

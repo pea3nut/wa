@@ -10,7 +10,7 @@ return array(
     'DB_PREFIX'=>'wa_', //数据库表前缀
     'db_charset' => 'utf8',//数据库字符集
     //表单提交时无需验证verifycode，此配置还要求开启调试模式的情况下才可生效
-    'Not_VerifyCode' => false,
+    'Not_VerifyCode' => true,
     //模板文件名后缀
     'TMPL_TEMPLATE_SUFFIX'=>'.tpl',
     //定义路径模式
