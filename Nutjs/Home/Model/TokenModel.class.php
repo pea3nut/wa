@@ -1,6 +1,6 @@
 <?php
 namespace Home\Model;
-use Think\Model;
+use Think\Model\RelationModel;
 /**
  * 用户登陆令牌
  *
@@ -13,7 +13,7 @@ use Think\Model;
  * <dt>date</dt>
  * <dd>datetime 用户最后登陆时间，系统自动生成，不允许操作。</dd>
  * */
-class TokenModel extends Model{
+class TokenModel extends RelationModel{
 	/**
 	 * 生成的令牌，可以通过getToken方法获取字段值
  	 * @var String(20)

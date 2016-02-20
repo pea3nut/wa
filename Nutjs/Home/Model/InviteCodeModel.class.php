@@ -1,6 +1,6 @@
 <?php
 namespace Home\Model;
-use Think\Model;
+use Think\Model\RelationModel;
 /**
  * 注册码/激活码 对应表
  *
@@ -13,7 +13,7 @@ use Think\Model;
  * <dt>date</dt>
  * <dd>datetime 使用该激活码的时间(用户注册时间)</dd>
  * */
-class InviteCodeModel extends Model{
+class InviteCodeModel extends RelationModel{
 	/**
 	 * 自动完成字段
 	 * @var Array
@@ -41,6 +41,24 @@ class InviteCodeModel extends Model{
 	 * @access protected
 	 * */
 	protected $pk='invite_code';
+    /**
+     * 关联信息
+     * ThinkPHP的系统变量，名称不可变更
+     * @var Array
+     * @access protected
+     */
+    protected $_link = array(
+        'user'  =>array(
+            'mapping_type'  => self::BELONGS_TO,
+            'class_name'    => 'Users',
+            'foreign_key'   => 'uid',
+        ),
+        'inf'  =>array(
+            'mapping_type'  => self::BELONGS_TO,
+            'class_name'    => 'UserInf',
+            'foreign_key'   => 'uid',
+        )
+    );
 	/**
 	 * 校验字段的规则
 	 * ThinkPHP的系统变量，名称不可变更
