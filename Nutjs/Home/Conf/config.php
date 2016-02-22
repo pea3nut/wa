@@ -9,6 +9,11 @@ return array(
     'DB_PORT'=>3306, //端口
     'DB_PREFIX'=>'wa_', //数据库表前缀
     'db_charset' => 'utf8',//数据库字符集
+    //链接参数
+    'DB_PARAMS' => array(
+        //不将number字段强制转换成string
+        PDO::ATTR_EMULATE_PREPARES => false,
+    ),
     //表单提交时无需验证verifycode，此配置还要求开启调试模式的情况下才可生效
     'Not_VerifyCode' => true,
     //模板文件名后缀

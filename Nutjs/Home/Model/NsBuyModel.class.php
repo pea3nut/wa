@@ -1,6 +1,6 @@
 <?php
 namespace Home\Model;
-use Think\Model;
+use Think\Model\RelationModel;
 /**
  * 购买记录&评分表
  *
@@ -16,7 +16,7 @@ use Think\Model;
  * <dt>score</dt>
  * <dd>int 购买者的评分，未评分则显示-1，评分范围为0-10</dd>
  * */
-class NsBuyModel extends Model{
+class NsBuyModel extends RelationModel{
     /**
      * 数据表中所有字段
      * 实际使用是应手动的调用filed()方法来指定要操作的字段
@@ -35,7 +35,33 @@ class NsBuyModel extends Model{
      * @var String
      * @access protected
      * */
-    protected $pk='id';
+    protected $pk='works_id';
+    /**
+     * 关联信息
+     * ThinkPHP的系统变量，名称不可变更
+     * @var Array
+     * @access protected
+     */
+    protected $_link = array(
+        'user'  =>array(
+            'mapping_type'  => self::BELONGS_TO,
+            'class_name'    => 'Users',
+            'foreign_key'   => 'uid',
+        ),
+        'inf'  =>array(
+            'mapping_type'  => self::BELONGS_TO,
+            'class_name'    => 'UserInf',
+            'foreign_key'   => 'uid',
+        ),
+        'works'  =>array(
+            'mapping_type'  => self::HAS_ONE,
+            'class_name'    => 'NsWorksList',
+            //对方的键
+            'foreign_key'   => 'id',
+            //自己的键，默认为自己的主键
+            'mapping_key'   => 'works_id',
+        ),
+    );
     /**
      * 校验字段的规则
      * ThinkPHP的系统变量，名称不可变更

@@ -1,6 +1,6 @@
 <?php
 namespace Home\Model;
-use Think\Model;
+use Think\Model\RelationModel;
 /**
  * 作品章节表
  *
@@ -19,7 +19,7 @@ use Think\Model;
  * <dt>update_date</dt>
  * <dd>date 本章最后更新时间</dd>
  * */
-class NsSectionModel extends Model{
+class NsSectionModel extends RelationModel{
     /**
      * 数据表中所有字段
      * 实际使用是应手动的调用filed()方法来指定要操作的字段
@@ -39,6 +39,22 @@ class NsSectionModel extends Model{
      * @access protected
      * */
     protected $pk='id';
+    /**
+     * 关联信息
+     * ThinkPHP的系统变量，名称不可变更
+     * @var Array
+     * @access protected
+     */
+    protected $_link = array(
+        'works'  =>array(
+            'mapping_type'  => self::HAS_ONE,
+            'class_name'    => 'NsWorksList',
+            //对方的键
+            'foreign_key'   => 'id',
+            //自己的键，默认为自己的主键
+            'mapping_key'   => 'works_id',
+        ),
+    );
     /**
      * 校验字段的规则
      * ThinkPHP的系统变量，名称不可变更

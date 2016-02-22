@@ -79,6 +79,16 @@ class UsersModel extends RelationModel{
             'class_name'    => 'InviteCode',
             'foreign_key'   => 'uid',
         ),
+        'buy' =>array(
+            'mapping_type'  => self::HAS_MANY,
+            'class_name'    => 'NsBug',
+            'foreign_key'   => 'uid',
+        ),
+        'works' =>array(
+            'mapping_type'  => self::HAS_MANY,
+            'class_name'    => 'NsWorksList',
+            'foreign_key'   => 'author_uid',
+        ),
     );
     /**
      * 自动完成字段
