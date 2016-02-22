@@ -12,53 +12,49 @@ class NutStoreController extends Controller {
         //将作品信息送入模板
         $mo_list = new \Home\Model\NsWorksListModel();
         $list_data =$mo_list->select();
-        $this->assign('works_inf',$list_data);
         //获取统计字段
         $mo_buy = new \Home\Model\NsBuyModel();
         $mo_buy->group('works_id');
         $buy_data =$mo_buy->getField('works_id ,avg(score) as avg_score ,count(uid) as buy_number');
         //送入模板
+        $this->assign('works_inf',$list_data);
         $this->assign('works_statistic',$buy_data);
-
-        $this->assign('is_signin',1);
         $this->display();
     }
     public function courses($courses_id){
         if( !preg_match('/^\d+$/', $courses_id))exit('E');
         //#作品信息
+        $data =array();
         $mo_works =new \Home\Model\NsWorksListModel();
         $mo_works ->where(array('id'=>$courses_id));
-        $works_data =$mo_works->find();
-        //获取统计字段
-        $mo_buy =new \Home\Model\NsBuyModel();
-        $mo_buy ->where(array('works_id'=>$courses_id));
-        $mo_buy ->field('avg(score) as avg_score ,count(uid) as buy_number');
-        $buy_data =$mo_buy->find();
-        //#合并信息
-        $works_inf =array_merge($works_data ,$buy_data);
-        //获取课程序言路径
-        $path = "./Nutjs/Home/Public/Include/NutStore/article/{$works_inf['author_uid']}/section-0.md";
-        //获取Markdown文件 渲染赋值
+        $mo_works ->relation(true);
+        $data =$mo_works->find();
+        //#作品平均分
+        $avg_score =0;
+        $mo_buy=new \Home\Model\NsBuyModel();
+        $mo_buy ->where(array('work_id'=>$courses_id));
+        $mo_buy ->field('avg(score) as avg_score');
+        $avg_score =$mo_buy ->find()['avg_score'] /2;
+        $avg_score =number_format($avg_score,2);
+        //#作者投稿课程数量
+        $mo_sl =new \Home\Model\NsWorksListModel();
+        $mo_sl ->where(array('author_uid'=>$data['author_uid']));
+        $submit_count =$mo_sl ->count();
+        //#渲染课程序言markdown文件
         $courses_preface ='';
+        //##获取课程序言路径
+        $path = "./Nutjs/Home/Public/Include/NutStore/article/{$courses_id}/section-0.md";
+        //##获取Markdown文件 渲染赋值
         if(file_exists($path)){
             $markdown =file_get_contents($path);
             include './Public/Library/Michelf/Markdown.inc.php';
             $courses_preface = \Michelf\Markdown::defaultTransform($markdown);
         }
-        //#作者信息
-        $mo_author =new \Home\Model\UserInfModel();
-        $mo_author ->where(array('uid' =>$works_inf['author_uid']));
-        $author_data =$mo_author ->find();
-        //#课程列表
-        $mo_section =new \Home\Model\NsSectionModel();
-        $mo_section ->where(array('works_id' =>$courses_id));
-        $mo_section ->order('section_id');
-        $section_data =$mo_section->select();
-        //模板赋值
-        $this->assign('author',$author_data);
-        $this->assign('works_inf',$works_inf);
+        //赋值
         $this->assign('courses_preface',$courses_preface);
-        $this->assign('section_list',$section_data);
+        $this->assign('data',$data);
+        $this->assign('avg_score',$avg_score);
+        $this->assign('submit_count',$submit_count);
         //输出
         $this->display();
     }
@@ -68,20 +64,16 @@ class NutStoreController extends Controller {
         $this->assign('markdown',decode_markdown($md));
         $this->display();
     }
-    public function edit($courses_id){
+    public function edit($courses_id=0){
         if( !preg_match('/^\d+$/', $courses_id))exit('E');
         //#作品信息
         $mo_works =new \Home\Model\NsWorksListModel();
         $mo_works ->where(array('id'=>$courses_id));
-        $works_data =$mo_works->find();
-        //#课程列表
-        $mo_section =new \Home\Model\NsSectionModel();
-        $mo_section ->where(array('works_id' =>$courses_id));
-        $mo_section ->order('section_id');
-        $section_data =$mo_section->select();
+        $mo_works ->relation('section');
+        $data =$mo_works->find();
         //模板赋值
-        $this->assign('section_list',$section_data);
-        $this->assign('works_inf',$works_data);
+        $this->assign('data',$data);
+        //var_dump($data);
         //输出
         $this->display();
     }

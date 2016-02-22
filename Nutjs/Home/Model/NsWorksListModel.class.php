@@ -62,14 +62,20 @@ class NsWorksListModel extends RelationModel{
      */
     protected $_link = array(
         'user'  =>array(
-            'mapping_type'  => self::BELONGS_TO,
+            'mapping_type'  => self::HAS_ONE,
             'class_name'    => 'Users',
-            'foreign_key'   => 'author_uid',
+            //对方的键
+            'foreign_key'   => 'uid',
+            //自己的键，默认为自己的主键
+            'mapping_key'   => 'author_uid',
         ),
         'inf'  =>array(
-            'mapping_type'  => self::BELONGS_TO,
+            'mapping_type'  => self::HAS_ONE,
             'class_name'    => 'UserInf',
-            'foreign_key'   => 'author_uid',
+            //对方的键
+            'foreign_key'   => 'uid',
+            //自己的键，默认为自己的主键
+            'mapping_key'   => 'author_uid',
         ),
         'buy'  =>array(
             'mapping_type'  => self::HAS_MANY,

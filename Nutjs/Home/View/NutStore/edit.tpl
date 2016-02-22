@@ -32,15 +32,15 @@
         <div class="panel-body ">
             <div class="form-group">
                 <label>课程名称：</label>
-                <input type="email" class="form-control" value="{$works_inf.works_name}" />
+                <input type="email" class="form-control" value="{$data.works_name}" />
             </div>
             <div class="form-group">
                 <label for="exampleInputEmail1">课程简介：</label>
-                <textarea class="form-control" rows="3">{$works_inf.works_intro}</textarea>
+                <textarea class="form-control" rows="3">{$data.works_intro}</textarea>
             </div>
             <div class="form-inline">
-                <label><a href="{:U(CONTROLLER_NAME.'/body/'.$works_inf['id'].'/0')}">Markdown文件</a>：</label><input type="button" class="form-control btn btn-info" value="重新上传" />
-                <label>售价：</label><input type="number" class="form-control input-sm" value="{$works_inf.price}" />果仁
+                <label><a href="{:U(CONTROLLER_NAME.'/body/'.$data['id'].'/0')}">Markdown文件</a>：</label><input type="button" class="form-control btn btn-info" value="重新上传" />
+                <label>售价：</label><input type="number" class="form-control input-sm" value="{$data.price}" />果仁
             </div>
         </div>
     </div>
@@ -48,7 +48,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">课程列表</div>
             <ul class="list-group form-inline">
-            <volist name="section_list" id="section">
+            <volist name="data.section" id="section">
                 <li class="list-group-item ">
                     <label>标题：</label><input type="text" class="form-control input-sm" value="{$section.section_name}" />
                     <label>序号：</label><input type="number" class="form-control input-sm" value="{$section.section_id}" />
@@ -65,7 +65,7 @@
     <div class="panel panel-default">
         <div class="panel-heading">更新课程：</div>
         <div class="panel-body">
-            <img src="__IMAGE__/article/{$works_inf.id}.jpg" alt="" style="width:100%;" />
+            <img src="__IMAGE__/article/{$data.id}.jpg" alt="" style="width:100%;" />
         </div>
         <div class="panel-body">
             <div class="form-group">
