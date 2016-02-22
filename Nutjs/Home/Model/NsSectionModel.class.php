@@ -75,5 +75,7 @@ class NsSectionModel extends RelationModel{
         array('update_date'  ,'get_sql_short_date'   ,self::MODEL_BOTH    ,'function'),
         //使用htmlspecialchars过滤输入字段
         array('works_name'   ,'htmlspecialchars'     ,self::MODEL_BOTH    ,'function'),
+        //清楚所有对于ID的操作
+        array('id'    ,''                     ,self::MODEL_BOTH    ,'function'),
     );
 }

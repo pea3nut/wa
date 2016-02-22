@@ -69,7 +69,7 @@ class NsWorksListModel extends RelationModel{
             //自己的键，默认为自己的主键
             'mapping_key'   => 'author_uid',
         ),
-        'inf'  =>array(
+        'inf'   =>array(
             'mapping_type'  => self::HAS_ONE,
             'class_name'    => 'UserInf',
             //对方的键
@@ -77,7 +77,7 @@ class NsWorksListModel extends RelationModel{
             //自己的键，默认为自己的主键
             'mapping_key'   => 'author_uid',
         ),
-        'buy'  =>array(
+        'buy'   =>array(
             'mapping_type'  => self::HAS_MANY,
             'class_name'    => 'NsBuy',
             'foreign_key'   => 'works_id',
@@ -85,6 +85,11 @@ class NsWorksListModel extends RelationModel{
         'section'  =>array(
             'mapping_type'  => self::HAS_MANY,
             'class_name'    => 'NsSection',
+            'foreign_key'   => 'works_id',
+        ),
+        'log'   =>array(
+            'mapping_type'  => self::HAS_MANY,
+            'class_name'    => 'NsUpdateLog',
             'foreign_key'   => 'works_id',
         ),
     );
@@ -101,6 +106,8 @@ class NsWorksListModel extends RelationModel{
         //使用htmlspecialchars过滤输入字段
         array('works_name'   ,'htmlspecialchars'     ,self::MODEL_BOTH    ,'function'),
         array('works_intro'  ,'htmlspecialchars'     ,self::MODEL_BOTH    ,'function'),
+        //清楚所有对于ID的操作
+        array('id'    ,''                     ,self::MODEL_BOTH    ,'function'),
     );
     /**
      * 校验字段的规则

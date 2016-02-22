@@ -18,6 +18,7 @@ B 错误发生的文件
         7 -> SignUp0Service.class.php
         8 -> SignUp1Service.class.php
         9 -> ClockService.class.php
+        A -> NsSetUpdateLogService.class.php
     A = 5 情况下
         3 -> InviteCodeModel.class.php
         4 -> TokenModel.class.php
@@ -28,6 +29,7 @@ B 错误发生的文件
         9 -> NsWorksListModel.class.php
         A -> NsBuyModel.class.php
         B -> NsSectionModel.class.php
+        C -> NsUpdateLogModel.class.php
 C 错误类型
     3 -> 字段格式错误
     4 -> 用户操作不合法，如无权限操作、验证码不符、确认密码字段不相同
@@ -78,6 +80,8 @@ return array(
     '4942' => '用户今天已经签到了',
     '4951' => 'ClockModel写入错误',
     '4952' => 'NutsModel写入错误',
+    //果仁商店提交作品更新日志
+    '4A41' => '用户没有登陆',
     //InviteCodeModel
     '5331' => 'uid格式不正确',
     '5332' => 'invite_code格式不正确',
@@ -122,4 +126,6 @@ return array(
     //NsSectionModel
     '5B31' => 'works_id字段必须是数字',
     '5B32' => 'section_id字段必须是数字',
+    //NsUpdateLogModel
+    '5C31' => 'works_id字段必须是数字',
 );
