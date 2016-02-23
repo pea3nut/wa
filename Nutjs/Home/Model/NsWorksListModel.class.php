@@ -19,9 +19,6 @@ use Think\Model\RelationModel;
  * <dt>works_state</dt>
  * <dd>varchar(64) 作品状态 1-更新中，2-已完结</dd>
  *
- * <dt>section_number</dt>
- * <dd>UNSIGNED int 课程章节数</dd>
- *
  * <dt>price</dt>
  * <dd>UNSIGNED int 作品售价</dd>
  *
@@ -41,7 +38,7 @@ class NsWorksListModel extends RelationModel{
       * @var Array
      * @access protected
      * */
-    protected $fields=array('id','author_uid','works_name','works_intro','works_state','section_number','price','update_number','update_date','create_date');
+    protected $fields=array('id','author_uid','works_name','works_intro','works_state','price','update_number','update_date','create_date');
     /**
      * 只读字段，一旦写入就不允许再修改了
      * @var Array
@@ -99,15 +96,18 @@ class NsWorksListModel extends RelationModel{
      * @access protected
      * */
     protected $_auto=array(
+        //插入时清楚所有对于ID的操作
+        array('id'    ,''                           ,self::MODEL_INSERT  ,'string'),
+        //使用htmlspecialchars过滤输入works_name字段
+        array('works_name'   ,'htmlspecialchars'    ,self::MODEL_BOTH    ,'function'),
+        //使用htmlspecialchars过滤输入works_intro字段
+        array('works_intro'  ,'htmlspecialchars'    ,self::MODEL_BOTH    ,'function'),
+        //定义works_state默认为1
+        array('works_state'   ,'1'                  ,self::MODEL_INSERT  ,'function'),
         //任何操作都获取当前时间
-        array('update_number' ,'get_sql_short_date'  ,self::MODEL_BOTH    ,'function'),
+        array('update_number' ,'get_sql_short_date' ,self::MODEL_BOTH    ,'function'),
         //在插入字段是自动获取当前时间
-        array('create_date'   ,'get_sql_short_date'  ,self::MODEL_INSERT  ,'function'),
-        //使用htmlspecialchars过滤输入字段
-        array('works_name'   ,'htmlspecialchars'     ,self::MODEL_BOTH    ,'function'),
-        array('works_intro'  ,'htmlspecialchars'     ,self::MODEL_BOTH    ,'function'),
-        //清楚所有对于ID的操作
-        array('id'    ,''                     ,self::MODEL_BOTH    ,'function'),
+        array('create_date'   ,'get_sql_short_date' ,self::MODEL_INSERT  ,'function'),
     );
     /**
      * 校验字段的规则
@@ -116,10 +116,17 @@ class NsWorksListModel extends RelationModel{
      * @access protected
      * */
     protected $_validate=array(
-        array('author_uid'      ,RegExp_uid        ,EC_5931    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('works_state'     ,RegExp_works_state,EC_5932    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('section_number'  ,'number'          ,EC_5933    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('price'           ,'number'          ,EC_5934    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('update_number'   ,'number'          ,EC_5935    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
+        //更新时，如果id存在就验证
+        array('id'              ,RegExp_Number     ,EC_5935    ,self::EXISTS_VALIDATE  ,'regex'    ,self::MODEL_UPDATE),
+        //author_uid必选
+        array('author_uid'      ,RegExp_uid        ,EC_5931    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
+        //更新时，校验works_state
+        array('works_state'     ,RegExp_works_state,EC_5932    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),
+        //插入时price必选
+        array('price'           ,RegExp_price      ,EC_5934    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_INSERT),
+        //更新时，若存在则要检验
+        array('price'           ,RegExp_price      ,EC_5934    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),
+        array('section_number'  ,'number'          ,EC_5933    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
+        array('update_number'   ,'number'          ,EC_5935    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
     );
 }

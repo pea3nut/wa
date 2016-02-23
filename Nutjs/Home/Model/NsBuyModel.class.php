@@ -81,7 +81,7 @@ class NsBuyModel extends RelationModel{
      * */
     protected $_auto=array(
         //清楚所有对于ID的操作
-        array('id'    ,''                     ,self::MODEL_BOTH    ,'function'),
+        array('id'    ,''                     ,self::MODEL_INSERT    ,'function'),
     );
     /**
      * 校验score字段
