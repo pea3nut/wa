@@ -29,12 +29,6 @@ class NutsModel extends RelationModel{
      * */
     protected $fields=array('uid','nuts','cumulative');
     /**
-     * 只读字段，一旦写入就不允许再修改了
-     * @var Array
-     * @access protected
-     * */
-    protected $readonlyField=array('uid');
-    /**
      * 数据表的主键
      * @var String
      * @access protected
@@ -64,10 +58,13 @@ class NutsModel extends RelationModel{
      * @access protected
      * */
     protected $_auto=array(
-        //根据nuts字段生成cumulative字段
-        array('cumulative'  ,'getCumulative'        ,self::MODEL_SET_NUTS    ,'callback'),
-        //根据nuts字段生成真正的nuts字段
-        array('nuts'        ,'getNuts'              ,self::MODEL_SET_NUTS    ,'callback'),
+        //初始化最原始的果仁数
+        array('nuts'        ,0   ,self::MODEL_INSERT    ,'string'),   //nuts 13
+        array('cumulative'  ,0   ,self::MODEL_INSERT    ,'string'),   //cumulative 13
+        //统计模式下，提交任何的cumulative字段都是无意义的，会自动根据nuts字段生成cumulative字段
+        array('cumulative'  ,'getCumulative'        ,self::MODEL_SET_NUTS    ,'callback'), //cumulative 123456
+        //统计模式下，根据nuts字段生成真正的nuts字段
+        array('nuts'        ,'getNuts'              ,self::MODEL_SET_NUTS    ,'callback'), //nuts 6
     );
     /**
      * 校验字段的规则
@@ -76,13 +73,15 @@ class NutsModel extends RelationModel{
      * @access protected
      * */
     protected $_validate=array(
-        //普通模式验证
-        array('uid'         ,RegExp_uid  ,EC_5831  ,self::MUST_VALIDATE  ,'regex'  ,self::MODEL_BOTH),
-        array('nuts'        ,'number'    ,EC_5832  ,self::MUST_VALIDATE  ,'regex'  ,self::MODEL_BOTH),
-        array('cumulative'  ,'number'    ,EC_5833  ,self::MUST_VALIDATE  ,'regex'  ,self::MODEL_BOTH),
+        //插入数据时uid字段必填
+        array('uid'         ,RegExp_uid  ,EC_5831  ,self::MUST_VALIDATE    ,'regex'  ,self::MODEL_INSERT), //uid 12
+        //24 所有字段，若存在则需要验证
+        array('uid'         ,RegExp_uid  ,EC_5831  ,self::EXISTS_VALIDATE  ,'regex'  ,self::MODEL_BOTH),
+        array('nuts'        ,'number'    ,EC_5832  ,self::EXISTS_VALIDATE  ,'regex'  ,self::MODEL_BOTH),
+        array('cumulative'  ,'number'    ,EC_5833  ,self::EXISTS_VALIDATE  ,'regex'  ,self::MODEL_BOTH),
         //统计模式验证
-        array('uid'         ,RegExp_uid  ,EC_5834  ,self::MUST_VALIDATE  ,'regex'  ,self::MODEL_SET_NUTS),
-        array('nuts'        ,'number'    ,EC_5835  ,self::MUST_VALIDATE  ,'regex'  ,self::MODEL_SET_NUTS),
+        array('uid'         ,RegExp_uid  ,EC_5834  ,self::MUST_VALIDATE  ,'regex'  ,self::MODEL_SET_NUTS), //uid 56
+        array('nuts'        ,'number'    ,EC_5835  ,self::MUST_VALIDATE  ,'regex'  ,self::MODEL_SET_NUTS), //nuts 56
     );
     /**
      * 统计模式下，根据nuts字段生产cumulative字段
@@ -104,7 +103,7 @@ class NutsModel extends RelationModel{
      * @return Array 一个直接操作SQL语句的数组
      * */
     protected function getNuts($nuts){
-        if($this->submit['nuts'] > 0){
+        if($this->submit['nuts'] >= 0){
            return array('exp','`nuts` +'.$this->submit['nuts']);
         }else{
             return array('exp','`nuts` '.$this->submit['nuts']);

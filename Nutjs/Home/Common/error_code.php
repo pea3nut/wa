@@ -114,18 +114,20 @@ return array(
     //NsWorksListModel
     '5931' => 'author_uid格式不正确',
     '5932' => 'works_state格式不正确',
-    '5933' => 'section_number格式不正确',
+    '5933' => 'works_name必填',
     '5934' => 'price格式不正确',
-    '5935' => 'update_number格式不正确',
-    '5936' => 'update_number格式不正确',
+    '5935' => 'id格式不正确',
     //NsBuyModel
     '5A31' => 'uid格式不正确',
     '5A32' => 'works_id格式不正确',
     '5A33' => 'score字段必须是数字',
     '5A34' => 'score字段必须在0-10以内',
+    '5A35' => 'id格式不正确',
     //NsSectionModel
     '5B31' => 'works_id字段必须是数字',
     '5B32' => 'section_id字段必须是数字',
     //NsUpdateLogModel
     '5C31' => 'works_id字段必须是数字',
+    '5C32' => 'section_id字段必须是数字',
+    '5C33' => 'id字段必须是数字',
 );

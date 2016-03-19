@@ -28,12 +28,6 @@ class NsSectionModel extends RelationModel{
      * */
     protected $fields=array('id','works_id','section_id','section_name','update_date');
     /**
-     * 只读字段，一旦写入就不允许再修改了
-     * @var Array
-     * @access protected
-     * */
-    protected $readonlyField=array('id');
-    /**
      * 数据表的主键
      * @var String
      * @access protected
@@ -62,8 +56,13 @@ class NsSectionModel extends RelationModel{
      * @access protected
      * */
     protected $_validate=array(
-        array('works_id'  ,'number'       ,EC_5B31    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('section_id','number'       ,EC_5B32    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
+        //新增时，必须校验的字段
+        array('works_id'    ,'number'       ,EC_5B31    ,self::MUST_VALIDATE    ,'regex'      ,self::MODEL_INSERT),//works_id 12
+        array('section_id'  ,'number'       ,EC_5B32    ,self::MUST_VALIDATE    ,'regex'      ,self::MODEL_INSERT),//section_id 12
+        //更新时，若存在则校验
+        array('works_id'    ,'number'       ,EC_5B31    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//works_id 4
+        array('section_id'  ,'number'       ,EC_5B32    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//section_id 4
+        array('id'          ,'number'       ,EC_5B33    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//id 4
     );
     /**
      * 自动完成字段
@@ -71,11 +70,12 @@ class NsSectionModel extends RelationModel{
      * @access protected
      * */
     protected $_auto=array(
-        //填充当前时间
-        array('update_date'  ,'get_sql_short_date'   ,self::MODEL_BOTH    ,'function'),
+        //update_date字段总是填充当前时间
+        array('update_date'  ,'get_sql_short_date'   ,self::MODEL_BOTH    ,'function'),//update_date 1234
         //使用htmlspecialchars过滤输入字段
-        array('works_name'   ,'htmlspecialchars'     ,self::MODEL_BOTH    ,'function'),
-        //清楚所有对于ID的操作
-        array('id'    ,''                     ,self::MODEL_INSERT    ,'function'),
+        array('works_name'   ,'htmlspecialchars'     ,self::MODEL_BOTH    ,'function'),//works_name 24
+        //新增数据时，清楚所有对于ID的操作
+        array('id'           ,''                     ,self::MODEL_INSERT  ,'string'),  //id 12
+        array('id'           ,''                     ,self::MODEL_INSERT  ,'ignore'),  //id 12
     );
 }

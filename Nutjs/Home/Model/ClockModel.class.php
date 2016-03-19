@@ -51,7 +51,11 @@ class ClockModel extends RelationModel{
      * @access protected
      * */
     protected $_auto=array(
-        array('date'    ,'get_sql_short_date'        ,self::MODEL_BOTH    ,'function'),//获取当前时间
+        //新增数据时，id字段不允许有值
+        array('id'     ,''                     ,self::MODEL_INSERT  ,'string'),  //id 12
+        array('id'     ,''                     ,self::MODEL_INSERT  ,'ignore'),  //id 12
+        //插入时，自动获取当前时间
+        array('date'   ,'get_sql_short_date'   ,self::MODEL_BOTH    ,'function'),//date 1234
     );
     /**
      * 校验字段的规则
@@ -60,6 +64,10 @@ class ClockModel extends RelationModel{
      * @access protected
      * */
     protected $_validate=array(
-        array('uid'    ,RegExp_uid        ,EC_5731    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
+        //插入时，uid必填
+        array('uid'    ,RegExp_uid        ,EC_5731    ,self::MUST_VALIDATE     ,'regex'    ,self::MODEL_INSERT),//uid 12
+        //若字段存在，则验证
+        array('uid'    ,RegExp_uid        ,EC_5731    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//uid 4
+        array('id'     ,RegExp_Number     ,EC_5732    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//id 4
     );
 }

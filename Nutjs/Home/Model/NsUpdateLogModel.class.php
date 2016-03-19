@@ -25,12 +25,6 @@ class NsUpdateLogModel extends RelationModel{
      * */
     protected $fields=array('id','works_id','log','date');
     /**
-     * 只读字段，一旦写入就不允许再修改了
-     * @var Array
-     * @access protected
-     * */
-    protected $readonlyField=array('id');
-    /**
      * 数据表的主键
      * @var String
      * @access protected
@@ -59,7 +53,11 @@ class NsUpdateLogModel extends RelationModel{
      * @access protected
      * */
     protected $_validate=array(
-        array('works_id' ,'number'       ,EC_5C31    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
+        //新增时，works_id必填
+        array('works_id' ,'number'       ,EC_5C31    ,self::MUST_VALIDATE      ,'regex'    ,self::MODEL_INSERT),//works_id 12
+        //若字段存在则验证格式
+        array('works_id' ,'number'       ,EC_5C31    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//works_id 4
+        array('id'       ,'number'       ,EC_5C32    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//id 4
     );
     /**
      * 自动完成字段
@@ -67,11 +65,12 @@ class NsUpdateLogModel extends RelationModel{
      * @access protected
      * */
     protected $_auto=array(
-        //填充当前时间
-        array('date'  ,'get_sql_short_date'   ,self::MODEL_BOTH    ,'function'),
+        //新增数据时，清楚所有对于ID的操作
+        array('id'    ,''                     ,self::MODEL_INSERT  ,'string'),  //id 12
+        array('id'    ,''                     ,self::MODEL_INSERT  ,'ignore'),  //id 12
+        //更新和新增时记录当前时间
+        array('date'  ,'get_sql_short_date'   ,self::MODEL_BOTH    ,'function'),//date 1234
         //使用htmlspecialchars过滤输入字段
-        array('log'   ,'htmlspecialchars'     ,self::MODEL_BOTH    ,'function'),
-        //清楚所有对于ID的操作
-        array('id'    ,''                     ,self::MODEL_INSERT    ,'function'),
+        array('log'   ,'htmlspecialchars'     ,self::MODEL_BOTH    ,'function'),//log 24
     );
 }

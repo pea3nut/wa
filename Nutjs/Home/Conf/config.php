@@ -22,6 +22,8 @@ return array(
     'URL_MODEL'=>2,
     //注册会员批次
     'WEB_BATCH' => 'D',
+    //新注册会员的果仁数
+    'INIT_NUTS' => 0,
     //Cookie前缀
     'COOKIE_PREFIX'=>'wa_',
     //Cookie过期时间

@@ -25,12 +25,6 @@ class NsBuyModel extends RelationModel{
      * */
     protected $fields=array('id','works_id','uid','score');
     /**
-     * 只读字段，一旦写入就不允许再修改了
-     * @var Array
-     * @access protected
-     * */
-    protected $readonlyField=array('id');
-    /**
      * 数据表的主键
      * @var String
      * @access protected
@@ -69,10 +63,17 @@ class NsBuyModel extends RelationModel{
      * @access protected
      * */
     protected $_validate=array(
-        array('uid'      ,RegExp_uid     ,EC_5A31    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('works_id' ,'number'       ,EC_5A32    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('score'    ,'number'       ,EC_5A33    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('score'    ,'checkScore'   ,EC_5A34    ,self::MUST_VALIDATE    ,'callback' ,self::MODEL_BOTH),
+        //新增时，必须校验的字段
+        array('uid'      ,RegExp_uid     ,EC_5A31    ,self::MUST_VALIDATE      ,'regex'    ,self::MODEL_INSERT),//uid 12
+        array('works_id' ,'number'       ,EC_5A32    ,self::MUST_VALIDATE      ,'regex'    ,self::MODEL_INSERT),//works_id 12
+        array('score'    ,'number'       ,EC_5A33    ,self::MUST_VALIDATE      ,'regex'    ,self::MODEL_INSERT),//score 12
+        //更新时，若存在则校验字段
+        array('uid'      ,RegExp_uid     ,EC_5A31    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//uid 4
+        array('works_id' ,'number'       ,EC_5A32    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//works_id 4
+        array('score'    ,'number'       ,EC_5A33    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//score 4
+        array('id'       ,'number'       ,EC_5A35    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//id 4
+        //score字段若存在，则必须在0-10以内
+        array('score'    ,'checkScore'   ,EC_5A34    ,self::EXISTS_VALIDATE    ,'callback' ,self::MODEL_BOTH),  //score 24
     );
     /**
      * 自动完成字段
@@ -80,8 +81,9 @@ class NsBuyModel extends RelationModel{
      * @access protected
      * */
     protected $_auto=array(
-        //清楚所有对于ID的操作
-        array('id'    ,''                     ,self::MODEL_INSERT    ,'function'),
+        //新增数据时，清楚所有对于ID的操作
+        array('id'       ,''                         ,self::MODEL_INSERT  ,'string'),  //id 12
+        array('id'       ,''                         ,self::MODEL_INSERT  ,'ignore'),  //id 12
     );
     /**
      * 校验score字段

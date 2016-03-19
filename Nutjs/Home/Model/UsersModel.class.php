@@ -36,12 +36,6 @@ class UsersModel extends RelationModel{
         ),
     );
     /**
-     * 只读字段，一旦写入就不允许再修改了
-      * @var Array
-     * @access protected
-     * */
-    protected $readonlyField=array('uid','qq');
-    /**
      * 数据表的主键
       * @var String
      * @access protected
@@ -96,10 +90,14 @@ class UsersModel extends RelationModel{
      * @access protected
      * */
     protected $_auto=array(
-        array('password'    ,'crypt'        ,self::MODEL_BOTH    ,'function'),//对密码进行散列计算
-        array('password'    ,null            ,self::MODEL_BOTH    ,'ignore'),//如果密码为空则释放
-        array('state'        ,'100'            ,self::MODEL_INSERT    ,'string'),//在新用户注册时随机生成协会编号
-        array('uid'            ,'createUid'    ,self::MODEL_INSERT    ,'callback'),//在新用户注册时随机生成协会编号
+        //对密码进行散列计算
+        array('password'    ,'crypt'        ,self::MODEL_BOTH    ,'function'), //password 24
+        //如果密码散列失败返回null则释放
+        array('password'    ,null           ,self::MODEL_BOTH    ,'ignore'),   //password 24
+        //在新用户注册时随机生成协会编号
+        array('state'       ,'100'          ,self::MODEL_INSERT  ,'string'),   //state 12
+        //在新用户注册时随机生成协会编号
+        array('uid'         ,'createUid'    ,self::MODEL_INSERT  ,'callback'), //uid 12
     );
     /**
      * 校验字段的规则
@@ -108,11 +106,20 @@ class UsersModel extends RelationModel{
      * @access protected
      * */
     protected $_validate=array(
-        array('uid'            ,RegExp_uid        ,EC_5631    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//在inset的时候是自动生成的，因此无需检查
-        array('state'        ,RegExp_state    ,EC_5632    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//同上
-        array('password'    ,RegExp_password,EC_5633    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('qq'            ,RegExp_qq        ,EC_5634    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('qq'            ,'checkQq'        ,EC_5651    ,self::MUST_VALIDATE    ,'callback'    ,self::MODEL_INSERT),//QQ不允许更改，因此仅仅需要注册的时候查同即可
+        //若字段存在，校验uid是否符合格式
+        array('uid'         ,RegExp_uid       ,EC_5631    ,self::EXISTS_VALIDATE   ,'regex'    ,self::MODEL_UPDATE), //uid 4
+        //若字段存在，校验state是否符合格式
+        array('state'       ,RegExp_state     ,EC_5632    ,self::EXISTS_VALIDATE   ,'regex'    ,self::MODEL_UPDATE), //state 4
+        //插入时，password为必填字段
+        array('password'    ,'require'        ,EC_5633    ,self::MUST_VALIDATE     ,'regex'    ,self::MODEL_INSERT), //password 1
+        //若字段存在，校验password是否符合格式
+        array('password'    ,RegExp_password  ,EC_5633    ,self::EXISTS_VALIDATE   ,'regex'    ,self::MODEL_BOTH),   //password 24
+        //插入时，password为必填字段
+        array('qq'          ,'require'        ,EC_5634    ,self::MUST_VALIDATE     ,'regex'    ,self::MODEL_INSERT), //qq 1
+        //若字段存在，校验qq是否符合格式
+        array('qq'          ,RegExp_qq        ,EC_5634    ,self::EXISTS_VALIDATE   ,'regex'    ,self::MODEL_BOTH),   //qq 24
+        //新增数据时要强制链接数据库检查qq重复
+        array('qq'          ,'checkQq'        ,EC_5651    ,self::MUST_VALIDATE     ,'callback' ,self::MODEL_INSERT), //qq 2
     );
     /**
      * 获取随机生成的协会编号

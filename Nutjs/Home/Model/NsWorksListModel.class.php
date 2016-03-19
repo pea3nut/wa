@@ -17,7 +17,7 @@ use Think\Model\RelationModel;
  * <dd>varchar(250) 作品简介</dd>
  *
  * <dt>works_state</dt>
- * <dd>varchar(64) 作品状态 1-更新中，2-已完结</dd>
+ * <dd>int(1) 作品状态 1-更新中，2-已完结</dd>
  *
  * <dt>price</dt>
  * <dd>UNSIGNED int 作品售价</dd>
@@ -39,12 +39,6 @@ class NsWorksListModel extends RelationModel{
      * @access protected
      * */
     protected $fields=array('id','author_uid','works_name','works_intro','works_state','price','update_number','update_date','create_date');
-    /**
-     * 只读字段，一旦写入就不允许再修改了
-     * @var Array
-     * @access protected
-     * */
-    protected $readonlyField=array('id','author_uid' ,'create_date');
     /**
      * 数据表的主键
      * @var String
@@ -96,18 +90,25 @@ class NsWorksListModel extends RelationModel{
      * @access protected
      * */
     protected $_auto=array(
-        //插入时清楚所有对于ID的操作
-        array('id'    ,''                           ,self::MODEL_INSERT  ,'string'),
-        //使用htmlspecialchars过滤输入works_name字段
-        array('works_name'   ,'htmlspecialchars'    ,self::MODEL_BOTH    ,'function'),
-        //使用htmlspecialchars过滤输入works_intro字段
-        array('works_intro'  ,'htmlspecialchars'    ,self::MODEL_BOTH    ,'function'),
-        //定义works_state默认为1
-        array('works_state'   ,'1'                  ,self::MODEL_INSERT  ,'function'),
-        //任何操作都获取当前时间
-        array('update_number' ,'get_sql_short_date' ,self::MODEL_BOTH    ,'function'),
-        //在插入字段是自动获取当前时间
-        array('create_date'   ,'get_sql_short_date' ,self::MODEL_INSERT  ,'function'),
+        //新增数据时，id字段不允许有值
+        array('id'              ,''                                 ,self::MODEL_INSERT ,'string'),  //id 12
+        array('id'              ,''                                 ,self::MODEL_INSERT ,'ignore'),  //id 12
+        //使用htmlspecialchars过滤文本字段
+        array('works_name'      ,'htmlspecialchars'                 ,self::MODEL_BOTH   ,'function'),//works_name 24
+        array('works_intro'     ,'htmlspecialchars'                 ,self::MODEL_BOTH   ,'function'),//works_intro 24
+        //新增数据时，works_state默认为1
+        array('works_state'     ,'1'                                ,self::MODEL_INSERT ,'function'),//works_state 12
+        //新增数据时，update_number默认为0
+        array('update_number'   ,0                                  ,self::MODEL_INSERT ,'string'),  //update_number 12
+        //任何更新操作都将update_number++
+        array('update_number'   ,array('exp','`update_number` +1')  ,self::MODEL_UPDATE ,'string'),  //update_number 34
+        //新增数据时，自动获取当前时间作为create_date字段
+        array('create_date'     ,'get_sql_short_date'               ,self::MODEL_INSERT ,'function'),//create_date 12
+        //更新数据时，不允许操作create_date字段
+        array('create_date'     ,''                                 ,self::MODEL_UPDATE ,'string'),  //create_date 4
+        array('create_date'     ,''                                 ,self::MODEL_UPDATE ,'ignore'),  //create_date 3
+        //update_date字段永远自动获取当前时间
+        array('update_date'     ,'get_sql_short_date'               ,self::MODEL_BOTH   ,'function'),//update_date 1234
     );
     /**
      * 校验字段的规则
@@ -116,17 +117,14 @@ class NsWorksListModel extends RelationModel{
      * @access protected
      * */
     protected $_validate=array(
-        //更新时，如果id存在就验证
-        array('id'              ,RegExp_Number     ,EC_5935    ,self::EXISTS_VALIDATE  ,'regex'    ,self::MODEL_UPDATE),
-        //author_uid必选
-        array('author_uid'      ,RegExp_uid        ,EC_5931    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        //更新时，校验works_state
-        array('works_state'     ,RegExp_works_state,EC_5932    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),
-        //插入时price必选
-        array('price'           ,RegExp_price      ,EC_5934    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_INSERT),
-        //更新时，若存在则要检验
-        array('price'           ,RegExp_price      ,EC_5934    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),
-        array('section_number'  ,'number'          ,EC_5933    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('update_number'   ,'number'          ,EC_5935    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
+        //新增时的必填字段
+        array('author_uid'      ,RegExp_uid        ,EC_5931    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//author_uid 12
+        array('works_name'      ,'require'         ,EC_5933    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//works_name 1
+        array('price'           ,RegExp_price      ,EC_5934    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//price 12
+        //更新时，如果存在就验证的字段
+        array('author_uid'      ,RegExp_uid        ,EC_5931    ,self::EXISTS_VALIDATE  ,'regex'    ,self::MODEL_UPDATE),//author_uid 4
+        array('id'              ,RegExp_Number     ,EC_5935    ,self::EXISTS_VALIDATE  ,'regex'    ,self::MODEL_UPDATE),//id 4
+        array('works_state'     ,RegExp_works_state,EC_5932    ,self::EXISTS_VALIDATE  ,'regex'    ,self::MODEL_UPDATE),//works_state 4
+        array('price'           ,RegExp_price      ,EC_5934    ,self::EXISTS_VALIDATE  ,'regex'    ,self::MODEL_UPDATE),//price 4
     );
-}
+};

@@ -37,12 +37,6 @@ class UserInfModel extends RelationModel{
      * */
     protected $fields=array('uid','name','nickname','gender','age','phone','school','wechat');
     /**
-     * 只读字段，一旦写入就不允许再修改了
-     * @var Array
-     * @access protected
-     * */
-    protected $readonlyField=array('uid');
-    /**
      * 数据表的主键
      * @var String
      * @access protected
@@ -98,13 +92,21 @@ class UserInfModel extends RelationModel{
      * @access protected
      * */
     protected $_validate=array(
-        array('uid'        ,RegExp_uid        ,EC_5531    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('name'    ,RegExp_name    ,EC_5532    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('gender'    ,RegExp_gender    ,EC_5533    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('age'        ,RegExp_age        ,EC_5534    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('phone'    ,RegExp_phone    ,EC_5535    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('school'    ,RegExp_school    ,EC_5536    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('wechat'    ,RegExp_wechat    ,EC_5537    ,self::VALUE_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
-        array('nickname',RegExp_nickname,EC_5538    ,self::VALUE_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
+        //12 插入时，有下面的字段是必填的
+        array('uid'      ,'require'         ,EC_5531    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_INSERT),
+        array('name'     ,'require'         ,EC_5532    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_INSERT),
+        array('gender'   ,'require'         ,EC_5533    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_INSERT),
+        array('age'      ,'require'         ,EC_5534    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_INSERT),
+        array('phone'    ,'require'         ,EC_5535    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_INSERT),
+        array('school'   ,'require'         ,EC_5536    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_INSERT),
+        //24 所有的字段，如果有则需要校验格式
+        array('uid'      ,RegExp_uid        ,EC_5531    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
+        array('name'     ,RegExp_name       ,EC_5532    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
+        array('gender'   ,RegExp_gender     ,EC_5533    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
+        array('age'      ,RegExp_age        ,EC_5534    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
+        array('phone'    ,RegExp_phone      ,EC_5535    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
+        array('school'   ,RegExp_school     ,EC_5536    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
+        array('wechat'   ,RegExp_wechat     ,EC_5537    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
+        array('nickname' ,RegExp_nickname   ,EC_5538    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),
     );
 }
