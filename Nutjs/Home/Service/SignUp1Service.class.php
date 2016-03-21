@@ -38,9 +38,16 @@ class SignUp1Service{
             ),
             Model::MODEL_UPDATE
         ) or drop($uMo->getError());
+        //若开启Not_Submit_To_Database则不提交数据库
+        if (C('Not_Submit_To_Database')) {
+            var_dump($uiMo->data());
+            var_dump($uMo->data());
+            $uiMo->fetchSql(true);
+            $uMo->fetchSql(true);
+        };
         //注册信息
-        $uiMo->add() or drop(EC_4861);
-        $uMo->save() or drop(EC_4862);
+        $uiMo->add() or drop(EC_4861.$uiMo->getError());
+        $uMo->save() or drop(EC_4862.$uMo->getError());
         //End 注册信息
         drop(true);
     }

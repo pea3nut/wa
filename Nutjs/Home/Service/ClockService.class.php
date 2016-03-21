@@ -15,6 +15,24 @@ class ClockService{
      * */
     protected $msg='';
     /**
+     * 签到获得的基础果仁
+     * @var Int
+     * @access protected
+     * */
+    protected $basicNuts=10;
+    /**
+     * 每日签到的前几名额外的倍数奖励
+     * @var Array
+     * @access protected
+     * */
+    protected $rankMultiple=array(3 ,2 ,1.5);
+    /**
+     * 连续签到的额外的倍数奖励
+     * @var Array
+     * @access protected
+     * */
+    protected $fullMultiple=array(1 ,2 ,1.5 ,3);
+    /**
      * 入口函数。此函数会被自动调用
      * */
     public function run(){
@@ -46,47 +64,89 @@ class ClockService{
             ));
         }
         //增加果仁
-        $nutMo->save() or drop(EC_4952.$nutMo->getError());
+        $nutMo->save()  or drop(EC_4952.$nutMo->getError());
         //写入ClockModel
-        $mo->add() or drop(EC_4951.$mo->getError());
+        $mo->add()      or drop(EC_4951.$mo->getError());
         //返回信息
         drop('1200,'.$this->msg);
     }
-    protected function getIncNutNum($uid){
-        //基础果仁
-        $nuts=10;
-        //查看是第几个签到的
+    /**
+     * 查看某天有几个人签到
+     * @access protected
+     * @return Number
+     * @param [date=Short_Date] 要计算的日期，默认取Short_Date
+     * */
+    protected function countClockPersonNumber($date =Short_Date){
         $mo=new ClockModel();
-        $users =$mo->where(array('date' => get_sql_short_date()))->count();
-        //计算前几名增加额外的倍数
-        //第123的倍数
-        $multiple1=array(3 ,2 ,1.5);
-        if($users < 3){
-            $nuts *= $multiple1[$users];
-        }
-        //记录提示信息
-        $this->msg .= "今天是第".($users+1)."个签到的，获得系数{$multiple1[$users]}\n";
-        //第0123的倍数
-        $multiple2=array(1 ,2 ,1.5 ,3);
+        $mo->where(array('date' => $date));
+        return $mo->count();
+    }
+    /**
+     * 计算某人连续签到了几天
+     * @access protected
+     * @return Number
+     * @param max=3 最大的连续天数
+     * @param uid=cookie('uid') 要统计人的uid
+     * @param date=Short_Date 从哪里开始计算连续天数
+     * */
+    protected function countFullDay($max=3,$uid=null,$date =Short_Date){
+        if (is_null($uid)) $uid=cookie('uid');
         //计算连续签到天数的
-        $mo->where(array('uid'=>$uid))->order('date DESC')->limit(3);
+        $mo=new ClockModel();
+        $mo->where(array('uid'=>$uid));
+        $mo->order('date DESC');
+        $mo->limit($max);
         $record =$mo->select();
         //现在的整天时间戳
-        $now_time =strtotime(get_sql_short_date());
-        for ($i = 0; $i < \count($record); $i++) {
+        $startTime =strtotime($date);
+        for ($i = 0; $i < count($record); $i++) {
             //上i+1次签到时的整天时间戳
-            $clock_time =strtotime($record[$i]['date']);
-            //若中间间隔不是一天，直接break
-            if ($now_time - $clock_time != 24*60*60*($i+1)){
+            $lastClockTime =strtotime($record[$i]['date']);
+            //若中间间隔不是i天，直接break
+            if ($startTime - $lastClockTime != 24*60*60*($i+1)){
                 break;
             };
+        };
+        return $i;
+    }
+    /**
+     * 计算应该获得的果仁数
+     * @return Int
+     * @access protected
+     * */
+    protected function getIncNutNum(){
+        //最终获得的果仁
+        $nuts =$this->basicNuts;
+        //计算前几名签到的倍数
+        $rank=$this->countClockPersonNumber();
+        if($rank < count($this->rankMultiple)){
+            $nuts *=$this->rankMultiple[$rank];
         }
-        //计算倍数
-        $nuts *= $multiple2[$i];
-        //记录提示信息
-        $this->msg .= "因连续签到{$i}天，获得系数{$multiple2[$i]}\n";
-        $this->msg .= "果仁数+{$nuts}";
-        //返回终值
+        //计算连续签到倍数
+        $full=$this->countFullDay();
+        $nuts *= $this->fullMultiple[$full];
+        //生成提示msg
+        $this->msg =$this ->getMsg($rank,$full,$nuts);
+        //返回果仁数
         return $nuts;
+    }
+    /**
+     * 生成提示信息
+     * @return String
+     * @access protected
+     * @param rank 第几个签到的
+     * @param full 连续签到了几天
+     * @param 获得了几个果仁
+     * */
+    protected function getMsg($rank ,$full ,$nuts){
+        $msg='你是今天第 '.($rank+1).' 个签到的';
+        if($rank < count($this->rankMultiple)){
+            $msg .= "，额外获得 {$this->rankMultiple[$rank]} 倍加成！";
+        };
+        if ($full >0){
+            $msg .="\n连续签到 {$full} 天获得 {$this->fullMultiple[$full]} 倍加成！";
+        };
+        $msg .="\n获得果仁 x {$nuts} ！";
+        return $msg;
     }
 }

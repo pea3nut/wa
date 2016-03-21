@@ -16,6 +16,8 @@ return array(
     ),
     //表单提交时无需验证verifycode，此配置还要求开启调试模式的情况下才可生效
     'Not_VerifyCode' => true,
+    //请求Service时，不提交到服务器，而是打印出数据对象
+    'Not_Submit_To_Database' =>false,
     //模板文件名后缀
     'TMPL_TEMPLATE_SUFFIX'=>'.tpl',
     //定义路径模式

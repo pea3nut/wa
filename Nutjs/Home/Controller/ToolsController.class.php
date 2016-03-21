@@ -52,7 +52,7 @@ class ToolsController extends Controller {
      * @param $token 协会编号，默认获取cookie('token')
      * @access public
      * */
-    public function test_token($uid,$token) {
+    public function test_token($uid='',$token='') {
         if(test_token($uid,$token)){
             echo 1;
         }else{
@@ -67,5 +67,14 @@ class ToolsController extends Controller {
      * */
     public function get_state($uid) {
         echo get_state($uid);
+    }
+    /**
+     * 架构函数 取得模板对象实例
+     * @access public
+     */
+    public function __construct(){
+        //关闭页面调试工具（trace）
+        C('SHOW_PAGE_TRACE',false);
+        parent::__construct();
     }
 }

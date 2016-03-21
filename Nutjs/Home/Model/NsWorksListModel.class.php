@@ -17,7 +17,7 @@ use Think\Model\RelationModel;
  * <dd>varchar(250) 作品简介</dd>
  *
  * <dt>works_state</dt>
- * <dd>int(1) 作品状态 1-更新中，2-已完结</dd>
+ * <dd>int(1) 作品状态 0-隐藏 1-更新中，2-已完结</dd>
  *
  * <dt>price</dt>
  * <dd>UNSIGNED int 作品售价</dd>
@@ -96,8 +96,10 @@ class NsWorksListModel extends RelationModel{
         //使用htmlspecialchars过滤文本字段
         array('works_name'      ,'htmlspecialchars'                 ,self::MODEL_BOTH   ,'function'),//works_name 24
         array('works_intro'     ,'htmlspecialchars'                 ,self::MODEL_BOTH   ,'function'),//works_intro 24
+        array('works_name'      ,null                               ,self::MODEL_BOTH   ,'ignore'),//works_name 24
+        array('works_intro'     ,null                               ,self::MODEL_BOTH   ,'ignore'),//works_intro 24
         //新增数据时，works_state默认为1
-        array('works_state'     ,'1'                                ,self::MODEL_INSERT ,'function'),//works_state 12
+        array('works_state'     ,'1'                                ,self::MODEL_INSERT ,'string'),//works_state 12
         //新增数据时，update_number默认为0
         array('update_number'   ,0                                  ,self::MODEL_INSERT ,'string'),  //update_number 12
         //任何更新操作都将update_number++
@@ -120,11 +122,11 @@ class NsWorksListModel extends RelationModel{
         //新增时的必填字段
         array('author_uid'      ,RegExp_uid        ,EC_5931    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//author_uid 12
         array('works_name'      ,'require'         ,EC_5933    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//works_name 1
-        array('price'           ,RegExp_price      ,EC_5934    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//price 12
+        array('price'           ,RegExp_Number     ,EC_5934    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//price 12
         //更新时，如果存在就验证的字段
         array('author_uid'      ,RegExp_uid        ,EC_5931    ,self::EXISTS_VALIDATE  ,'regex'    ,self::MODEL_UPDATE),//author_uid 4
         array('id'              ,RegExp_Number     ,EC_5935    ,self::EXISTS_VALIDATE  ,'regex'    ,self::MODEL_UPDATE),//id 4
         array('works_state'     ,RegExp_works_state,EC_5932    ,self::EXISTS_VALIDATE  ,'regex'    ,self::MODEL_UPDATE),//works_state 4
-        array('price'           ,RegExp_price      ,EC_5934    ,self::EXISTS_VALIDATE  ,'regex'    ,self::MODEL_UPDATE),//price 4
+        array('price'           ,RegExp_Number      ,EC_5934    ,self::EXISTS_VALIDATE ,'regex'    ,self::MODEL_UPDATE),//price 4
     );
 };
