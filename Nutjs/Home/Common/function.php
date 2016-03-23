@@ -1,6 +1,5 @@
 <?php
-use Home\Model\UsersModel;
-use Home\Model\TokenModel;
+use Think\Model;
 
 /**
  * 生成给定长度的随机字符串
@@ -32,81 +31,81 @@ function check_verify($code, $id = ''){
  * @param $uid 要生成的Cookie的协会编号
  * */
 function log_in($uid){
-    //要创建的数据
-    $data=array();
-    $data['uid']=$uid;
-    $data['date']=true;
-    $data['token']=true;
     //检查是否token表中是否有此用户，没有则inset，有则updata
-    $is_inset=false;
-    $mo=new TokenModel();
-    $mo->where(array('uid'=>$uid));
-    if(empty($mo->find())){
-        $is_inset=true;
+    $hasRow=false;
+    $tokenMo=new \Home\Model\TokenModel();
+    $tokenMo->where(array('uid'=>$uid));
+    if(empty($tokenMo->find())){
+        $hasRow=true;
     }else {
-        $is_inset=false;
+        $hasRow=false;
     };
     //更新token
-    $mo->field('uid,date,token');
-    $mo->create($data) or drop($mo->getError());
+    $tokenMo->field('uid,date,token');
+    $tokenMo->create(
+        array('uid'=>$uid),
+        $hasRow ? Model::MODEL_UPDATE : Model::MODEL_INSERT
+    ) or drop($tokenMo->getError());
     //更新token，如果不存在则生成一条新记录
-    if ($is_inset) {
-        $mo->add() or drop(CE_3531.$mo->getError());
+    if ($hasRow) {
+        $tokenMo->add()     or drop(EC_3361.$tokenMo->getError());
     }else{
-        $mo->save() or drop(CE_3532.$mo->getError());
+        $tokenMo->save()    or drop(EC_3562.$tokenMo->getError());
     };
     //获取生成的token
-    $data['token']=$mo->getToken();
+    $token =$tokenMo->getToken();
     //生成Cookie
-    cookie('uid'    ,$data['uid']);
-    cookie('token'    ,$data['token']);
+    cookie('uid'    ,$uid);
+    cookie('token'  ,$token);
 };
 /**
- * 退出并返回指定信息，如果$msg为true则不会退出
+ * 输出指定信息，有可能会执行退出操作。
+ * 此函数的行为略微复杂
  * $msg传入不同的参数会有不同的效果
- * <li>Bool 若为true，则返回执行成功的信息(200)且不退出。若为false，则返回未知错误的信息</li>
- * <li>String 以逗号分隔的错误信息，格式：错误码,错误信息</li>
  * @param $msg String/Bool 要返回的信息
- * @param $return=false Bool 若为true，则返回信息不退出
- * @return Json字符串或null
+ * <h5>Bool情况：</h5>
+ *   <li>若为true，则等同于echo drop('1200,ok',true)</li>
+ *   <li>若为false，则等同于drop('1201,error')</li>
+ * <h5>String情况：</h5>
+ * - 以逗号分隔的错误信息，格式：错误码,错误信息。注意逗号是英文逗号<br />
+ * - 如drop('1202,非法的数据对象');
+ *
+ * @param $return Bool 若为true，则将格式好的信息返回，不打印也不退出
+ * @param $extra Array 额外添加的数据
+ * @return String/Void 若$return为true则返回Json字符串
  * */
-function drop($msg,$return=false){
-    //返回信息的数组
+function drop($msg ,$return=false ,$extra=null){
+    //最终要格式化的对象
     $reArray=array();
-    //解析参数
-    if (is_bool($msg)){
-        if ($msg){
-            $reArray['errcode']=1200;
-            $reArray['errmsg']='ok';
-        }else {
-            $reArray['errcode']=1201;
-            $reArray['errmsg']='error';
-        };
-    }elseif (is_string($msg)){
-        $msg=explode(',',$msg);
-        if (count($msg) == 2){
-            $reArray['errcode']=$msg[0];
-            $reArray['errmsg']=$msg[1];
+    //最终返回的信息
+    $reMsg='';
+    //读取布尔参数
+    if(is_bool($msg)){
+        if($msg){
+            echo drop('1200,ok',true);
+            return;
         }else{
-            $reArray['errcode']=1201;
-            $reArray['errmsg']=$msg[0];
-        }
-    }else{
-        throw new Exception ('$msg参数错误');
-    }
-    //要返回的字符串
-    $json_option =(defined('APP_DEBUG') && APP_DEBUG) ? JSON_UNESCAPED_UNICODE : JSON_FORCE_OBJECT;
-    $reMsg=mb_strtolower(json_encode($reArray,$json_option));
-    //根据$return来处理返回信息
-    header('Content-Type:application/json; charset=utf-8');
-    if($return){
-        return $reMsg;
-    }else {
-        //设定Json头信息，返回输出Json
-        echo $reMsg;
-        //如果$msg为true则不会退出
-        if ($msg !== true) exit;
+            return drop('1201,error');
+        };
+    //读取字符串参数
+    }else if(is_string($msg)){
+        //分割字符串
+        preg_match('/^([^,]*),(.*)$/', $msg ,$msg);
+        //赋值返回数组
+        $reArray['errcode']=$msg[1];
+        $reArray['errmsg']=$msg[2];
     };
+    //检测添加额外的数组
+    if (is_array($extra)){
+        $reArray =array_merge($reArray ,$extra);
+    };
+    //根据调试模式状态格式化JSON数据
+    $json_option =APP_DEBUG ? JSON_UNESCAPED_UNICODE : JSON_FORCE_OBJECT;
+    $reMsg =mb_strtolower(json_encode($reArray,$json_option));
+    //返回JSON数据
+    header('Content-Type:application/json; charset=utf-8');
+    if($return) return $reMsg;
+    else        exit($reMsg);
 }
 /**
  * 检查令牌是否合法
@@ -115,9 +114,13 @@ function drop($msg,$return=false){
  * @return bool
  * */
 function test_token($uid,$token){
+    //初始值
     if(empty($uid)) $uid=cookie('uid');
     if(empty($token)) $token=cookie('token');
-    $mo=new TokenModel();
+    //校验字段格式
+    if(!preg_match(RegExp_uid, $uid)) return false;
+    //查询返回结果
+    $mo=new \Home\Model\TokenModel();
     $mo->where(array('uid'=>$uid));
     $db_token = $mo->getField('token');
     if($db_token == $token && !empty($token)){
@@ -132,8 +135,12 @@ function test_token($uid,$token){
  * @return String(3) 当前协会编号的状态
  * */
 function get_state($uid){
+    //初始值
     if(empty($uid)) $uid=cookie('uid');
-    $mo=new UsersModel();
+    //校验字段格式
+    if(!preg_match(RegExp_uid, $uid)) return '';
+    //查询返回结果
+    $mo=new \Home\Model\UsersModel();
     $mo->where(array('uid'=>$uid));
     return $mo->getField('state');
 }
@@ -148,21 +155,57 @@ function test_uid($uid,$token){
     return test_token($uid,$token) && in_array(get_state($uid) ,$pass_code);
 }
 /**
- * 以一个友好的格式返回的当前时间
+ * 以一个友好的格式返回的当前完整时间
  * @return String Y-m-d H:i:s
+ * @param $date 传来的时间，会尝试转换成Y-m-d H:i:s，若失败则返回当前时间
  * */
-function get_sql_date(){
-    return date('Y-m-d H:i:s');
+function get_sql_date($date){
+    if (empty($date)){
+        return date('Y-m-d H:i:s');
+    }else {
+        $timestamp=strtotime($date);
+        if ($timestamp){
+            return date('Y-m-d H:i:s',$timestamp);
+        }else{
+            return date('Y-m-d H:i:s');
+        }
+    }
 }
 /**
  * 以一个友好的格式返回的当前年月日
  * @return String Y-m-d
+ * @param $date 传来的时间，会尝试转换成Y-m-d，若失败则返回当前时间
  * */
-function get_sql_short_date(){
-    return date('Y-m-d');
+function get_sql_short_date($date){
+    if (empty($date)){
+        return date('Y-m-d');
+    }else {
+        $timestamp=strtotime($date);
+        if ($timestamp){
+            return date('Y-m-d',$timestamp);
+        }else{
+            return date('Y-m-d');
+        }
+    }
 }
-
-
+/**
+ * 渲染输出Markdown文件，渲染前会对源码进行htmlspecialchars编码
+ * @param String $path 要渲染的文件路径
+ * @return String 渲染成的HTML字符串
+ * */
+function decode_markdown($path){
+    //检测文件是否存在
+    if(!file_exists($path)) return;
+    //获取文件内容
+    $md=file_get_contents($path);
+    //过滤HTML字符
+    $md=htmlspecialchars($md);
+    //渲染Markdown
+    include '.\Public\Library\Michelf\Markdown.inc.php';
+    $html = \Michelf\Markdown::defaultTransform($md);
+    //返回
+    return $html;
+};
 
 
 

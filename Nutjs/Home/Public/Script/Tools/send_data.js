@@ -34,6 +34,8 @@ nutjs.addEve(window,'load',function(){
             nutjs.ajax.url=url.value;
             if(nutjs.ajax.mode == 'post'){
                 nutjs.ajax.sendMsg=sendMsgElt.value;
+            }else if(nutjs.ajax.mode == 'get'){
+                nutjs.ajax.url +='?'+sendMsgElt.value;
             }
         //}
         nutjs.ajax.send();

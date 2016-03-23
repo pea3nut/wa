@@ -9,14 +9,23 @@ return array(
     'DB_PORT'=>3306, //端口
     'DB_PREFIX'=>'wa_', //数据库表前缀
     'db_charset' => 'utf8',//数据库字符集
+    //链接参数
+    'DB_PARAMS' => array(
+        //不将number字段强制转换成string
+        PDO::ATTR_EMULATE_PREPARES => false,
+    ),
     //表单提交时无需验证verifycode，此配置还要求开启调试模式的情况下才可生效
     'Not_VerifyCode' => false,
+    //请求Service时，不提交到服务器，而是打印出数据对象
+    'Not_Submit_To_Database' =>false,
     //模板文件名后缀
     'TMPL_TEMPLATE_SUFFIX'=>'.tpl',
     //定义路径模式
     'URL_MODEL'=>2,
     //注册会员批次
     'WEB_BATCH' => 'D',
+    //新注册会员的果仁数
+    'INIT_NUTS' => 0,
     //Cookie前缀
     'COOKIE_PREFIX'=>'wa_',
     //Cookie过期时间

@@ -34,29 +34,23 @@ class SignUp0Service{
             Model::MODEL_INSERT
         ) or drop($icMo->getError());
         //数据检查
-        if(I('post.password') != I('post.re_password'))           drop(EC_4742);
+        if(I('post.password') != I('post.re_password') )       drop(EC_4742);
         $this->checkInviteCode_0( I('post.invite_code'))    or drop(EC_4751);
         $this->checkInviteCode_1( I('post.invite_code'))    or drop(EC_4752);
-        //注册信息
-        $usersMo->add()    or drop(EC_4761);
-        $icMo->save()    or drop(EC_4762);;
+        //若开启Not_Submit_To_Database则不提交数据库
+        if (C('Not_Submit_To_Database')) {
+            var_dump($usersMo->data());
+            var_dump($icMo->data());
+            $usersMo->fetchSql(true);
+            $icMo->fetchSql(true);
+        };
+        //提交到数据库
+        $icMo->save()    or drop(EC_4751.$icMo->getError());
+        $usersMo->add()  or drop(EC_4752.$usersMo->getError());
         //生成登陆信息
         log_in($usersMo->getUid());
         //返回成功信息
         echo drop('1200,'.$usersMo->getUid(),true);
-    }
-    /**
-     * 检查该QQ是否已被注册
-     * @param string qq 用户提交的qq字段
-     * @access protected
-     * */
-    protected function checkQq($qq){
-        $mo=new UsersModel();
-        if(empty($mo->where(array('qq'=>$qq))->find())){
-            return true;
-        }else{
-            return false;
-        };
     }
     /**
      * 校验邀请码是否存在
