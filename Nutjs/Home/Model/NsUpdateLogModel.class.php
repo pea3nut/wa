@@ -2,7 +2,7 @@
 namespace Home\Model;
 use Think\Model\RelationModel;
 /**
- * 作品更新记录
+ * 果仁商店作品更新日志记录表
  *
  * <dt>id</dt>
  * <dd>主键 UNSIGNED int 记录ID</dd>
@@ -18,9 +18,15 @@ use Think\Model\RelationModel;
  * */
 class NsUpdateLogModel extends RelationModel{
     /**
+     * log的默认值
+     * @var String
+     * @access protected
+     * */
+    protected $defaultLog='fix bug.';
+    /**
      * 数据表中所有字段
      * 实际使用是应手动的调用filed()方法来指定要操作的字段
-      * @var Array
+     * @var Array
      * @access protected
      * */
     protected $fields=array('id','works_id','log','date');
@@ -68,9 +74,18 @@ class NsUpdateLogModel extends RelationModel{
         //新增数据时，清楚所有对于ID的操作
         array('id'    ,''                     ,self::MODEL_INSERT  ,'string'),  //id 12
         array('id'    ,''                     ,self::MODEL_INSERT  ,'ignore'),  //id 12
-        //更新和新增时记录当前时间
+        //更新和新增时若date为空则记录当前时间
         array('date'  ,'get_sql_short_date'   ,self::MODEL_BOTH    ,'function'),//date 1234
+        //若log为空则填充默认值
+        array('log'   ,'getLog'               ,self::MODEL_BOTH    ,'callback'),//log 13
         //使用htmlspecialchars过滤输入字段
         array('log'   ,'htmlspecialchars'     ,self::MODEL_BOTH    ,'function'),//log 24
     );
+    protected function getLog($log){
+        if (empty($log)){
+            return $this->defaultLog;
+        }else {
+            return $log;
+        }
+    }
 }

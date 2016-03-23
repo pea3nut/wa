@@ -119,7 +119,7 @@ class UsersModel extends RelationModel{
         //若字段存在，校验qq是否符合格式
         array('qq'          ,RegExp_qq        ,EC_5634    ,self::EXISTS_VALIDATE   ,'regex'    ,self::MODEL_BOTH),   //qq 24
         //新增数据时要强制链接数据库检查qq重复
-        array('qq'          ,'checkQq'        ,EC_5651    ,self::MUST_VALIDATE     ,'callback' ,self::MODEL_INSERT), //qq 2
+        array('qq'          ,'checkQq'        ,EC_5641    ,self::MUST_VALIDATE     ,'callback' ,self::MODEL_INSERT), //qq 2
     );
     /**
      * 获取随机生成的协会编号

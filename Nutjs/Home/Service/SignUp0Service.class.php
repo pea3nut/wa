@@ -45,8 +45,8 @@ class SignUp0Service{
             $icMo->fetchSql(true);
         };
         //提交到数据库
-        $usersMo->add()  or drop(EC_4761.$usersMo->getError());
-        $icMo->save()    or drop(EC_4762.$icMo->getError());
+        $icMo->save()    or drop(EC_4751.$icMo->getError());
+        $usersMo->add()  or drop(EC_4752.$usersMo->getError());
         //生成登陆信息
         log_in($usersMo->getUid());
         //返回成功信息

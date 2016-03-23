@@ -2,7 +2,7 @@
 namespace Home\Model;
 use Think\Model\RelationModel;
 /**
- * 用户登陆令牌
+ * 用户登陆令牌cookie表
  *
  * <dt>uid</dt>
  * <dd>主键 char(5) 用户的协会编号</dd>
@@ -40,9 +40,9 @@ class TokenModel extends RelationModel{
      * */
     protected $_auto=array(
         //自动生成令牌，一般情况不允许手动创建
-        array('token'    ,'createToken'        ,self::MODEL_BOTH    ,'callback'), //token 1234
+        array('token'    ,'createToken'             ,self::MODEL_BOTH       ,'callback'), //token 1234
         //自动获取当前时间，一般情况不允许手动创建
-        array('date'    ,'get_sql_date'        ,self::MODEL_BOTH    ,'function'), //token 1234
+        array('date'    ,Long_Date                  ,self::MODEL_BOTH       ,'function'), //token 1234
     );
     /**
      * 校验字段的规则
@@ -52,9 +52,9 @@ class TokenModel extends RelationModel{
      * */
     protected $_validate=array(
         //插入时，uid字段必填
-        array('uid'    ,'require'     ,EC_5431    ,self::MUST_VALIDATE     ,'regex'    ,self::MODEL_INSERT), //uid 1
+        array('uid'    ,'require'     ,EC_5431      ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_INSERT), //uid 1
         //若uid字段存在，则需要校验格式
-        array('uid'    ,RegExp_uid    ,EC_5431    ,self::EXISTS_VALIDATE   ,'regex'    ,self::MODEL_BOTH),  //uid 24
+        array('uid'    ,RegExp_uid    ,EC_5431      ,self::EXISTS_VALIDATE  ,'regex'    ,self::MODEL_BOTH),  //uid 24
     );
     /**
      * 生成令牌

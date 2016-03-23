@@ -2,7 +2,7 @@
 namespace Home\Model;
 use Think\Model\RelationModel;
 /**
- * 购买记录&评分表
+ * 果仁商店用户购买记录&评分表
  *
  * <dt>id</dt>
  * <dd>主键 UNSIGNED int 购买记录ID</dd>
@@ -66,14 +66,13 @@ class NsBuyModel extends RelationModel{
         //新增时，必须校验的字段
         array('uid'      ,RegExp_uid     ,EC_5A31    ,self::MUST_VALIDATE      ,'regex'    ,self::MODEL_INSERT),//uid 12
         array('works_id' ,'number'       ,EC_5A32    ,self::MUST_VALIDATE      ,'regex'    ,self::MODEL_INSERT),//works_id 12
-        array('score'    ,'number'       ,EC_5A33    ,self::MUST_VALIDATE      ,'regex'    ,self::MODEL_INSERT),//score 12
+        //若score有值则需要校验，并需在-1~10以内
+        array('score'    ,RegExp_Integer ,EC_5A33    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),//score 24
+        array('score'    ,'checkScore'   ,EC_5A34    ,self::EXISTS_VALIDATE    ,'callback' ,self::MODEL_BOTH),//score 24
         //更新时，若存在则校验字段
-        array('uid'      ,RegExp_uid     ,EC_5A31    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//uid 4
-        array('works_id' ,'number'       ,EC_5A32    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//works_id 4
-        array('score'    ,'number'       ,EC_5A33    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//score 4
-        array('id'       ,'number'       ,EC_5A35    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//id 4
-        //score字段若存在，则必须在0-10以内
-        array('score'    ,'checkScore'   ,EC_5A34    ,self::EXISTS_VALIDATE    ,'callback' ,self::MODEL_BOTH),  //score 24
+        array('uid'      ,RegExp_uid     ,EC_5A31    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//uid 4
+        array('works_id' ,'number'       ,EC_5A32    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//works_id 4
+        array('id'       ,'number'       ,EC_5A35    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//id 4
     );
     /**
      * 自动完成字段
@@ -82,9 +81,20 @@ class NsBuyModel extends RelationModel{
      * */
     protected $_auto=array(
         //新增数据时，清楚所有对于ID的操作
-        array('id'       ,''                         ,self::MODEL_INSERT  ,'string'),  //id 12
-        array('id'       ,''                         ,self::MODEL_INSERT  ,'ignore'),  //id 12
+        array('id'       ,''                         ,self::MODEL_INSERT       ,'string'),  //id 12
+        array('id'       ,''                         ,self::MODEL_INSERT       ,'ignore'),  //id 12
+        //插入时，若score字段为空或不存在，则赋值为-1
+        array('score'    ,'setScore'                 ,self::MODEL_INSERT       ,'callback'),//score 1
     );
+    /**
+     * 若score字段为空或不存在，则返回为-1
+	 * @param string score 用户提交的score字段
+	 * @access protected
+	 * @return bool
+     * */
+    protected function setScore ($score){
+        return empty($score) ? -1 : $score;
+    }
     /**
      * 校验score字段
 	 * @param string score 用户提交的score字段
@@ -93,7 +103,7 @@ class NsBuyModel extends RelationModel{
      * */
     protected function checkScore ($score){
         $num= (int)$score;
-        if($num >=0 && $num <=10){
+        if($num >=-1 && $num <=10){
             return true;
         }else {
             return false;

@@ -2,7 +2,7 @@
 namespace Home\Model;
 use Think\Model\RelationModel;
 /**
- * 注册码/激活码 对应表
+ * 激活码使用记录表
  *
  * <dt>invite_code</dt>
  * <dd>主键 char(5) 存放激活码字段</dd>
@@ -52,7 +52,7 @@ class InviteCodeModel extends RelationModel{
      * */
     protected $_auto=array(
         //date字段永远自动获取当前时间
-        array('date'         ,'get_sql_date'             ,self::MODEL_BOTH   ,'function'),//date 1234
+        array('date'         ,Long_Date                 ,self::MODEL_BOTH   ,'function'),//date 1234
     );
     /**
      * 校验字段的规则
@@ -62,9 +62,9 @@ class InviteCodeModel extends RelationModel{
      * */
     protected $_validate=array(
         //插入时，invite_code必填
-        array('invite_code'  ,RegExp_Letter  ,EC_5332    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//invite_code 12
+        array('invite_code'  ,RegExp_Letter  ,EC_5332   ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//invite_code 12
         //若存在则验证的字段
-        array('uid'          ,RegExp_uid     ,EC_5331    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),  //uid 24
-        array('invite_code'  ,RegExp_Letter  ,EC_5332    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),  //invite_code 24
+        array('uid'          ,RegExp_uid     ,EC_5331   ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),  //uid 24
+        array('invite_code'  ,RegExp_Letter  ,EC_5332   ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),  //invite_code 24
     );
 }

@@ -43,7 +43,7 @@ class ClockService{
         $mo->field('uid');
         $mo->create(array('uid'=>cookie('uid'))) or drop($mo->getError());
         //检查是否已签到
-        $mo->where(array('uid'=>cookie('uid'),'date'=>get_sql_short_date()));
+        $mo->where(array('uid'=>cookie('uid'),'date'=>Short_Date));
         if($mo->find()) drop(EC_4942);
         //获取用户增加果仁数
         $nuts =$this->getIncNutNum(cookie('uid'));
@@ -64,9 +64,9 @@ class ClockService{
             ));
         }
         //增加果仁
-        $nutMo->save()  or drop(EC_4952.$nutMo->getError());
-        //写入ClockModel
-        $mo->add()      or drop(EC_4951.$mo->getError());
+        $nutMo->save()  or drop(EC_4951.$nutMo->getError());
+        //记录签到
+        $mo->add()      or drop(EC_4952.$mo->getError());
         //返回信息
         drop('1200,'.$this->msg);
     }

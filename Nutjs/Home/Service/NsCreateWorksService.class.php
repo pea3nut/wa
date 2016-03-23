@@ -38,7 +38,7 @@ class NsCreateWorksService{
                 echo drop('1200,'.$insetId,true);
             };
         }else{//否则就是出错了
-            drop(EC_4A52.$worksMo->getError());
+            drop(EC_4A51.$worksMo->getError());
         }
     }
 }

@@ -2,7 +2,7 @@
 namespace Home\Model;
 use Think\Model\RelationModel;
 /**
- * 签到表
+ * 用户签到记录表
  *
  * <dt>id</dt>
  * <dd>主键 init(5) 签到记录ID，自动增长</dd>
@@ -55,7 +55,7 @@ class ClockModel extends RelationModel{
         array('id'     ,''                     ,self::MODEL_INSERT  ,'string'),  //id 12
         array('id'     ,''                     ,self::MODEL_INSERT  ,'ignore'),  //id 12
         //插入时，自动获取当前时间
-        array('date'   ,'get_sql_short_date'   ,self::MODEL_BOTH    ,'function'),//date 1234
+        array('date'   ,Short_Date             ,self::MODEL_BOTH    ,'function'),//date 1234
     );
     /**
      * 校验字段的规则

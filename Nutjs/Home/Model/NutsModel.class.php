@@ -2,7 +2,8 @@
 namespace Home\Model;
 use Think\Model\RelationModel;
 /**
- * 果仁表
+ * 用户果仁数量记录表
+ *
  * 果仁表内置提供了“统计模式”来供开发者快捷的操作果仁数
  * 在使用Create方法创建数据时，向第二个参数传入在传入Model::MODEL_SET_NUTS即表示启用统计模式
  * 启用统计模式的情况下，在uid的同时，仅需将nuts字段设置成要增加的数字即可
@@ -74,14 +75,14 @@ class NutsModel extends RelationModel{
      * */
     protected $_validate=array(
         //插入数据时uid字段必填
-        array('uid'         ,RegExp_uid  ,EC_5831  ,self::MUST_VALIDATE    ,'regex'  ,self::MODEL_INSERT), //uid 12
+        array('uid'         ,RegExp_uid     ,EC_5831  ,self::MUST_VALIDATE    ,'regex'  ,self::MODEL_INSERT), //uid 12
         //24 所有字段，若存在则需要验证
-        array('uid'         ,RegExp_uid  ,EC_5831  ,self::EXISTS_VALIDATE  ,'regex'  ,self::MODEL_BOTH),
-        array('nuts'        ,'number'    ,EC_5832  ,self::EXISTS_VALIDATE  ,'regex'  ,self::MODEL_BOTH),
-        array('cumulative'  ,'number'    ,EC_5833  ,self::EXISTS_VALIDATE  ,'regex'  ,self::MODEL_BOTH),
+        array('uid'         ,RegExp_uid     ,EC_5831  ,self::EXISTS_VALIDATE  ,'regex'  ,self::MODEL_BOTH),
+        array('nuts'        ,'number'       ,EC_5832  ,self::EXISTS_VALIDATE  ,'regex'  ,self::MODEL_BOTH),
+        array('cumulative'  ,'number'       ,EC_5833  ,self::EXISTS_VALIDATE  ,'regex'  ,self::MODEL_BOTH),
         //统计模式验证
-        array('uid'         ,RegExp_uid  ,EC_5834  ,self::MUST_VALIDATE  ,'regex'  ,self::MODEL_SET_NUTS), //uid 56
-        array('nuts'        ,'number'    ,EC_5835  ,self::MUST_VALIDATE  ,'regex'  ,self::MODEL_SET_NUTS), //nuts 56
+        array('uid'         ,RegExp_uid     ,EC_5834  ,self::MUST_VALIDATE  ,'regex'  ,self::MODEL_SET_NUTS), //uid 56
+        array('nuts'        ,RegExp_Integer ,EC_5835  ,self::MUST_VALIDATE  ,'regex'  ,self::MODEL_SET_NUTS), //nuts 56
     );
     /**
      * 统计模式下，根据nuts字段生产cumulative字段

@@ -23,27 +23,42 @@ class ToolsController extends Controller {
      * @access public
      * */
     public function test_login($uid='',$token='') {
+        $tpl='
+            <table border="1" cellspacing="0" cellpadding="3">
+                <tr>
+                    <td colspan="2"><strong>原始值</strong></td>
+                </tr>
+                <tr>
+                    <td>uid</td>
+                    <td>{$uid}</td>
+                </tr>
+                <tr>
+                    <td>token</td>
+                    <td>{$token}</td>
+                </tr>
+                <tr>
+                    <td colspan="2"><strong>函数返回值</strong></td>
+                </tr>
+                <tr>
+                    <td>test_token($uid,$token)</td>
+                    <td>{$test_token}</td>
+                </tr>
+                <tr>
+                    <td>get_state($uid)</td>
+                    <td>{$get_state}</td>
+                </tr>
+            </table>
+        ';
         //获取默认值
         if (empty($uid))$uid=cookie('uid');
         if (empty($token))$token=cookie('token');
-        //输出原始信息
-        echo "-- uid ---> $uid\n-- token-> $token\n";
-        //检测令牌
-        if(test_token($uid,$token)){
-            echo '<br />已通过 test_token<br />';
-        }else {
-            echo '<br />未通过 test_token <br />';
-            if (defined('APP_DEBUG') && APP_DEBUG){
-                //输出数据库的令牌
-                $mo=new \Home\Model\TokenModel();
-                $mo->where(array('uid'=>$uid));
-                $mo->field('token');
-                $db_token = $mo->find()['token'];
-                echo "<br />DbToken -- $db_token<br />";
-            };
-        }
-        //调用get_state
-        echo '<br />get_state 返回 '.get_state($uid),'<br />';
+        //渲染信息
+        $tpl =str_replace('{$uid}'        ,$uid ,$tpl);
+        $tpl =str_replace('{$token}'      ,$token ,$tpl);
+        $tpl =str_replace('{$test_token}' ,test_token($uid,$token)?'true':'false' ,$tpl);
+        $tpl =str_replace('{$get_state}'  ,get_state($uid) ,$tpl);
+        //输出信息
+        echo $tpl;
     }
     /**
      * 检测令牌是否有效

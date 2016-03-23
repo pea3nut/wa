@@ -46,8 +46,8 @@ class SignUp1Service{
             $uMo->fetchSql(true);
         };
         //注册信息
-        $uiMo->add() or drop(EC_4861.$uiMo->getError());
-        $uMo->save() or drop(EC_4862.$uMo->getError());
+        $uiMo->add() or drop(EC_4851.$uiMo->getError());
+        $uMo->save() or drop(EC_4852.$uMo->getError());
         //End 注册信息
         drop(true);
     }
