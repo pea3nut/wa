@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2016-02-18 14:44:36
+-- Generation Time: 2016-03-24 08:09:56
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `wa_clock` (
   `uid` char(5) NOT NULL COMMENT '签到用户的协会编号',
   `date` date NOT NULL COMMENT '签到时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=7 ;
 
 -- --------------------------------------------------------
 
@@ -46,21 +46,6 @@ CREATE TABLE IF NOT EXISTS `wa_invite_code` (
   PRIMARY KEY (`invite_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- 转存表中的数据 `wa_invite_code`
---
-
-INSERT INTO `wa_invite_code` (`invite_code`, `uid`, `date`) VALUES
-('Ut4be', 'D308', '2016-01-27 01:20:31'),
-('uxvR3', '', '0000-00-00 00:00:00'),
-('uZJsN', '', '0000-00-00 00:00:00'),
-('V2KDn', '', '0000-00-00 00:00:00'),
-('v6YHK', 'D893', '2016-01-27 12:49:39'),
-('X00Gj', 'D383', '2016-01-27 13:01:35'),
-('yaYsV', '', '0000-00-00 00:00:00'),
-('z2BLJ', '', '0000-00-00 00:00:00'),
-('zs7OC', '', '0000-00-00 00:00:00');
-
 -- --------------------------------------------------------
 
 --
@@ -74,6 +59,68 @@ CREATE TABLE IF NOT EXISTS `wa_msg` (
   `date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '发送日期',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `wa_ns_buy`
+--
+
+CREATE TABLE IF NOT EXISTS `wa_ns_buy` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '字段的ID只',
+  `works_id` bigint(20) unsigned NOT NULL COMMENT '课程ID',
+  `uid` char(5) NOT NULL COMMENT '购买者的协会编号',
+  `score` int(1) NOT NULL DEFAULT '-1' COMMENT '作品评分',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='用户购买课程信息' AUTO_INCREMENT=20 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `wa_ns_section`
+--
+
+CREATE TABLE IF NOT EXISTS `wa_ns_section` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '记录ID',
+  `works_id` bigint(20) unsigned NOT NULL COMMENT '作品ID',
+  `section_id` int(8) unsigned NOT NULL COMMENT '第几章',
+  `section_name` varchar(64) NOT NULL COMMENT '章节名称',
+  `update_date` date NOT NULL COMMENT '最后改动时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='作品章节列表' AUTO_INCREMENT=6 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `wa_ns_update_log`
+--
+
+CREATE TABLE IF NOT EXISTS `wa_ns_update_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '记录ID',
+  `works_id` bigint(20) NOT NULL COMMENT '作品ID',
+  `log` varchar(250) NOT NULL COMMENT '更新说明',
+  `date` date NOT NULL COMMENT '更新时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='作品更新日志' AUTO_INCREMENT=9 ;
+
+-- --------------------------------------------------------
+
+--
+-- 表的结构 `wa_ns_works_list`
+--
+
+CREATE TABLE IF NOT EXISTS `wa_ns_works_list` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '作品ID',
+  `author_uid` char(5) NOT NULL COMMENT '作者的协会编号',
+  `works_name` varchar(64) NOT NULL COMMENT '作品名称',
+  `works_intro` varchar(250) NOT NULL COMMENT '作品简介',
+  `works_state` int(1) NOT NULL COMMENT '作品状态,0-隐藏，1-更新中，2-已完结',
+  `price` int(10) unsigned NOT NULL COMMENT '作品售价',
+  `update_number` int(8) unsigned NOT NULL COMMENT '更新次数',
+  `update_date` date NOT NULL COMMENT '最后更新时间',
+  `create_date` date NOT NULL COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='NutStore作品信息表' AUTO_INCREMENT=16 ;
 
 -- --------------------------------------------------------
 
@@ -102,16 +149,6 @@ CREATE TABLE IF NOT EXISTS `wa_token` (
   UNIQUE KEY `token` (`token`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- 转存表中的数据 `wa_token`
---
-
-INSERT INTO `wa_token` (`uid`, `token`, `date`) VALUES
-('A233', 'a71dYOBCa2bXkt5HznbO', '2016-02-13 10:44:58'),
-('D308', 'q2BsomGnA0bmeQ203cKp', '2016-02-03 15:11:45'),
-('D383', 'zMSYEwo6RQZ5wbN9uwo0', '2016-01-27 13:01:44'),
-('D893', 'mWv4Rs6dIoMNJG7yhPcH', '2016-01-27 12:54:42');
-
 -- --------------------------------------------------------
 
 --
@@ -125,16 +162,6 @@ CREATE TABLE IF NOT EXISTS `wa_users` (
   `password` varchar(64) NOT NULL COMMENT '密码的哈希值',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- 转存表中的数据 `wa_users`
---
-
-INSERT INTO `wa_users` (`state`, `uid`, `qq`, `password`) VALUES
-('200', 'A001', '1600976855', '$1$iU..Dz0.$c4VNX58nRF8jDIfP6Uk8L.'),
-('200', 'A233', '626954412', '$1$/x0.an/.$EwX7jv.s/lWoR0QARAqDY1'),
-('100', 'D383', '1600976855', '$1$iU..Dz0.$c4VNX58nRF8jDIfP6Uk8L.'),
-('200', 'D893', '1612826240', '$1$es1.PE5.$1xGBQgCoTVd.IGVAruX1M1');
 
 -- --------------------------------------------------------
 
@@ -153,15 +180,6 @@ CREATE TABLE IF NOT EXISTS `wa_user_inf` (
   `wechat` varchar(16) NOT NULL COMMENT '微信号',
   PRIMARY KEY (`uid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
---
--- 转存表中的数据 `wa_user_inf`
---
-
-INSERT INTO `wa_user_inf` (`uid`, `name`, `nickname`, `gender`, `age`, `phone`, `school`, `wechat`) VALUES
-('A001', '李想', '柠檬', 2, 15, '17854252332', 'ql', ''),
-('A233', '刘伯源', '花生PeA', 1, 21, '15336392006', 'ql', 'pea3nut'),
-('D893', '张岩', '', 2, 19, '17854257608', 'sk', 'ZYqing964083');
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
