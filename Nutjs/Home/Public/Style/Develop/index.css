@@ -1,0 +1,36 @@
+@CHARSET "UTF-8";
+header{
+    max-width: 800px;
+    width:70%;
+    margin:0 auto;
+}
+header h1{
+    text-align: center;
+    margin:30px 0 40px 0;
+}
+p{
+    text-indent: 2em;
+    font-size:16px;
+}
+.text-right{
+    text-align: right;
+}
+nav{
+    text-align: center;
+    margin:50px 0 0 0;
+}
+nav a{
+    padding:0 10px;
+    border-right: 1px solid #333;
+    display:inline-block;
+    font-size:16px;
+}
+nav a:last-child{
+    border-right: none;
+}
+
+@media (min-width: 1200px) {
+    nav a{
+        font-size:14px;
+    }
+}

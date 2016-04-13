@@ -1,0 +1,28 @@
+@CHARSET "UTF-8";
+body{
+    font-size: 16px
+}
+p{
+    text-indent: 2em;
+}
+.header-block{
+    font-size: 18px
+}
+.header-block li a{
+    text-decoration: none;
+    font-size:16px;
+    margin-bottom: 2px;
+}
+.text-body{
+    background-color: #fff;
+    margin-top:70px;
+}
+article{
+    padding-bottom: 50px;
+}
+section{
+    padding-bottom:5px;
+}
+section:target{
+    padding-top:60px;
+}
