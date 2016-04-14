@@ -57,6 +57,8 @@ abstract class Controller {
         //控制器初始化
         if(method_exists($this,'_initialize'))
             $this->_initialize();
+        //PeA：给模板_data赋值
+        $this->assign('_data',$this->_data);
     }
 
     /**
@@ -71,8 +73,6 @@ abstract class Controller {
      * @return void
      */
     protected function display($templateFile='',$charset='',$contentType='',$content='',$prefix='') {
-        //PeA：给模板_data赋值
-        $this->assign('_data',$this->_data);
         $this->view->display($templateFile,$charset,$contentType,$content,$prefix);
     }
 
@@ -86,8 +86,6 @@ abstract class Controller {
      * @return mixed
      */
     protected function show($content,$charset='',$contentType='',$prefix='') {
-        //PeA：给模板_data赋值
-        $this->assign('_data',$this->_data);
         $this->view->display('',$charset,$contentType,$content,$prefix);
     }
 

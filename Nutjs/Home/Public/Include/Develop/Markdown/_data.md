@@ -73,11 +73,19 @@ _date数据同上
 
 - 页面链接：站点URL/NutStore/member/[uid]
 
-已购买的课程信息
+## 已购买的信息
+
+已购买的记录信息
 
 - _data.buy.length 用户一共购买的课程数
-- _data.buy[x] 用户购买的第x个课程
-- _data.buy[x].works.id 购买的第x个课程的ID
+- _data.buy[x] 用户购买的第x个课程，一个数组
+- _data.buy[x].id 购买记录ID
+- _data.buy[x].score 用户购买的第x个课程给出的评分
+
+已购买的课程信息
+
+- _data.buy[x].works.id 购买的第x个课程ID
+- _data.buy[x] 用户购买的第x个课程给出的评分
 - _data.buy[x].works.author_uid 购买的第x个课程的UP主（投稿者）的协会编号
 - _data.buy[x].works.works_name 购买的第x个课程的名称
 - _data.buy[x].works.works_intro 购买的第x个课程简介
@@ -99,6 +107,20 @@ _date数据同上
 - _data.buy[x].author.school 购买的第x个课程的作者所在的学校，默认为ql。ql青理 sk山科 sy石油
 - _data.buy[x].author.wechat 购买的第x个课程的作者微信号
 - _data.buy[x].author.nickname 购买的第x个课程的作者的昵称
+
+## 投稿信息
+
+- _data.submit.length 用户一共投稿的课程数
+- _data.submit[x] 用户投稿的第x个课程
+- _data.submit[x].works.id 投稿的第x个课程的ID
+- _data.submit[x].works.author_uid 投稿的第x个课程的UP主（投稿者）的协会编号
+- _data.submit[x].works.works_name 投稿的第x个课程的名称
+- _data.submit[x].works.works_intro 投稿的第x个课程简介
+- _data.submit[x].works.works_state 投稿的第x个课程状态 0-隐藏 1-更新中，2-已完结
+- _data.submit[x].works.price 投稿的第x个课程售价
+- _data.submit[x].works.update_number 投稿的第x个课程的历史更新次数
+- _data.submit[x].works.update_date 投稿的第x个课程最后更新时间
+- _data.submit[x].works.create_date 投稿的第x个课程创建时间
 
 ### 查看课程列表
 

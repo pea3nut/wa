@@ -3,22 +3,23 @@ namespace Home\ViewData;
 use Think\Model\RelationModel;
 /**
  * 创建用于View模板的数据
- * 创建全局 _data.user数据
+ * 格式化works数据
  * */
-class UserViewData extends RelationModel{
+class WorksViewData extends RelationModel{
     /**
      * 自身的表名
      * @access protected
      * @var String
      * */
-    protected $tableName ='users';
+    protected $tableName ='ns_works_list';
     /**
      * 本表要显示的字段，若要修改本表的字段名字需要在这里修改
      * @access protected
      * @var Array
      * */
     protected $fields=array(
-        'state','uid','qq'
+        'id','author_uid','works_name','works_intro','works_state',
+        'price','update_number','update_date','create_date'
     );
     /**
      * 关联信息，默认所有的关联都会被执行
@@ -27,24 +28,18 @@ class UserViewData extends RelationModel{
      * @var Array
      * */
     protected $_link = array(
-        'inf'   =>array(
-            'mapping_type'  => self::HAS_ONE,
-            'class_name'    => 'UserInf',
-            'foreign_key'   => 'uid',
-            'mapping_key'   => 'uid',
-            'as_fields'     => '*',
-        ),
+
     );
     /**
      * 针对本层特殊的构造函数
      * @access public
-     * @param $uid 获取记录的uid值
+     * @param $id 获取记录的id值
      * */
-    public function __construct($uid){
-        if(!preg_match(RegExp_uid, $uid)) drop('1201,UserViewData构造时发生异常');
+    public function __construct($id){
+        $id =(int)$id;
         $this->options['field'] =$this->fields;
         $this->options['link']  =true;
-        $this->options['where'] =array('uid'=>$uid);
+        $this->options['where'] =array('id'=>$id);
         $this->options['limit'] ='1';
         parent::__construct();
     }
