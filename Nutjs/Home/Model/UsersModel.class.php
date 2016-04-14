@@ -75,7 +75,7 @@ class UsersModel extends RelationModel{
         ),
         'buy' =>array(
             'mapping_type'  => self::HAS_MANY,
-            'class_name'    => 'NsBug',
+            'class_name'    => 'NsBuy',
             'foreign_key'   => 'uid',
         ),
         'works' =>array(

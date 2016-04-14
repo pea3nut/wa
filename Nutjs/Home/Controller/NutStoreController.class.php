@@ -2,12 +2,9 @@
 namespace Home\Controller;
 use Think\Controller;
 /**
- * 果仁商店控制器
+ * 果仁商店页面
  * */
 class NutStoreController extends Controller {
-    public function debug(){
-        echo 'Home / NutStoreController -> debug()';
-    }
     public function index(){
         //将作品信息送入模板
         $mo_list = new \Home\Model\NsWorksListModel();
@@ -93,6 +90,17 @@ class NutStoreController extends Controller {
         //输出
         $this->display();
     }
+    /*! =====特殊方法=====*/
+    /**
+     * 测试方法
+     * */
+    public function debug(){
+        echo 'Home / NutStoreController -> debug()';
+    }
+    /**
+     * 架构函数 取得模板对象实例
+     * @access public
+     */
     public function __construct(){
         header("Content-type: text/html; charset=utf-8");
         parent::__construct();

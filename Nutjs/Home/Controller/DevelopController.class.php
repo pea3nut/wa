@@ -2,21 +2,9 @@
 namespace Home\Controller;
 use Think\Controller;
 /**
- * 开发文档控制器
+ * 会员信息操作页面
  * */
 class DevelopController extends Controller {
-    public function debug(){
-        //echo 'Home / ExploitController -> debug()';
-    }
-    /**
-     * 架构函数 取得模板对象实例
-     * @access public
-     */
-    public function __construct(){
-        //关闭页面调试工具（trace）
-        C('SHOW_PAGE_TRACE',false);
-        parent::__construct();
-    }
     /**
      * 检测Markdown请求
      * */
@@ -34,5 +22,21 @@ class DevelopController extends Controller {
         };
         //注意，一旦上文没有执行return语句，这里将会抛出一个错误
         E(L('_ERROR_ACTION_').':'.ACTION_NAME);
+    }
+    /*! =====特殊方法=====*/
+    /**
+     * 测试方法
+     * */
+    public function debug(){
+        echo 'Home / ExploitController -> debug()';
+    }
+    /**
+     * 架构函数 取得模板对象实例
+     * @access public
+     */
+    public function __construct(){
+        //关闭页面调试工具（trace）
+        C('SHOW_PAGE_TRACE',false);
+        parent::__construct();
     }
 }

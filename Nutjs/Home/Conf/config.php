@@ -48,5 +48,7 @@ return array(
     'APP_SUB_DOMAIN_RULES' => array(
         'service'   => 'Home/Service',
         'nutjs.org' => 'Exploit',
-    )
+    ),
+    //开启Model字段映射
+    'READ_DATA_MAP'=>true,
 );

@@ -19,7 +19,11 @@ abstract class Controller {
      * @access public
      * @var Array
      * */
-    public $_data =array();
+    public $_data =array(
+        'isLogged'  =>0,
+        'version'   =>Project_Version,
+        'user'      =>array(),
+    );
 
     /**
      * 视图实例对象
@@ -40,6 +44,13 @@ abstract class Controller {
      * @access public
      */
     public function __construct() {
+        //PeA:生成全局_data数据
+        $this->_data['isLogged'] =(int)test_token();
+        if($this->_data['isLogged']){
+            $da =new \Home\ViewData\UserViewData(cookie('uid'));
+            $this->_data['user'] =array_merge($this->_data['user'] ,$da->find());
+        }
+        //原控制器方法
         Hook::listen('action_begin',$this->config);
         //实例化视图类
         $this->view     = Think::instance('Think\View');

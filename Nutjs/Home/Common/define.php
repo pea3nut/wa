@@ -25,3 +25,5 @@ foreach ($errorcode as $code => $msg){
 //时间常量
 define('Short_Date'      ,date('Y-m-d') ,true);
 define('Long_Date'       ,date('Y-m-d H:i:s') ,true);
+//其他常量
+define('Project_Version' ,'5.0.1' ,true);
