@@ -73,7 +73,7 @@ _date数据同上
 
 - 页面链接：站点URL/NutStore/member/[uid]
 
-## 已购买的信息
+#### 已购买的信息
 
 已购买的记录信息
 
@@ -108,7 +108,7 @@ _date数据同上
 - _data.buy[x].author.wechat 购买的第x个课程的作者微信号
 - _data.buy[x].author.nickname 购买的第x个课程的作者的昵称
 
-## 投稿信息
+#### 投稿信息
 
 - _data.submit.length 用户一共投稿的课程数
 - _data.submit[x] 用户投稿的第x个课程
@@ -124,7 +124,7 @@ _date数据同上
 
 ### 查看课程列表
 
-- 页面链接：站点URL/NutStore/list/[order_by]/[asc|desc]
+- 页面链接：站点URL/NutStore/works_list/[order_by]/[asc|desc]
 
 页面信息
 

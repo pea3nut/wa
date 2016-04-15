@@ -58,7 +58,7 @@
 
 ### 查看课程列表
 
-- 页面链接：站点URL/NutStore/list/[order_by]/[asc|desc]
+- 页面链接：站点URL/NutStore/works_list/[order_by]/[asc|desc]
 - 功能：查看课程，并按[order_by]排序
 - 访问控制：无
 

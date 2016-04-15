@@ -3,6 +3,31 @@ namespace Home\ViewData;
 use Think\Model\RelationModel;
 /**
  * 创建用于View模板NutStore/member的数据
+{
+    buy:{
+        length,
+        [
+            id,
+            score,
+            works:{},
+            author:{}
+        ],
+        [
+            id,
+            score,
+            works:{},
+            author:{}
+        ],
+        [
+            id,
+            score,
+            works:{},
+            author:{}
+        ],
+        ...
+    },
+    submit:{}
+}
  * */
 class MemberViewData extends RelationModel{
     /**
