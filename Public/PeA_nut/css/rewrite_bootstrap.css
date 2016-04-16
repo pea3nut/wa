@@ -10,6 +10,12 @@ a:hover{
     color:#eb8a1f;
     text-decoration: none;
 }
+.alert-danger{
+    border: 1px solid #a94442;
+}
+.alert{
+    padding:10px 12px;
+}
 @media (max-width: 479px) {
     h1,
     .h1 {

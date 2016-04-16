@@ -37,7 +37,7 @@ class ContentReplaceBehavior {
             '__URL__'       =>  __CONTROLLER__,
             '__PUBLIC__'    =>  __ROOT__.'/Public',// 站点公共目录
             //自己定义的模板常量
-            '__PUB__'    =>  __ROOT__.str_replace('.','', APP_PATH).BIND_MODULE.'Public',// 站点公共目录,
+            '__PUB__'    =>  __ROOT__.str_replace('.','', APP_PATH).BIND_MODULE.'/Public',// 站点公共目录,
             '__STYLE__'     =>  __ROOT__.str_replace('.','', APP_PATH).BIND_MODULE.'/Public/Style/'.CONTROLLER_NAME,//公共样式表文件夹
             '__IMAGE__'     =>  __ROOT__.str_replace('.','', APP_PATH).BIND_MODULE.'/Public/Image/'.CONTROLLER_NAME,//公共图片文件夹
             '__SCRIPT__'     =>  __ROOT__.str_replace('.','', APP_PATH).BIND_MODULE.'/Public/Script/'.CONTROLLER_NAME,//公共脚本文件夹

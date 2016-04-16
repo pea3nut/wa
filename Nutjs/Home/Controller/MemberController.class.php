@@ -6,10 +6,6 @@ use Think\Controller;
  * */
 class MemberController extends Controller {
     //会员登录页面
-    public function index(){
-        $this->display('sign_in');
-    }
-    //会员登录页面
     public function sign_in(){
         $this->display();
     }
