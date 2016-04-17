@@ -10,6 +10,8 @@ jQuery.NutjsAjax =function ($option){
     this.reqUrl     =$option.reqUrl?$option.reqUrl:document.URL;
     //发送模式
     this.reqMode    =$option.reqMode?$option.reqMode:'post';
+    //成功后的重定向
+    this.redirect   =$option.redirect;
     //将要发送的JSON对象
     this.fieldData={};
 };
@@ -21,21 +23,34 @@ jQuery.NutjsAjax.prototype ={
         //清空历史信息
         this.fieldData={};
         //遍历字段类型
-        //若是数组，包装成对象
+        //若是数组或字符串，包装成对象
         if(this.field instanceof Array){
             this.field ={
                 "text":this.field
             };
-        }
+        }else if(typeof this.field ==='string'){
+            this.field ={
+                "text":[this.field]
+            };
+        };
         for(var key in this.field){
-            switch(key){
-                case 'text':
-                    for (var i=0;i<this.field[key].length;i++){
-                        var tarElt =$(this.field[key][i]);
+            //如果是裸字符串，包装成数组
+            if(typeof this.field[key] ==='string'){
+                this.field[key] =[this.field[key]];
+            };
+            blKey:for (var i=0;i<this.field[key].length;i++){
+                var tarElt =$(this.field[key][i]);
+                switch(key){
+                    case 'select':
+                    case 'text':
                         this.fieldData[tarElt.attr("name")]=tarElt.val();
-                    }
-                    break;
-                //default:
+                        break;
+                    case 'radio':
+                        this.fieldData[tarElt.attr("name")] =tarElt.filter(':checked').val();
+                        break;
+                    default:
+                        break blKey;
+                }
             }
         };
     },
@@ -89,12 +104,30 @@ jQuery.NutjsAjax.prototype ={
             //遍历所有要提示的字段
             for(var i=0;i<$action["errElt"].length;i++){
                 var tpElt =$($action["errElt"][i]);
+                //若是radio，则操作要特殊一些
+                if(tpElt.attr("type") === "radio"){
+                    //这里被变量提升了
+                    var isRadio =true;
+                    tpElt =tpElt.parent();
+                };
                 //提示信息
                 tpElt.parent()
                     .addClass("has-error")
                     .addClass("has-feedback")
                     .append('<span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>');;
                 ;
+                //若是radio，则操作要特殊一些
+                if(isRadio){//因为有变量提升，因此不会报错
+                    tpElt.parent().children(".glyphicon-remove").css("top",0);
+                };
+                //若是验证码提示，需要向左偏移
+                if(tpElt.attr("name") === "verifycode"){
+                    tpElt.parent().children(".glyphicon-remove").css("right","70px");
+                }
+                //若是select，需要向左偏移
+                if(tpElt[0] &&tpElt[0].tagName.toLowerCase() === "select"){
+                    tpElt.parent().children(".glyphicon-remove").css("right","35px");
+                }
                 //绑定隐藏提示事件
                 tpElt.on("click",function(){
                     $(this).parent()
@@ -107,7 +140,7 @@ jQuery.NutjsAjax.prototype ={
         };
         //执行后续动作
         if($action["action"]){
-            ($action["action"])();
+            $action["action"].call(this);
         };
     }
 }

@@ -33,11 +33,11 @@ rpsObj ={
 end;
 
 function goSignIn(){
-    location.href="/Member/sign_in";
+    location.href=NUT.URL_ROOT+"/Member/sign_in";
 };
 
 function goIndex(){
-    location.href="/";
+    location.href=NUT.URL_ROOT;
 }
 
 function goBack(){
@@ -50,7 +50,12 @@ $.NutjsAjax.prototype.errcode ={
     //预定义对象
     "action":{},
     //动作
-    "1200":{},
+    "1200":{
+        "action"    :function(){
+            console.log(this.redirect);
+            if(this.redirect) location.href =this.redirect;
+        },
+    },
     "1201":errorObj,
     "1202":{
         "showMsg"   :"请求不正确，请重试",
@@ -106,7 +111,7 @@ $.NutjsAjax.prototype.errcode ={
         "errElt"    :true,
     },
     "4841":vcObj,
-    "4842":rpsObj,
+    "4842":siObj,
     "4843":{
         "showMsg"   :"你不需要进行此操作",
         "errElt"    :true,

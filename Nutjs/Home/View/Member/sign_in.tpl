@@ -7,10 +7,6 @@
         .login-window{
             margin: 60px 0;
         }
-        .form-group-towbtn button{
-            width:48%;
-            margin:0 !important;
-        }
     </style>
 </head>
 <body>
@@ -18,7 +14,7 @@
 <div class="container-fluid">
     <div class="panel panel-default col-xs-12 col-md-4 col-lg-3 pull-right login-window">
         <div class="panel-heading">
-            <h3 class="panel-title">会员登录</h3>
+            <h1 class="panel-title">会员登录</h1>
         </div>
         <div class="panel-body">
             <div class="form-group">
@@ -27,7 +23,7 @@
             </div>
             <div class="form-group">
                 <label for="password">密码</label>
-                <input type="text" class="form-control" id="password" name="password" />
+                <input type="password" class="form-control" id="password" name="password" />
             </div>
             <div class="form-group">
                 <label for="verifycode">验证码</label>
@@ -36,7 +32,7 @@
                     <div class="input-group-addon input-group-verifycode"><img src="{:U('Service/verifycode')}" /></div>
                 </div>
             </div>
-            <div class="alert alert-danger" role="alert" id="_showMsg" style="display: none;">验证码不符！</div>
+            <div class="alert alert-danger" role="alert" id="_showMsg" style="display: none;">出现错误</div>
             <div class="form-group">
                 <button id="_goAjax" type="button" class="btn btn-success btn-block">Sign in</button>
             </div>
@@ -54,7 +50,8 @@
 <script type="text/javascript">$(function(){
 sign_ajax(
     ["[name='username']" ,"[name='password']" ,"[name='verifycode']"],
-    "{:U('Service/sign_in')}"
+    NUT.URL_ROOT+"Service/sign_in",
+    NUT.URL_ROOT
 );
 })</script>
 </body>

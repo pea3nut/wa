@@ -1,7 +1,8 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-use Think\Model;
+use Home\ViewData\ListViewData;
+
 /**
  * 测试控制器
  * */

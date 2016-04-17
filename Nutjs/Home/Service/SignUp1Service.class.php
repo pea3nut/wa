@@ -11,10 +11,6 @@ class SignUp1Service{
      * 入口函数。此函数会被自动调用
      * */
     public function run(){
-        //检查验证码
-        if(!(APP_DEBUG && C('Not_VerifyCode'))){
-            check_verify(I('post.verifycode')) or drop(EC_4841);
-        };
         //校验登陆信息
         test_token() or drop(EC_4842);
         //校验是否需要登记信息
