@@ -1,8 +1,8 @@
 @CHARSET "UTF-8";
-body {
+body ,.default-font{
     font-family: "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei UI", "Microsoft YaHei", SimHei, "\5B8B\4F53", simsun, sans-serif;
 }
-a{
+a[href]{
     text-decoration: underline;
     color:#026fe6;
 }
@@ -10,11 +10,21 @@ a:hover{
     color:#eb8a1f;
     text-decoration: none;
 }
+.collapse a ,.navbar-header > a{
+    text-decoration: none;
+}
+.dropdown-menu{
+    min-width: 140px;
+}
 .alert-danger{
     border: 1px solid #a94442;
 }
 .alert{
     padding:10px 12px;
+}
+.dropdown-header{
+    background-color: #555;
+    color: #fff;
 }
 @media (max-width: 479px) {
     h1,

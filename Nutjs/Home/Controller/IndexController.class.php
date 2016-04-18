@@ -7,7 +7,7 @@ use Think\Controller;
 class IndexController extends Controller {
     //首页
     public function index(){
-        $this->success('即将跳转到开发文档页','Develop/index',3);
+        $this->display();
     }
     /*! =====特殊方法=====*/
     /**

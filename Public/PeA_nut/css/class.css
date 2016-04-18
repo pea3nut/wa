@@ -48,3 +48,11 @@
 .input-group-verifycode{
     padding:0;
 }
+
+.navbar-brand-nutjs_ico{
+    padding: 14px 7px 15px 15px;
+}
+.navbar-brand-nutjs_text{
+    font-size: 20px;
+    padding:18px 15px 15px 15px;
+}
