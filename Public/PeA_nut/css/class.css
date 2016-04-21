@@ -48,11 +48,18 @@
 .input-group-verifycode{
     padding:0;
 }
-
-.navbar-brand-nutjs_ico{
+/*!导航条*/
+#_nav{
+    font-size: 14px;
+}
+#_nav .navbar-brand-nutjs_ico{
     padding: 14px 7px 15px 15px;
 }
-.navbar-brand-nutjs_text{
+#_nav .navbar-brand-nutjs_text{
     font-size: 20px;
     padding:18px 15px 15px 15px;
+}
+
+.toc a{
+    text-decoration: none;
 }

@@ -135,10 +135,10 @@ abstract class Controller {
      * 模板变量赋值
      * @access protected
      * @param mixed $name 要显示的模板变量
-     * @param mixed $value 变量的值
+     * @param mixed & $value 变量的值 PeA:这里修改为引用
      * @return Action
      */
-    protected function assign($name,$value='') {
+    protected function assign($name,&$value='') {
         $this->view->assign($name,$value);
         return $this;
     }

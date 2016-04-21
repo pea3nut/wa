@@ -31,13 +31,13 @@ class View {
      * 模板变量赋值
      * @access public
      * @param mixed $name
-     * @param mixed $value
+     * @param mixed & $value PeA:这里修改为引用
      */
-    public function assign($name,$value=''){
+    public function assign($name,&$value=''){
         if(is_array($name)) {
             $this->tVar   =  array_merge($this->tVar,$name);
         }else {
-            $this->tVar[$name] = $value;
+            $this->tVar[$name] = &$value;
         }
     }
 

@@ -6,6 +6,23 @@ use Think\Controller;
  * */
 class DevelopController extends Controller {
     /**
+     * 首页
+     * */
+    public function index(){
+        $this->display();
+    }
+    /**
+     * 展示后台返回码文件
+     * */
+    public function errcode(){
+        $this->_data['body']=
+            '<pre>'
+                .htmlspecialchars(file_get_contents('./Nutjs/Home/Common/error_code.php')).
+            '</pre>'
+        ;
+        $this->display('_doc');
+    }
+    /**
      * 检测Markdown请求
      * */
     public function _empty(){

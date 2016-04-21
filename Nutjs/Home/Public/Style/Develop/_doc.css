@@ -2,8 +2,14 @@
 body{
     font-size: 16px
 }
-p{
+.text-body{
+    background-color: #FFFEE9;
+    box-shadow:-1px -1px 6px #222 inset;
+}
+.text-body p{
     text-indent: 2em;
+    line-height:1.8em;
+    margin-bottom: 15px;
 }
 .header-block{
     font-size: 18px

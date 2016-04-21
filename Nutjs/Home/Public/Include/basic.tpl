@@ -21,22 +21,31 @@
         </div>
         
         <div class="collapse navbar-collapse" id="nav-list">
+            <if condition="!$_data['isLogged']">
+                <p class="navbar-text navbar-right">
+                    <a href="{:U('Member/sign_in')}" class="navbar-link">登陆</a>
+                    /
+                    <a href="{:U('Member/sign_up_0')}" class="navbar-link">注册</a>
+                </p>
+            </if>
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="{:U('index')}" target="_self"><span class="glyphicon glyphicon-home"></span> 首页</a></li>
                 <li class="dropdown">
                     <a role="button" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <span class="glyphicon glyphicon-book"></span> 开发文档
+                        <span class="glyphicon glyphicon-book"></span> 文档 / 手册
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="dropdown-header">参考文档</li>
+                        <li class="dropdown-header">开发文档</li>
                         <li><a href="{:U('Develop/rules')}" target="_self">开发建议</a></li>
                         <li><a href="{:U('Develop/deploy')}" target="_self">部署安装</a></li>
+                        <li><a href="{:U('Develop/join')}" target="_self">如何参与</a></li>
                         <li><a href="{:U('Develop/template')}" target="_self">模板开发指南</a></li>
-                        <li class="dropdown-header">参考文档</li>
+                        <li class="dropdown-header">参考手册</li>
                         <li><a href="{:U('Develop/_data')}" target="_self">模板数据</a></li>
-                        <li><a href="{:U('Develop/_data')}" target="_self">URL速查</a></li>
-                        <li><a href="{:U('Develop/_data')}" target="_self">API</a></li>
+                        <li><a href="{:U('Develop/url')}" target="_self">URL速查</a></li>
+                        <li><a href="{:U('Develop/api')}" target="_self">API请求</a></li>
+                        <li><a href="{:U('Develop/errcode')}" target="_self">API返回</a></li>
                         <li><a href="{:U('Develop/user_state')}" target="_self">state码</a></li>
                         <li class="dropdown-header">其他</li>
                         <li><a href="{:U('Develop/public')}" target="_self">公共资源</a></li>
@@ -69,24 +78,18 @@
                     </ul>
                 </li>
                 <if condition="$_data['isLogged']">
-                <li class="dropdown">
-                    <a role="button" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <span class="glyphicon glyphicon-user"></span> {$_data.user.uid}
-                        <span class="caret"></span>
-                    </a>
-                    <ul class="dropdown-menu">
-                        <li><a href="{:U('Exploit/rules')}" target="_self">更新资料</a></li>
-                        <li><a href="{:U('Exploit/rules')}" target="_self">修改密码</a></li>
-                        <li role="separator" class="divider"></li>
-                        <li><a href="{:U('Exploit/rules')}" target="_self">Sign out</a></li>
-                    </ul>
-                </li>
-                <else />
-                <p class="navbar-text navbar-right">
-                    <a href="{:U('Member/sign_in')}" class="navbar-link">登陆</a>
-                    /
-                    <a href="{:U('Member/sign_up_0')}" class="navbar-link">注册</a>
-                </p>
+                    <li class="dropdown">
+                        <a role="button" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <span class="glyphicon glyphicon-user"></span> {$_data.user.uid}
+                            <span class="caret"></span>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a href="{:U('Exploit/rules')}" target="_self">更新资料</a></li>
+                            <li><a href="{:U('Exploit/rules')}" target="_self">修改密码</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="{:U('Exploit/rules')}" target="_self">Sign out</a></li>
+                        </ul>
+                    </li>
                 </if>
             </ul>
         </div>

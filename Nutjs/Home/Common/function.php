@@ -198,11 +198,13 @@ function decode_markdown($path){
     if(!file_exists($path)) return;
     //获取文件内容
     $md=file_get_contents($path);
-    //过滤HTML字符
-    $md=htmlspecialchars($md);
     //渲染Markdown
-    include '.\Public\Library\Michelf\Markdown.inc.php';
-    $html = \Michelf\Markdown::defaultTransform($md);
+    require_once '.\Public\Library\Michelf\Markdown.inc.php';
+    $parser = new \Michelf\Markdown;
+    $parser->no_markup=true;
+    $html =$parser ->transform($md);
+    //渲染模板
+    $html =preg_replace('/URL_ROOT/', URL_ROOT, $html);
     //返回
     return $html;
 };
