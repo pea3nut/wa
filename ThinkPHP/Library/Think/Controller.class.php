@@ -58,7 +58,7 @@ abstract class Controller {
         if(method_exists($this,'_initialize'))
             $this->_initialize();
         //PeA：给模板_data赋值
-        $this->assign('_data',$this->_data);
+        $this->assign('_data','',$this->_data);
     }
 
     /**
@@ -138,8 +138,12 @@ abstract class Controller {
      * @param mixed & $value 变量的值 PeA:这里修改为引用
      * @return Action
      */
-    protected function assign($name,&$value='') {
-        $this->view->assign($name,$value);
+    protected function assign($name,$value='',&$real_value='') {
+        if(empty($real_value)){
+            $this->view->assign($name,$value);
+        }else{
+            $this->view->assign($name,$real_value);
+        }
         return $this;
     }
 

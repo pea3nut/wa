@@ -51,14 +51,14 @@ class MemberViewData extends RelationModel{
     public function find($options){
         //# 要返回的数组
         $reObj =array(
-            'buy'   =>array(
-                'length'=>0,
-            ),
-            'submit'=>array(),
+            'buy'         =>array(),
+            'buyLength'   =>0,
+            'submit'      =>array(),
+            'submitLength'=>0,
         );
         //# 赋值submit
         $reObj['submit'] =$this->select();
-        $reObj['submit']["length"] =count($reObj['submit']);
+        $reObj['submitLength'] =count($reObj['submit']);
         //# 赋值buy
         //## 获取购买记录
         $buy_mo =new \Home\Model\NsBuyModel();
@@ -66,7 +66,7 @@ class MemberViewData extends RelationModel{
         $buy_mo->field(array('id','works_id','score'));
         $buy_list =$buy_mo->select();
         //## 遍历购买记录
-        for($i=0 ;$i< ($reObj['buy']['length']=count($buy_list)) ;$i++){
+        for($i=0 ;$i< ($reObj['buyLength']=count($buy_list)) ;$i++){
             //### 通过works_id获取作品信息
             $tp_da =new WorksViewData($buy_list[$i]['works_id']);
             $works_arr =$tp_da->find();
@@ -95,7 +95,7 @@ class MemberViewData extends RelationModel{
         $this->uid=$uid;
         $this->options['field'] =$this->fields;
         $this->options['link']  =true;
-        $this->options['where'] =array('uid'=>$uid);
+        $this->options['where'] =array('author_uid'=>$uid);
         parent::__construct();
     }
 }

@@ -49,6 +49,7 @@
 - _data.works.update_number 作品的历史更新次数
 - _data.works.update_date 作品最后更新时间
 - _data.works.create_date 作品创建时间
+- _data.works.preface 课程序言
 
 作者信息
 

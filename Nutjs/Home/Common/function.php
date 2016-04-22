@@ -198,6 +198,8 @@ function decode_markdown($path){
     if(!file_exists($path)) return;
     //获取文件内容
     $md=file_get_contents($path);
+    //对所有下划线转义
+    $md =preg_replace('/_/','\\_', $md);
     //渲染Markdown
     require_once '.\Public\Library\Michelf\Markdown.inc.php';
     $parser = new \Michelf\Markdown;

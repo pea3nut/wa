@@ -16,6 +16,13 @@ class NutStoreController extends Controller {
         //## author信息
         $author_da =new \Home\ViewData\UserViewData($this->_data['works']['author_uid']);
         $this->_data['author'] =$author_da->find();
+        //## 课程序言
+        $md="./Nutjs/Home/Public/Include/NutStore/article/{$works_id}/section-0.md";
+        $this->_data['works']['preface'] =decode_markdown($md);
+        //## 章节列表
+
+        //## 课程统计信息
+        //$this->display();
         var_dump($this->_data);
     }
     //编辑可选信息页面
@@ -27,11 +34,11 @@ class NutStoreController extends Controller {
         $works_da =new \Home\ViewData\WorksViewData($works_id);
         $this->_data['works'] =$works_da->find();
         //### 如果不是课程作者
-        if($this->_data['works']['author_uid'] !== cookie('uid')) $this->error('只有课程作者才可以编辑课程信息');
+        if($this->_data['works']['author_uid'] !== cookie('uid')) $this->error('只有课程作者才可以编辑课程信息','javascript:history.back(-1);');
         //## author信息
         $author_da =new \Home\ViewData\UserViewData($this->_data['works']['author_uid']);
         $this->_data['author'] =$author_da->find();
-        var_dump($this->_data);
+        $this->display();
     }
     //果仁商店个人信息页面
     public function member($uid='') {
@@ -41,7 +48,8 @@ class NutStoreController extends Controller {
         //渲染输出模板
         $mr_da =new \Home\ViewData\MemberViewData($uid);
         $this->_data =array_merge($this->_data ,$mr_da->find());
-        var_dump($this->_data);
+        $this->display();
+        //var_dump($this->_data);
     }
     //查看课程列表
     public function works_list($order_by ,$aod='asc'){

@@ -58,8 +58,8 @@ jQuery.NutjsAjax.prototype ={
     "defaultCallBack"   :function($data){
         //获取动作指令
         var actionObj ={};
-        if($data["errcode"] &&this.errcode[ $data["errcode"] ]){//从errcode中获取到动作指令
-            actionObj =this.errcode[ $data["errcode"] ];
+        if($data["errcode"] &&this.errcode[ $data["errcode"].toUpperCase() ]){//从errcode中获取到动作指令
+            actionObj =this.errcode[ $data["errcode"].toUpperCase() ];
         }else{//手动生成动作指令
             actionObj.showMsg="后台返回："
             if($data["errcode"]) actionObj.showMsg +="错误码"+$data["errcode"];
