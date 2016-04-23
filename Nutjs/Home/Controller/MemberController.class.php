@@ -15,14 +15,12 @@ class MemberController extends Controller {
     }
     //会员注册第二步
     public function sign_up_1(){
-        if(! (APP_DEBUG &&C('Not_Control_Page')))//取消页面权限检查
-            test_token() or $this->error('请重新登录' ,'sign_in');
+        test_control_login();
         $this->display();
     }
     //修改密码页面
     public function change_password(){
-        if(! (APP_DEBUG &&C('Not_Control_Page')))//取消页面权限检查
-            test_token() or $this->error('请重新登录' ,'sign_in');
+        test_control_login();
         $this->display();
     }
     /*! =====特殊方法=====*/

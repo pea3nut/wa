@@ -16,16 +16,16 @@
         <!-- 主内容 -->
         <div class="tab-content">
             <!-- 课程序言 -->
-            <div id="preface" class="active tab-pane">
-                {$_data.preface|default="<h1>没有序言</h1>"}
+            <div id="preface" class="tab-pane">
+                {$_data.works.preface|default="<h1>没有序言</h1>"}
             </div>
             <!-- 课程列表 -->
             <div id="courses_list" class="tab-pane">
-                <include file="__INCLUDE__/courses-list.tpl" />
+                <include file="__INCLUDE__/works-list.tpl" />
             </div>
             <!-- 课程更新日志 -->
-            <div id="log" class="tab-pane">
-                <include file="__INCLUDE__/courses-log.tpl" />
+            <div id="log" class="tab-pane active">
+                <include file="__INCLUDE__/works-log.tpl" />
             </div>
         </div>
     </article>

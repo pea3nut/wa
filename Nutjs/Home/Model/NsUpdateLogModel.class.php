@@ -22,7 +22,7 @@ class NsUpdateLogModel extends RelationModel{
      * @var String
      * @access protected
      * */
-    protected $defaultLog='fix bug.';
+    protected $defaultLog='Fix bug.';
     /**
      * 数据表中所有字段
      * 实际使用是应手动的调用filed()方法来指定要操作的字段

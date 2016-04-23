@@ -1,6 +1,25 @@
 <?php
 use Think\Model;
 
+
+
+
+
+
+
+/**
+ * 检查用户是否有效登陆
+ * 若未登录则直接跳转到登陆页面
+ * 开启调试模式与Not_Control_Page参数可以让避免跳转
+ * */
+function test_control_login(){
+    if(! (APP_DEBUG &&C('Not_Control_Page'))){//取消页面权限检查
+        test_token() or $this->error('请重新登录' ,'sign_in');
+    };
+};
+
+
+
 /**
  * 生成给定长度的随机字符串
  * @param string $code 用户输入的验证码字符串

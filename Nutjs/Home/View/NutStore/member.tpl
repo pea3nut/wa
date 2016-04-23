@@ -20,15 +20,15 @@
                 <volist name="_data.buy" id="buyInf">
                     <tr>
                         <td>{$buyInf.id}</td>
-                        <td>{$buyInf.works.works_name}</td>
+                        <td>{$buyInf.works.inf.works_name}</td>
                         <td>{$buyInf.score} 分</td>
-                        <td>{$buyInf.works.id}</td>
-                        <td>{$buyInf.works.price} 果仁</td>
-                        <td>{$buyInf.works.works_state}</td>
+                        <td>{$buyInf.works.inf.id}</td>
+                        <td>{$buyInf.works.inf.price} 果仁</td>
+                        <td>{$buyInf.works.inf.works_state}</td>
                     </tr>
                 </volist>
             </table>
-            <div class="panel-footer text-right">共 {$_data.buyLength} 门</div>
+            <div class="panel-footer text-right">共 {:count($_data['buy'])} 门</div>
         </div>
         <div class="panel panel-default">
             <div class="panel-heading">我投稿的课程</div>
@@ -40,17 +40,17 @@
                     <td>课程状态</td>
                     <td>操作</td>
                 </tr>
-                <volist name="_data.submit" id="submitInf">
+                <volist name="_data.submit" id="submit">
                     <tr>
-                        <td>{$submitInf.id}</td>
-                        <td>{$submitInf.works_name}</td>
-                        <td>{$submitInf.price} 果仁</td>
-                        <td>{$submitInf.works_state}</td>
-                        <td><a href="{:U('edit')}/{$submitInf.id}">编辑</a></td>
+                        <td>{$submit.inf.id}</td>
+                        <td>{$submit.inf.works_name}</td>
+                        <td>{$submit.inf.price} 果仁</td>
+                        <td>{$submit.inf.works_state}</td>
+                        <td><a href="{:U('edit')}/{$submit.inf.id}">编辑</a></td>
                     </tr>
                 </volist>
             </table>
-            <div class="panel-footer text-right">共 {$_data.submitLength} 门</div>
+            <div class="panel-footer text-right">共 {:count($_data['submit'])} 门</div>
         </div>
     </article>
     <aside class="container col-lg-3 col-md-3 col-sm-3 col-xs-12">
@@ -58,8 +58,8 @@
             <div class="panel-heading">个人资料<a class="pull-right" href="###">编辑</a></div>
             <ul class="list-group">
                 <li class="list-group-item">投稿昵称：{$_data.user.nickname|default=$_data.user.name}</li>
-                <li class="list-group-item">共投稿：{$_data.submitLength}</li>
-                <li class="list-group-item">共购买：{$_data.buyLength}</li>
+                <li class="list-group-item">共投稿：{:count($_data['submit'])}</li>
+                <li class="list-group-item">共购买：{:count($_data['buy'])}</li>
             </ul>
         </div>
     </aside>

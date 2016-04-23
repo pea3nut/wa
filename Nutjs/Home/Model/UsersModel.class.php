@@ -4,6 +4,9 @@ use Think\Model\RelationModel;
 /**
  * 用户基础信息表
  *
+ * <dt>state</dt>
+ * <dd>char(3) 用户的账号状态码</dd>
+ *
  * <dt>uid</dt>
  * <dd>主键 char(5) 用户的协会编号</dd>
  *

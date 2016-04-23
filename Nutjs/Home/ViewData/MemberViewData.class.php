@@ -3,31 +3,6 @@ namespace Home\ViewData;
 use Think\Model\RelationModel;
 /**
  * 创建用于View模板NutStore/member的数据
-{
-    buy:{
-        length,
-        [
-            id,
-            score,
-            works:{},
-            author:{}
-        ],
-        [
-            id,
-            score,
-            works:{},
-            author:{}
-        ],
-        [
-            id,
-            score,
-            works:{},
-            author:{}
-        ],
-        ...
-    },
-    submit:{}
-}
  * */
 class MemberViewData extends RelationModel{
     /**
@@ -45,20 +20,18 @@ class MemberViewData extends RelationModel{
     /**
      * 查询数据
      * @access public
-     * @param mixed $options 表达式参数
      * @return mixed
      * */
-    public function find($options){
+    public function find(){
         //# 要返回的数组
         $reObj =array(
             'buy'         =>array(),
-            'buyLength'   =>0,
             'submit'      =>array(),
-            'submitLength'=>0,
         );
         //# 赋值submit
-        $reObj['submit'] =$this->select();
-        $reObj['submitLength'] =count($reObj['submit']);
+        $works_da =new \Home\ViewData\WorksViewData();
+        $works_da->where(array('author_uid' =>$this->uid));
+        $reObj['submit'] =$works_da->select();
         //# 赋值buy
         //## 获取购买记录
         $buy_mo =new \Home\Model\NsBuyModel();
@@ -66,22 +39,17 @@ class MemberViewData extends RelationModel{
         $buy_mo->field(array('id','works_id','score'));
         $buy_list =$buy_mo->select();
         //## 遍历购买记录
-        for($i=0 ;$i< ($reObj['buyLength']=count($buy_list)) ;$i++){
-            //### 通过works_id获取作品信息
-            $tp_da =new WorksViewData($buy_list[$i]['works_id']);
-            $works_arr =$tp_da->find();
-            //### author_id获取作品作者
-            $author_da =new UserViewData($works_arr['author_uid']);
-            $author_arr =$author_da->find();
+        for($i=0 ;$i<count($buy_list) ;$i++){
+            //### 通过购买记录的works_id获取作品信息
+            $works_da =new \Home\ViewData\WorksViewData();
+            $buy_works =$works_da ->find($buy_list[$i]['works_id']);
             //### 添加到数组
             array_push($reObj['buy'], array(
                 'id'    =>$buy_list[$i]['id'],
-                'score' =>$buy_list[$i]['score'],
-                'works' =>$works_arr,
-                'author'=>$author_arr,
+                'my_score' =>$buy_list[$i]['score'],
+                'works' =>$buy_works,
             ));
             //### 释放多余的字段
-            unset($buy_list[i]['works_id']);
         };
         return $reObj;
     }
