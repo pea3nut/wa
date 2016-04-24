@@ -10,8 +10,12 @@ jQuery.NutjsAjax =function ($option){
     this.reqUrl     =$option.reqUrl?$option.reqUrl:document.URL;
     //发送模式
     this.reqMode    =$option.reqMode?$option.reqMode:'post';
-    //成功后的重定向
-    this.redirect   =$option.redirect;
+    //当返回1200成功码后调用的回调函数
+    this.onSuccsee  =
+        (typeof $option.onSuccsee === 'function')
+        ?$option.onSuccsee
+        :function(){location.href=$option.onSuccsee}
+    ;
     //将要发送的JSON对象
     this.fieldData={};
 };
@@ -60,7 +64,7 @@ jQuery.NutjsAjax.prototype ={
         var actionObj ={};
         if($data["errcode"] &&this.errcode[ $data["errcode"].toUpperCase() ]){//从errcode中获取到动作指令
             actionObj =this.errcode[ $data["errcode"].toUpperCase() ];
-        }else{//手动生成动作指令
+        }else if($data["errcode"] !='1200'){//手动生成动作指令
             actionObj.showMsg="后台返回："
             if($data["errcode"]) actionObj.showMsg +="错误码"+$data["errcode"];
             if($data["errmsg"]) actionObj.showMsg +="，"+$data["errmsg"];
@@ -68,6 +72,7 @@ jQuery.NutjsAjax.prototype ={
         }
         //解析动作指令
         this.analytic(actionObj);
+        if($data["errcode"] =='1200')this.onSuccsee($data);
     },
     //发送Ajax请求
     "send"              :function(){

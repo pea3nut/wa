@@ -71,7 +71,7 @@
 <script type="text/javascript">$(function(){
 sign_ajax(
     ["[name='qq']" ,"[name='password']" ,"[name='re_password']" ,"[name='invite_code']" ,"[name='verifycode']"],
-    NUT.URL_ROOT+"Service/sign_up_0",
+    NUT.URL_ROOT+"/Service/sign_up_0",
     NUT.URL_ROOT+"Member/sign_up_1"
 );
 })</script>

@@ -5,7 +5,7 @@
             <div class="list-group-item">暂无课程</div>
         </empty>
         <volist name="_data.works.section" id="section">
-            <a href="{:U(CONTROLLER_NAME.'/read/'.$_data['works']['inf']['id'].'/'.$section['id'])}" class="list-group-item">
+            <a href="{:U(CONTROLLER_NAME.'/read/'.$_data['works']['inf']['id'].'/'.$section['section_id'])}" class="list-group-item">
                 {$section.section_name}
                 <span class="pull-right">更新时间：{$section.update_date}</span>
             </a>

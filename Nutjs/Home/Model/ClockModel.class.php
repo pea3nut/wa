@@ -55,7 +55,7 @@ class ClockModel extends RelationModel{
         array('id'     ,''                     ,self::MODEL_INSERT  ,'string'),  //id 12
         array('id'     ,''                     ,self::MODEL_INSERT  ,'ignore'),  //id 12
         //插入时，自动获取当前时间
-        array('date'   ,Short_Date             ,self::MODEL_BOTH    ,'function'),//date 1234
+        array('date'   ,Short_Date             ,self::MODEL_BOTH    ,'string'),//date 1234
     );
     /**
      * 校验字段的规则

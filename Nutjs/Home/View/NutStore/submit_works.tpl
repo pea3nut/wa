@@ -46,7 +46,10 @@
     <script type="text/javascript">$(function(){
     sign_ajax(
         ["[name='works_name']" ,"[name='works_intro']" ,"[name='price']"],
-        NUT.URL_ROOT+"Service/ns_create_works"
+        NUT.URL_ROOT+"/Service/ns_create_works",
+        function ($data){
+            location.href=NUT.URL_ROOT+"/NutStore/edit/"+$data.errmsg;
+        }
     );
     })</script>
 </block>

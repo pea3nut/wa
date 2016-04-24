@@ -58,11 +58,6 @@ $.NutjsAjax.prototype.errcode ={
     //预定义对象
     "action":{},
     //动作
-    "1200":{
-        "action"    :function(){
-            if(this.redirect) location.href =this.redirect;
-        },
-    },
     "1201":errorObj,
     "1202":{
         "showMsg"   :"请求不正确，请重试",

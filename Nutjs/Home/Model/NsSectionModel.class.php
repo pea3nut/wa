@@ -81,7 +81,7 @@ class NsSectionModel extends RelationModel{
      * */
     protected $_auto=array(
         //update_date字段总是填充当前时间
-        array('update_date'  ,Short_Date             ,self::MODEL_BOTH    ,'function'),//update_date 1234
+        array('update_date'  ,Short_Date             ,self::MODEL_BOTH    ,'string'),//update_date 1234
         //使用htmlspecialchars过滤输入字段
         array('section_name' ,'htmlspecialchars'     ,self::MODEL_BOTH    ,'function'),//works_name 24
         //新增数据时，清楚所有对于ID的操作

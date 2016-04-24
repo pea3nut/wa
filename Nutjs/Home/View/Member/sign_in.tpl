@@ -50,7 +50,7 @@
 <script type="text/javascript">$(function(){
 sign_ajax(
     ["[name='username']" ,"[name='password']" ,"[name='verifycode']"],
-    NUT.URL_ROOT+"Service/sign_in",
+    NUT.URL_ROOT+"/Service/sign_in",
     NUT.URL_ROOT
 );
 })</script>

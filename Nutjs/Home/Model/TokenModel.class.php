@@ -42,7 +42,7 @@ class TokenModel extends RelationModel{
         //自动生成令牌，一般情况不允许手动创建
         array('token'    ,'createToken'             ,self::MODEL_BOTH       ,'callback'), //token 1234
         //自动获取当前时间，一般情况不允许手动创建
-        array('date'    ,Long_Date                  ,self::MODEL_BOTH       ,'function'), //token 1234
+        array('date'    ,Long_Date                  ,self::MODEL_BOTH       ,'string'), //token 1234
     );
     /**
      * 校验字段的规则

@@ -36,17 +36,24 @@ class NutStoreController extends Controller {
     }
     //果仁商店个人信息页面
     public function member($uid='') {
-        //过滤非法字符
-        $uid =$uid?:cookie('uid');
+        # 过滤非法字符
+        $uid =strtoupper($uid?:cookie('uid'));
         if(empty($uid)) $this->error('请先登录',U('Member/sign_in'));
         if(!preg_match(RegExp_uid, $uid)) $this->error('不存在此用户');
-        //渲染输出模板
+        # 渲染输出模板
         $mr_da =new \Home\ViewData\MemberViewData($uid);
         $this->_data =array_merge($this->_data ,$mr_da->find());
+        # 输出个人信息
+        if($uid == cookie('uid')){//查看自己的信息
+            $this->_data['target_user'] =&$this->_data['user'];
+        }else{//获取信息
+            $user_va =new \Home\ViewData\UserViewData($uid);
+            $this->_data['target_user'] =$user_va->find();
+        }
         $this->display();
     }
     //查看课程列表
-    public function works_list($order_by='update_date' ,$aod='asc'){
+    public function works_list($order_by='update_date' ,$aod='desc'){
         # 过滤非法数据
         if(!preg_match('/^\w+$/', $this->order_by=$order_by)) $this->error('排序字段无效');
         if(!preg_match('/^(asc|desc)$/i', $this->aod=$aod)) $this->error('排序方式仅能为asc|desc');
@@ -54,6 +61,8 @@ class NutStoreController extends Controller {
         $works_da =new \Home\ViewData\WorksViewData();
         $works_da->order("$order_by $aod");
         $this->_data['works'] =$works_da->select();
+        # 输出排序信息
+        $this->_data['order'] =strtolower("$order_by $aod");
         $this->display();
     }
     //阅读课程界面
@@ -84,6 +93,16 @@ class NutStoreController extends Controller {
         # 渲染章节Markdown
         $mdFile =MODULE_PATH.'Public/Include/'.CONTROLLER_NAME."/article/{$works_id}/section-{$section}.md";
         if(file_exists($mdFile)) $this->_data['section_value']=decode_markdown($mdFile);
+        $this->display();
+    }
+    //购买作品
+    public function buy($works_id){
+        #过滤非法字符
+        $works_id   =(int)$works_id;
+        # 取得数据渲染模板works信息
+        $works_da =new \Home\ViewData\WorksViewData();
+        $this->_data['works'] =$works_da->find($works_id);
+        # 渲染输出
         $this->display();
     }
     /*! =====特殊方法=====*/

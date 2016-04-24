@@ -52,7 +52,7 @@ class InviteCodeModel extends RelationModel{
      * */
     protected $_auto=array(
         //date字段永远自动获取当前时间
-        array('date'         ,Long_Date                 ,self::MODEL_BOTH   ,'function'),//date 1234
+        array('date'         ,Long_Date                 ,self::MODEL_BOTH   ,'string'),//date 1234
     );
     /**
      * 校验字段的规则

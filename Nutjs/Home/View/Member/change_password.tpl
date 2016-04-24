@@ -59,7 +59,7 @@
 sign_ajax(
     ["[name='password']" ,"[name='re_password']" ,"[name='verifycode']"],
     NUT.URL_ROOT+"Service/change_password",
-    NUT.URL_ROOT+"Member/sign_in"
+    NUT.URL_ROOT+"/Member/sign_in"
 );
 })</script>
 </body>

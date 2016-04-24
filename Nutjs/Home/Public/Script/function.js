@@ -1,9 +1,15 @@
-function sign_ajax($field ,$url ,$redirect){
+/**
+ * 快捷发送Ajax请求
+ * @param {Json} $field - 要发送的字段
+ * @param {String} $url - 请求的URL
+ * @param {Function} $onSuccsee - 成功后的回调函数
+ * */
+function sign_ajax($field ,$url ,$onSuccsee){
     var ajax_req =new $.NutjsAjax({
         "field"     :$field,
         "reqMode"   :"post",
         "reqUrl"    :$url,
-        "redirect"  :$redirect,
+        "onSuccsee" :$onSuccsee,
         "showMsgFn" :function($msg){
             $("#_showMsg").html($msg).show();
         },

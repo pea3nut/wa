@@ -53,4 +53,6 @@ return array(
     ),
     //开启Model字段映射
     'READ_DATA_MAP'=>true,
+    //页面调试工具
+    'SHOW_PAGE_TRACE' =>false,
 );

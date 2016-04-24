@@ -105,12 +105,12 @@ class NsWorksListModel extends RelationModel{
         //任何更新操作都将update_number++
         array('update_number'   ,array('exp','`update_number` +1')  ,self::MODEL_UPDATE ,'string'),  //update_number 34
         //新增数据时，自动获取当前时间作为create_date字段
-        array('create_date'     ,Short_Date                         ,self::MODEL_INSERT ,'function'),//create_date 12
+        array('create_date'     ,Short_Date                         ,self::MODEL_INSERT ,'string'),//create_date 12
         //更新数据时，不允许操作create_date字段
         array('create_date'     ,''                                 ,self::MODEL_UPDATE ,'string'),  //create_date 4
         array('create_date'     ,''                                 ,self::MODEL_UPDATE ,'ignore'),  //create_date 3
         //update_date字段永远自动获取当前时间
-        array('update_date'     ,Short_Date                         ,self::MODEL_BOTH   ,'function'),//update_date 1234
+        array('update_date'     ,Short_Date                         ,self::MODEL_BOTH   ,'string'),//update_date 1234
     );
     /**
      * 校验字段的规则

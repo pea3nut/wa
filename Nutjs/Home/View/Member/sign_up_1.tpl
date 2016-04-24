@@ -92,7 +92,7 @@ sign_ajax(
         "select":"[name='school']",
         "radio" :"[name='gender']",
     },
-    NUT.URL_ROOT+"Service/sign_up_1",
+    NUT.URL_ROOT+"/Service/sign_up_1",
     NUT.URL_ROOT
 );
 })</script>

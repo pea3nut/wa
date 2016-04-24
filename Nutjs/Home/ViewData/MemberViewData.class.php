@@ -49,7 +49,6 @@ class MemberViewData extends RelationModel{
                 'my_score' =>$buy_list[$i]['score'],
                 'works' =>$buy_works,
             ));
-            //### 释放多余的字段
         };
         return $reObj;
     }

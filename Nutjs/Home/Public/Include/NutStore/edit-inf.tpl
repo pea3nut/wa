@@ -43,8 +43,9 @@
             </div>
             <div style="display: none;" id="_showMsg" role="alert" class="alert alert-danger col-sm-10 center-block no-float">出现错误</div>
             <div class="form-group">
-                <div class="col-sm-10 center-block no-float">
-                    <button id="_goAjax" class="btn btn-success btn-block pull-left" type="button">Ctrl + S</button>
+                <div class="col-sm-10 center-block no-float form-group-towbtn-1-3">
+                    <button class="btn btn-danger btn-block" type="button">删除</button>
+                    <button id="_goAjax" class="btn btn-success btn-block" type="button">Ctrl + S</button>
                 </div>
             </div>
         </div>
