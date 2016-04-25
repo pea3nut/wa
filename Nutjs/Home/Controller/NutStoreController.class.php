@@ -99,6 +99,8 @@ class NutStoreController extends Controller {
     public function buy($works_id){
         #过滤非法字符
         $works_id   =(int)$works_id;
+        # 检查登陆
+        test_control_login();
         # 取得数据渲染模板works信息
         $works_da =new \Home\ViewData\WorksViewData();
         $this->_data['works'] =$works_da->find($works_id);

@@ -199,6 +199,10 @@ $.NutjsAjax.prototype.errcode ={
         "showMsg"   :"你已经购买了此作品啦~~",
         "errElt"    :true,
     },
+    "4G45":{
+        "showMsg"   :"不能购买自己投稿的作品",
+        "errElt"    :true,
+    },
     "4G51":{
         "showMsg"   :"果仁扣除失败，请联系网站管理员",
         "errElt"    :true,

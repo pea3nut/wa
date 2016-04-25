@@ -32,6 +32,8 @@ class NsBuyWorksService{
         $this->checkNuts() or drop(EC_4G42);
         //检查用户是否已购买此作品
         $this->checkRepeat() or drop(EC_4G44);
+        //检查用户是否正在购买自己的作品
+        $this->checkRepeat() or drop(EC_4G45);
         //尝试创建扣除果仁数据对象
         $nutsMo =new NutsModel();
         $nutsMo ->create(
@@ -70,7 +72,7 @@ class NsBuyWorksService{
     }
     /**
      * 检查用户所持有的果仁是否足够购买作品
-     * 还会用作品价格连填充
+     * 还会用作品价格来填充
      * @return bool
      * @access protected
      * */
@@ -94,5 +96,19 @@ class NsBuyWorksService{
         $userNuts =$nutMo->getField('nuts');
         //返回
         return $userNuts >= $targetNuts;
+    }
+    /**
+     * 检查用户是否正在购买自己投稿的作品
+     * @return bool
+     * @access protected
+     * */
+    protected function checkSelf(){
+        //获取作者uid
+        $targetNuts =1;
+        $worksMo =new \Home\Model\NsWorksListModel();
+        $worksMo ->where(array(
+            'id' => I('get.works_id')
+        ));
+        return $worksMo->getField('author_uid') !== cookie('uid');
     }
 }

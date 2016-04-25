@@ -34,6 +34,14 @@ class UserViewData extends RelationModel{
             'mapping_key'   => 'uid',
             'as_fields'     => '*',
         ),
+        'nut' =>array(
+            'mapping_type'  => self::HAS_ONE,
+            'class_name'    => 'Nuts',
+            'foreign_key'   => 'uid',
+            'mapping_key'   => 'uid',
+            'as_fields'     => 'nuts',
+            'mapping_fields'=> 'nuts',
+        ),
     );
     /**
      * 针对本层特殊的构造函数
