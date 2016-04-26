@@ -29,6 +29,9 @@ a:hover{
     background-color: #555;
     color: #fff;
 }
+img[role=verifycode]{
+    cursor:pointer;
+}
 @media (max-width: 479px) {
     h1,
     .h1 {

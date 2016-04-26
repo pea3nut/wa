@@ -35,8 +35,8 @@ class SignUp0Service{
         ) or drop($icMo->getError());
         //数据检查
         if(I('post.password') != I('post.re_password') )       drop(EC_4742);
-        $this->checkInviteCode_0( I('post.invite_code'))    or drop(EC_4751);
-        $this->checkInviteCode_1( I('post.invite_code'))    or drop(EC_4752);
+        $this->checkInviteCode_0( I('post.invite_code'))    or drop(EC_4743);
+        $this->checkInviteCode_1( I('post.invite_code'))    or drop(EC_4744);
         //若开启Not_Submit_To_Database则不提交数据库
         if (C('Not_Submit_To_Database')) {
             var_dump($usersMo->data());

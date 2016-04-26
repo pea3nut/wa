@@ -1,31 +1,55 @@
 /**
  * 快捷发送Ajax请求
- * @param {Json} $field - 要发送的字段
+ * @param {Array} $field - 要发送的字段
  * @param {String} $url - 请求的URL
  * @param {Function} $onSuccsee - 成功后的回调函数
  * */
 function sign_ajax($field ,$url ,$onSuccsee){
+    var sendElt =$("#_goAjax");
+    sendElt.attr("disabled",false);
     var ajax_req =new $.NutjsAjax({
         "field"     :$field,
         "reqMode"   :"post",
         "reqUrl"    :$url,
-        "onSuccsee" :$onSuccsee,
+        "onSuccsee" :$onSuccsee ?$onSuccsee :function(){
+            if(history.length >1){
+                history.back()
+            }else{
+                location.href=NUT.URL_ROOT;
+            };
+        },
         "showMsgFn" :function($msg){
             $("#_showMsg").html($msg).show();
         },
         "alertMsgFn":function($msg){
             alert($msg);
         },
+        "callBack"  :function($data){
+            // 恢复按钮样式
+            sendElt.html(sendElt.attr("msg"));
+            sendElt.attr("disabled",false);
+            // 刷新验证码
+            $("*[role='verifycode']").click();
+            // 执行默认的回调函数
+            this.defaultCallBack($data);
+        }
     });
-    $(document.body).on("keyup",function(event){
+    $($field[$field.length-1]).on("keyup",function(event){
         if(event.keyCode ==13){
-            ajax_req.countField();
-            ajax_req.send();
+            sendElt.click();
         };
     });
     
-    $("#_goAjax").on('click',function(){
+    sendElt.on('click',function(){
+        // 防止多次触发该事件
+        if(sendElt.attr("disabled") ==='disabled') return;
+        // 设定按钮样式
+        sendElt.attr("msg",sendElt.html());
+        sendElt.html("提交中...");
+        sendElt.attr("disabled",true);
+        // 计算字段，发送
         ajax_req.countField();
         ajax_req.send();
     });
 };
+

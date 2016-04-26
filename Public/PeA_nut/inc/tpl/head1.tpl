@@ -14,8 +14,9 @@
     <load href="__PUBLIC__/Library/bootstrap-3.3.5/css/bootstrap.css" />
     <load href="__PUBLIC__/PeA_nut/css/rewrite_bootstrap.css" />
     <load href="__PUBLIC__/PeA_nut/css/class.css" />
-    <!-- 引入jQuery -->
+    <!-- 引入Script -->
     <load href="__PUBLIC__/Library/Script/jquery-1.12.1.js" />
     <load href="__PUBLIC__/Library/bootstrap-3.3.5/js/bootstrap.js" />
     <load href="__PUB__/Script/config.js" />
     <load href="__PUB__/Script/function.js" />
+    <load href="__PUB__/Script/basic.js" />

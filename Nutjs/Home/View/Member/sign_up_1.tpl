@@ -1,19 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <include file="./Public/PeA_nut/inc/tpl/head1.tpl" />
-    <meta charset="utf-8" />
+<extend name="./Nutjs/Home/Public/Include/basic.tpl" />
+<block name="head">
     <title>会员信息填写</title>
     <style>
-        .form-window{
-            margin-top:60px;
+        .my-body{
+            margin-top:100px;
+        }
+        body{
+            background-image: url(__PUBLIC__/PeA_nut/bg/star01.jpg);
         }
     </style>
-</head>
-<body>
+</block>
+<block name="body">
 
-<div class="container">
-    <div class="panel panel-default col-xs-12 col-sm-9 col-md-6 col-lg-5 center-block no-float no-padding form-window">
+<div class="container my-body" id="my-body">
+    <div class="panel panel-default col-xs-12 col-sm-9 col-md-6  center-block no-float no-padding form-window">
         <div class="panel-heading">
             <h1 class="panel-title">会员信息填写</h1>
         </div>
@@ -87,14 +87,19 @@
 <script src="__PUBLIC__/PeA_nut/js/nutjs_ajax/errcode.json.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">$(function(){
 sign_ajax(
-    {
-        "text"  :["[name='name']" ,"[name='age']" ,"[name='phone']" ,"[name='wechat']" ,"[name='nickname']"],
-        "select":"[name='school']",
-        "radio" :"[name='gender']",
-    },
+    [
+        "[name='name']"     ,"[name='age']",
+        "[name='phone']"    ,"[name='wechat']" ,
+        "[name='nickname']"],"select":"[name='school']",
+        "[name='gender']"
+    ]
     NUT.URL_ROOT+"/Service/sign_up_1",
     NUT.URL_ROOT
 );
+//设定主部分高度
+$('#my-body').css("min-height",innerHeight-100);
+$(window).on("resize",function(){
+    $('#my-body').css("min-height",innerHeight-100);
+});
 })</script>
-</body>
-</html>
+</block>

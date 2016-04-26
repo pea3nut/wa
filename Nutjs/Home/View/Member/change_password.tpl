@@ -36,7 +36,7 @@
                     <div class="input-group">
                         <input type="text" class="form-control" id="verifycode" name="verifycode" />
                         <div class="input-group-addon input-group-verifycode">
-                            <img src="{:U('Service/verifycode')}" />
+                            <img role="verifycode" src="{:U('Service/verifycode')}" />
                         </div>
                     </div>
                 </div>

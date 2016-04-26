@@ -23,6 +23,12 @@ class MemberController extends Controller {
         test_control_login();
         $this->display();
     }
+    //退出登录
+    public function sign_out(){
+        $se =new \Home\Service\SignOutService();
+        $se ->run(false);
+        $this->success("退出登录成功");
+    }
     /*! =====特殊方法=====*/
     /**
      * 测试方法

@@ -1,61 +1,55 @@
 jQuery.NutjsAjax =function ($option){
-    //要的发送字段
+    //# 要的发送字段选择器
     this.field      =$option.field;
-    //Ajax请求后的回调函数
-    this.callBack   =$option.callBack?$option.callBack:this.defaultCallBack;
-    //默认回调解析配置
+    //# 通过field计算的数据对象
+    this.fieldData={};
+    //# 默认回调解析配置
     this.showMsgFn  =$option.showMsgFn;
     this.alertMsgFn =$option.alertMsgFn;
-    //要请求的地址
+    //# 要请求的地址
     this.reqUrl     =$option.reqUrl?$option.reqUrl:document.URL;
-    //发送模式
+    //# 发送模式
     this.reqMode    =$option.reqMode?$option.reqMode:'post';
-    //当返回1200成功码后调用的回调函数
-    this.onSuccsee  =
-        (typeof $option.onSuccsee === 'function')
-        ?$option.onSuccsee
-        :function(){location.href=$option.onSuccsee}
-    ;
-    //将要发送的JSON对象
-    this.fieldData={};
+    //# 回调函数
+    //## 每次都执行的回调函数
+    this.callBack   =$option.callBack ?$option.callBack :this.defaultCallBack;
+    //## 当返回1200成功码后执行的回调函数
+    this.onSuccsee  =$option.onSuccsee ?$option.onSuccsee :function(){};
 };
 jQuery.NutjsAjax.prototype ={
     //版本
     "varsion"           :"1.0.0",
     //计算各个字段，生成要发送是JSON对象
     "countField"        :function(){
-        //清空历史信息
+        //# 清空历史信息
         this.fieldData={};
-        //遍历字段类型
-        //若是数组或字符串，包装成对象
-        if(this.field instanceof Array){
-            this.field ={
-                "text":this.field
+        //# 若是裸字符串，包装成数组
+        if(typeof this.field ==='string'){
+            this.field =[this.field];
+        }
+        //# 遍历字段类型
+        for(var i=0;i<this.field.length;i++){
+            var tpElt=$(this.field[i]);
+            var eltType='';
+            //## 判断元素类型，获取数据
+            switch(tpElt.prop('tagName').toLowerCase()){
+                case 'select':
+                    this.fieldData[tpElt.attr("name")]=tpElt.val();
+                    break;
+                case 'input':
+                    switch(tpElt.attr('type')){
+                        case 'text':
+                        case 'password':
+                            this.fieldData[tpElt.attr("name")]=tpElt.val();
+                            break;
+                        case 'radio':
+                            this.fieldData[tpElt.attr("name")] =tpElt.filter(':checked').val();
+                            break;
+                    };
+                    break;
+                default:
+                    
             };
-        }else if(typeof this.field ==='string'){
-            this.field ={
-                "text":[this.field]
-            };
-        };
-        for(var key in this.field){
-            //如果是裸字符串，包装成数组
-            if(typeof this.field[key] ==='string'){
-                this.field[key] =[this.field[key]];
-            };
-            blKey:for (var i=0;i<this.field[key].length;i++){
-                var tarElt =$(this.field[key][i]);
-                switch(key){
-                    case 'select':
-                    case 'text':
-                        this.fieldData[tarElt.attr("name")]=tarElt.val();
-                        break;
-                    case 'radio':
-                        this.fieldData[tarElt.attr("name")] =tarElt.filter(':checked').val();
-                        break;
-                    default:
-                        break blKey;
-                }
-            }
         };
     },
     //默认的Ajax回调函数

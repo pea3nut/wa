@@ -9,10 +9,10 @@
 <nav class="navbar navbar-default navbar-fixed-top" id="_nav">
     <div class="container">
         <div class="navbar-header">
-            <a href="{:U('/')}" class="navbar-brand navbar-brand-nutjs_ico">
+            <a href="{:U('/')}" target="_self" class="navbar-brand navbar-brand-nutjs_ico">
                 <img width="25" src="__PUBLIC__/Library/Image/nutjs.ico" alt="Nutjs" />
             </a>
-            <a href="{:U('/')}" class="navbar-brand navbar-brand-nutjs_text">Nutjs.com</a>
+            <a href="{:U('/')}" target="_self" class="navbar-brand navbar-brand-nutjs_text">Nutjs.com</a>
             <button class="navbar-toggle" data-toggle="collapse" data-target="#nav-list">
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -23,13 +23,13 @@
         <div class="collapse navbar-collapse" id="nav-list">
             <if condition="!$_data['isLogged']">
                 <p class="navbar-text navbar-right">
-                    <a href="{:U('Member/sign_in')}" class="navbar-link">登陆</a>
+                    <a target="_self" href="{:U('Member/sign_in')}" class="navbar-link">登陆</a>
                     /
-                    <a href="{:U('Member/sign_up_0')}" class="navbar-link">注册</a>
+                    <a target="_self" href="{:U('Member/sign_up_0')}" class="navbar-link">注册</a>
                 </p>
             </if>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{:U('index')}" target="_self"><span class="glyphicon glyphicon-home"></span> 首页</a></li>
+                <li><a target="_self" href="{:U('index')}" target="_self"><span class="glyphicon glyphicon-home"></span> 首页</a></li>
                 <li class="dropdown">
                     <a role="button" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                         <span class="glyphicon glyphicon-book"></span> 文档 / 手册
@@ -87,7 +87,7 @@
                             <li><a href="{:U('Exploit/rules')}" target="_self">更新资料</a></li>
                             <li><a href="{:U('Exploit/rules')}" target="_self">修改密码</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="{:U('Exploit/rules')}" target="_self">Sign out</a></li>
+                            <li><a href="{:U('Member/sign_out')}" target="_self">Sign out</a></li>
                         </ul>
                     </li>
                 </if>
