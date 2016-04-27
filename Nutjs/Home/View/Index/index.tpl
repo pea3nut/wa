@@ -95,7 +95,7 @@
         //设定主部分高度
         $('#my-body').css("min-height",innerHeight-100);
         $(window).on("resize",function(){
-            $('#my-body').css("min-height",innerHeight-100));
+            $('#my-body').css("min-height",innerHeight-100);
         });
         $(document.body).css("background","url(__IMAGE__/bg.png) center")
         //导航条反色

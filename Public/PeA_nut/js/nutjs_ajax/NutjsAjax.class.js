@@ -33,6 +33,7 @@ jQuery.NutjsAjax.prototype ={
             var eltType='';
             //## 判断元素类型，获取数据
             switch(tpElt.prop('tagName').toLowerCase()){
+                case 'textarea':
                 case 'select':
                     this.fieldData[tpElt.attr("name")]=tpElt.val();
                     break;
@@ -40,6 +41,7 @@ jQuery.NutjsAjax.prototype ={
                     switch(tpElt.attr('type')){
                         case 'text':
                         case 'password':
+                        case 'hidden':
                             this.fieldData[tpElt.attr("name")]=tpElt.val();
                             break;
                         case 'radio':
@@ -48,7 +50,12 @@ jQuery.NutjsAjax.prototype ={
                     };
                     break;
                 default:
-                    
+                    try{
+                        this.fieldData[tpElt.attr("name")]=tpElt.val();
+                    }catch(e){
+                        console.error(e);
+                    };
+                    break;
             };
         };
     },

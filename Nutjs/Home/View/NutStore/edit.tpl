@@ -1,6 +1,16 @@
 <extend name="./Nutjs/Home/Public/Include/basic.tpl" />
 <block name="head">
     <load href="__STYLE__/basic.css" />
+    <style>
+        .upload_img{
+            cursor:pointer;
+            border: 1px solid #ddd;
+        }
+        .works-banner-progress-shell{
+            border-top-left-radius:0;
+            border-top-right-radius:0;
+        }
+    </style>
 </block>
 <block name="body">
     <div class="container my-body">
@@ -15,14 +25,19 @@
 
     <script src="__PUBLIC__/PeA_nut/js/nutjs_ajax/NutjsAjax.class.js" type="text/javascript" charset="utf-8"></script>
     <script src="__PUBLIC__/PeA_nut/js/nutjs_ajax/errcode.json.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Library/uploader/src/dmuploader.min.js" type="text/javascript" charset="utf-8"></script>
     <script type="text/javascript">$(function(){
-    sign_ajax(
-        {
-            "text"  :["[name='works_name']" ,"[name='works_intro']" ,"[name='price']","[name='works_id']"],
-            "select":"[name='works_state']",
-            "file"  :"[name='banner']"
-        },
-        NUT.URL_ROOT+"Service/ns_edit_works"
-    );
+        //注册Ajax
+        sign_ajax(
+            [
+                "[name='works_name']" ,"[name='works_intro']",
+                "[name='price']"      ,"[name='works_id']",
+                "[name='works_state']"
+            ],
+            NUT.URL_ROOT+"/Service/ns_edit_works",
+            function(){location.reload();}
+        );
+        //注册上传
+        sign_upload("{:U('Behavior/upload/works_banner/'.$_data['works']['inf']['id'])}");
     })</script>
 </block>

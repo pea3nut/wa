@@ -80,7 +80,6 @@
         </div>
         <div class="clearfix"></div>
     </div>
-            
 </div>
 
 <script src="__PUBLIC__/PeA_nut/js/nutjs_ajax/NutjsAjax.class.js" type="text/javascript" charset="utf-8"></script>

@@ -7,8 +7,8 @@
             text-align: right;
         }
         .works-name{
-            text-overflow:ellipsis; 
-            white-space:nowrap; 
+            text-overflow:ellipsis;
+            white-space:nowrap;
             overflow:hidden;
             margin:0 0 5px 0;
         }
@@ -18,7 +18,7 @@
             font-weight: 700;
         }
         .works-intro{
-            text-overflow:ellipsis; 
+            text-overflow:ellipsis;
             overflow:hidden;
             height: 60px;
             white-space: nowrap;
@@ -61,13 +61,13 @@
         <li role="presentation"><a target="_self" href="{:U('NutStore/works_list/price/asc')}">价格</a></li>
     </if>
 </ul>
-    
+
     <section class="row">
     <volist name="_data.works" id="works">
         <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail">
                 <a href="{:U(CONTROLLER_NAME.'/works/'.$works['inf']['id'])}">
-                    <img src="__IMAGE__/article/{$works.inf.id}.jpg" alt="banner" class="img-banner" />
+                    <img src="__IMAGE__/article/works-{$works.inf.id}.jpg" alt="banner" class="img-banner" />
                 </a>
                 <div class="caption">
                     <h3 class="works-name">{$works.inf.works_name}</h3>

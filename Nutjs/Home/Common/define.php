@@ -13,8 +13,8 @@ define('RegExp_gender'      ,'/^[1|2]$/' ,true);
 define('RegExp_qq'          ,'/^\d{5,11}$/' ,true);
 define('RegExp_state'       ,'/^\d{3}$/' ,true);
 define('RegExp_works_state' ,'/^[-1|0|1|2]$/' ,true);
-define('RegExp_Number'      ,'/^\d+$/' ,true);
 define('RegExp_Letter'      ,'/^\w+$/' ,true);
+define('RegExp_Number'      ,'/^\d+$/' ,true);
 define('RegExp_Integer'     ,'/^\-?\d+$/' ,true);
 //将errorCode数组转换成常量
 //格式define('EC_[错误码]','[错误码],[错误信息]！');

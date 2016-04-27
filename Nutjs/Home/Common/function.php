@@ -91,9 +91,10 @@ function log_in($uid){
  *
  * @param $return Bool 若为true，则将格式好的信息返回，不打印也不退出
  * @param $extra Array 额外添加的数据
+ * @param $noToLower Boll 不进行强制小写转换
  * @return String/Void 若$return为true则返回Json字符串
  * */
-function drop($msg ,$return=false ,$extra=null){
+function drop($msg ,$return=false ,$extra=null ,$noToLower=false){
     //最终要格式化的对象
     $reArray=array();
     //最终返回的信息
@@ -120,7 +121,8 @@ function drop($msg ,$return=false ,$extra=null){
     };
     //根据调试模式状态格式化JSON数据
     $json_option =APP_DEBUG ? JSON_UNESCAPED_UNICODE : JSON_FORCE_OBJECT;
-    $reMsg =mb_strtolower(json_encode($reArray,$json_option));
+    $reMsg =json_encode($reArray,$json_option);
+    if(!$noToLower)$reMsg =mb_strtolower($reMsg);
     //返回JSON数据
     header('Content-Type:application/json; charset=utf-8');
     if($return) return $reMsg;
