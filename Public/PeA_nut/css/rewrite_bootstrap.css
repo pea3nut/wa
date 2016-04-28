@@ -5,6 +5,7 @@ body ,.default-font{
 a{
     text-decoration: underline;
     color:#026fe6;
+    cursor: pointer;
 }
 a[role='button'],.nav a,a.list-group-item{
     text-decoration: none;

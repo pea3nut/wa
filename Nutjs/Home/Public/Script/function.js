@@ -53,7 +53,6 @@ function sign_ajax($field ,$url ,$onSuccsee){
     });
 };
 
-
 function sign_upload($url){
     $(".upload_call_file").prop("disabled",false);
     $(".upload_group").dmUploader({
@@ -102,3 +101,26 @@ function sign_upload($url){
     });
 };
 
+
+function get_short_date(){
+    var D =new Date();
+    return  D.getFullYear()+"-"
+            +((D.getMonth()>=10)?(+D.getMonth()+1):("0"+(+D.getMonth()+1)))
+            +"-"
+            +D.getDate()
+    ;
+};
+function get_long_date(){
+    var D =new Date();
+    return  D.getFullYear()+"-"
+            +((D.getMonth()>=10)?(+D.getMonth()+1):("0"+(+D.getMonth()+1)))
+            +"-"
+            +D.getDate()
+            +" "
+            +((D.getHours()>=10)?(+D.getHours()+1):("0"+(+D.getHours()+1)))
+            +":"
+            +((D.getMinutes()>=10)?(+D.getMinutes()+1):("0"+D.getMinutes()))
+            +":"
+            +((D.getSeconds()>=10)?(+D.getSeconds()+1):("0"+D.getSeconds()))
+    ;
+};

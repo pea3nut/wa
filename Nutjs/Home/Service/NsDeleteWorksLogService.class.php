@@ -12,12 +12,12 @@ class NsDeleteWorksLogService{
         //校验登陆信息
         test_token() or drop(EC_4J41);
         //校验字段
-        preg_match(RegExp_Number, I('get.log_id'))   or drop(EC_4J31);
+        preg_match(RegExp_Number, I('post.log_id'))   or drop(EC_4J31);
         //定位记录
         $sectionMo = new NsUpdateLogModel();
         $sectionMo->limit(1);
         $sectionMo->where(array(
-            'id'   =>I('get.log_id')
+            'id'   =>I('post.log_id')
         ));
         //校验是否有权限进行此操作
         $this->checkPermissions() or drop(EC_4J42);
@@ -42,7 +42,7 @@ class NsDeleteWorksLogService{
         //通过log_id获得works_id
         $logMo =new \Home\Model\NsUpdateLogModel();
         $logMo ->where(array(
-            'id'         =>I('get.log_id'),
+            'id'         =>I('post.log_id'),
         ));
         $worksId =$logMo->getField('works_id');
         $worksId or drop(EC_4J43);

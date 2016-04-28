@@ -5,7 +5,7 @@ jQuery.NutjsAjax =function ($option){
     this.fieldData={};
     //# 默认回调解析配置
     this.showMsgFn  =$option.showMsgFn;
-    this.alertMsgFn =$option.alertMsgFn;
+    this.alertMsgFn =$option.alertMsgFn ?$option.alertMsgFn :function($msg){alert($msg);};
     //# 要请求的地址
     this.reqUrl     =$option.reqUrl?$option.reqUrl:document.URL;
     //# 发送模式
@@ -47,6 +47,13 @@ jQuery.NutjsAjax.prototype ={
                         case 'radio':
                             this.fieldData[tpElt.attr("name")] =tpElt.filter(':checked').val();
                             break;
+                        default:
+                            try{
+                                this.fieldData[tpElt.attr("name")]=tpElt.val();
+                            }catch(e){
+                                console.error(e);
+                            };
+                            break;
                     };
                     break;
                 default:
@@ -73,7 +80,7 @@ jQuery.NutjsAjax.prototype ={
         }
         //解析动作指令
         this.analytic(actionObj);
-        if($data["errcode"] =='1200')this.onSuccsee($data);
+        if($data["errcode"] =='1200')this.onSuccsee.call(this ,$data);
     },
     //发送Ajax请求
     "send"              :function(){
