@@ -27,6 +27,7 @@ class MntController extends Controller {
     }
     public function __construct(){
         header("Content-type: text/html; charset=utf-8");
+        C('SHOW_PAGE_TRACE',true);
         parent::__construct();
     }
 }

@@ -65,6 +65,10 @@ jQuery.NutjsAjax.prototype ={
                     break;
             };
         };
+        // 删除无值的字段
+        for(var key in this.fieldData){
+            if(this.fieldData[key]==='') delete this.fieldData[key];
+        };
     },
     //默认的Ajax回调函数
     "defaultCallBack"   :function($data){

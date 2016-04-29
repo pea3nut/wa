@@ -51,11 +51,11 @@ class ClockModel extends RelationModel{
      * @access protected
      * */
     protected $_auto=array(
-        //新增数据时，id字段不允许有值
-        array('id'     ,''                     ,self::MODEL_INSERT  ,'string'),  //id 12
-        array('id'     ,''                     ,self::MODEL_INSERT  ,'ignore'),  //id 12
+        //清除所有对于ID的操作
+        array('id'     ,''                     ,self::MODEL_BOTH  ,'string'),  //id 1234
+        array('id'     ,''                     ,self::MODEL_BOTH  ,'ignore'),  //id 1234
         //插入时，自动获取当前时间
-        array('date'   ,Short_Date             ,self::MODEL_BOTH    ,'string'),//date 1234
+        array('date'   ,Short_Date             ,self::MODEL_BOTH  ,'string'),//date 1234
     );
     /**
      * 校验字段的规则
@@ -68,6 +68,5 @@ class ClockModel extends RelationModel{
         array('uid'    ,RegExp_uid        ,EC_5731    ,self::MUST_VALIDATE     ,'regex'    ,self::MODEL_INSERT),//uid 12
         //若字段存在，则验证
         array('uid'    ,RegExp_uid        ,EC_5731    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//uid 4
-        array('id'     ,RegExp_Number     ,EC_5732    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//id 4
     );
 }

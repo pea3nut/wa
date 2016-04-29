@@ -5,6 +5,8 @@
  * @param {Number} works_id 请求的works_id
  * */
 function sign_log_event(create_url ,delete_url,works_id){
+//清除按钮禁用
+$(".log_list button").removeProp("disabled");
 //创建日志表单
 $(".log_create").on("click",function(){
     $(".log_list").append('\
@@ -12,7 +14,7 @@ $(".log_create").on("click",function(){
             <td><input type="text" name="log" value="Fix bug." /></td>\
             <td><input type="date" name="date" value="'+get_short_date()+'" /></td>\
             <td class="text-right">\
-                <button class="btn btn-default btn-xs log_submit">保存</button>\
+                <button class="btn btn-success btn-xs log_submit">保存</button>\
                 <button class="btn btn-danger btn-xs log_del_form">删除</button>\
                 <div class="text-danger log_errmsg"></div>\
                 <input type="hidden" name="log_id" class="log_id" value="0" />\

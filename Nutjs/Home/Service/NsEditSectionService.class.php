@@ -21,8 +21,7 @@ class NsEditSectionService{
         ) or drop($sectionMo->getError());
         //定位修改的记录
         $sectionMo->where(array(
-            'works_id'   =>I('post.works_id'),
-            'section_id' =>I('post.section_id')
+            'id'   =>I('post.id'),
         ));
         //校验是否有权限进行此操作
         $this->checkPermissions() or drop(EC_4E42);
@@ -41,12 +40,12 @@ class NsEditSectionService{
      * @return bool
      * */
     protected function checkPermissions(){
-        $mo =new \Home\Model\NsWorksListModel();
+        $mo =new \Home\Model\NsSectionModel();
+        $mo->relation('works');
         $mo ->where(array(
-            'id'         =>I('post.works_id'),
-            'author_uid' =>cookie('uid')
+            'id'   =>I('post.id'),
         ));
         $data =$mo->find();
-        return !empty($data);
+        return ($data['works']['author_uid'] ==cookie('uid'));
     }
 }

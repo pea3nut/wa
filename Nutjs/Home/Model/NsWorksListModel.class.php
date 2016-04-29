@@ -90,9 +90,9 @@ class NsWorksListModel extends RelationModel{
      * @access protected
      * */
     protected $_auto=array(
-        //新增数据时，id字段不允许有值
-        array('id'              ,''                                 ,self::MODEL_INSERT ,'string'),  //id 12
-        array('id'              ,''                                 ,self::MODEL_INSERT ,'ignore'),  //id 12
+        //清除所有对于ID的操作
+        array('id'              ,''                                 ,self::MODEL_BOTH   ,'string'),  //id 1234
+        array('id'              ,''                                 ,self::MODEL_BOTH   ,'ignore'),  //id 1234
         //使用htmlspecialchars过滤文本字段
         array('works_name'      ,'htmlspecialchars'                 ,self::MODEL_BOTH   ,'function'),//works_name 24
         array('works_intro'     ,'htmlspecialchars'                 ,self::MODEL_BOTH   ,'function'),//works_intro 24
@@ -125,7 +125,6 @@ class NsWorksListModel extends RelationModel{
         array('price'           ,RegExp_Number     ,EC_5934    ,self::MUST_VALIDATE    ,'regex'    ,self::MODEL_INSERT),//price 12
         //更新时，如果存在就验证的字段
         array('author_uid'      ,RegExp_uid        ,EC_5931    ,self::EXISTS_VALIDATE  ,'regex'    ,self::MODEL_UPDATE),//author_uid 4
-        array('id'              ,RegExp_Number     ,EC_5935    ,self::EXISTS_VALIDATE  ,'regex'    ,self::MODEL_UPDATE),//id 4
         array('works_state'     ,RegExp_works_state,EC_5932    ,self::EXISTS_VALIDATE  ,'regex'    ,self::MODEL_UPDATE),//works_state 4
         array('price'           ,RegExp_Number     ,EC_5934    ,self::EXISTS_VALIDATE ,'regex'    ,self::MODEL_UPDATE),//price 4
     );

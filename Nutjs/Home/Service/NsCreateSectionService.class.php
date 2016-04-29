@@ -28,8 +28,8 @@ class NsCreateSectionService{
             $sectionMo->fetchSql(true);
         };
         //获取数据库返回值
-        $sectionMo->add() or drop(EC_4D52);
-        echo drop('1200,'.$sectionMo->section_id ,true);
+        $id =$sectionMo->add() or drop(EC_4D52);
+        echo drop('1200,'.$sectionMo->section_id ,true,array('id'=>$id));
     }
     /**
      * 检测是否是作品作者

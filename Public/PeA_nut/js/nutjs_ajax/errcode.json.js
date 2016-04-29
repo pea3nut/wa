@@ -219,17 +219,17 @@ $.NutjsAjax.prototype.errcode ={
         "errElt"    :true,
     },
     
-    "4E31":{
+    "4J31":{
         "showMsg"   :"日志ID格式不正确",
         "errElt"    :"[name='log_id']",
     },
-    "4E41":siObj,
-    "4E42":accObj,
-    "4E43":{
+    "4J41":siObj,
+    "4J42":accObj,
+    "4J43":{
         "showMsg"   :"找不到对应ID的日志",
         "errElt"    :"[name='log_id']",
     },
-    "4E51":{
+    "4J51":{
         "showMsg"   :"日志删除失败，请联系网站管理员",
         "errElt"    :true,
     },

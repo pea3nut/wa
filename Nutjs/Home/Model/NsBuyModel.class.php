@@ -72,7 +72,6 @@ class NsBuyModel extends RelationModel{
         //更新时，若存在则校验字段
         array('uid'      ,RegExp_uid     ,EC_5A31    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//uid 4
         array('works_id' ,'number'       ,EC_5A32    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//works_id 4
-        array('id'       ,'number'       ,EC_5A35    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//id 4
     );
     /**
      * 自动完成字段
@@ -80,9 +79,9 @@ class NsBuyModel extends RelationModel{
      * @access protected
      * */
     protected $_auto=array(
-        //新增数据时，清楚所有对于ID的操作
-        array('id'       ,''                         ,self::MODEL_INSERT       ,'string'),  //id 12
-        array('id'       ,''                         ,self::MODEL_INSERT       ,'ignore'),  //id 12
+        //清除所有对于ID的操作
+        array('id'       ,''                         ,self::MODEL_BOTH       ,'string'),  //id 1234
+        array('id'       ,''                         ,self::MODEL_BOTH       ,'ignore'),  //id 1234
         //插入时，若score字段为空或不存在，则赋值为-1
         array('score'    ,'setScore'                 ,self::MODEL_INSERT       ,'callback'),//score 1
     );

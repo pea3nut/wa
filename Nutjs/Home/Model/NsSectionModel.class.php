@@ -69,10 +69,9 @@ class NsSectionModel extends RelationModel{
         //若section_id存在则需要校验
         array('section_id'  ,'number'         ,EC_5B33    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_BOTH),//section_id 24
         //新增数据时，若section_id有值，则检查works_id下的section_id是否可用
-        array('section_id'  ,'checkSectionId' ,EC_5B41    ,self::EXISTS_VALIDATE    ,'function' ,self::MODEL_INSERT),//section_id 24
+        array('section_id'  ,'checkSectionId' ,EC_5B41    ,self::EXISTS_VALIDATE    ,'callback' ,self::MODEL_INSERT),//section_id 24
         //更新时，若存在则校验
         array('works_id'    ,'number'         ,EC_5B31    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//works_id 4
-        array('id'          ,'number'         ,EC_5B34    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//id 4
     );
     /**
      * 自动完成字段
@@ -84,9 +83,9 @@ class NsSectionModel extends RelationModel{
         array('update_date'  ,Short_Date             ,self::MODEL_BOTH    ,'string'),//update_date 1234
         //使用htmlspecialchars过滤输入字段
         array('section_name' ,'htmlspecialchars'     ,self::MODEL_BOTH    ,'function'),//works_name 24
-        //新增数据时，清楚所有对于ID的操作
-        array('id'           ,''                     ,self::MODEL_INSERT  ,'string'),  //id 12
-        array('id'           ,''                     ,self::MODEL_INSERT  ,'ignore'),  //id 12
+        //清除所有对于ID的操作
+        array('id'           ,''                     ,self::MODEL_BOTH    ,'string'),  //id 1234
+        array('id'           ,''                     ,self::MODEL_BOTH    ,'ignore'),  //id 1234
         //若section_id无值则自动增长
         array('section_id'   ,'setSectionId'         ,self::MODEL_INSERT  ,'callback'),////section 1
     );

@@ -63,7 +63,6 @@ class NsUpdateLogModel extends RelationModel{
         array('works_id' ,'number'       ,EC_5C31    ,self::MUST_VALIDATE      ,'regex'    ,self::MODEL_INSERT),//works_id 12
         //若字段存在则验证格式
         array('works_id' ,'number'       ,EC_5C31    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//works_id 4
-        array('id'       ,'number'       ,EC_5C32    ,self::EXISTS_VALIDATE    ,'regex'    ,self::MODEL_UPDATE),//id 4
     );
     /**
      * 自动完成字段
@@ -71,9 +70,9 @@ class NsUpdateLogModel extends RelationModel{
      * @access protected
      * */
     protected $_auto=array(
-        //新增数据时，清楚所有对于ID的操作
-        array('id'    ,''                     ,self::MODEL_INSERT  ,'string'),  //id 12
-        array('id'    ,''                     ,self::MODEL_INSERT  ,'ignore'),  //id 12
+        //清除所有对于ID的操作
+        array('id'    ,''                     ,self::MODEL_BOTH    ,'string'),  //id 1234
+        array('id'    ,''                     ,self::MODEL_BOTH    ,'ignore'),  //id 1234
         //更新和新增时若date为空则记录当前时间
         array('date'  ,'get_sql_short_date'   ,self::MODEL_BOTH    ,'function'),//date 1234
         //若log为空则填充默认值
