@@ -36,7 +36,7 @@ class NsEditWorksService{
         //写入数据库
         $worksMo->save()    or drop(EC_4B51.$worksMo->getError());
         //移动Banner
-        $banner_path ='./Nutjs/Upload/'.cookie('uid').'/works-banner-'.I('post.works_id').'.jpg';
+        $banner_path ='./Nutjs/Upload/'.cookie('uid').'/works/'.I('post.works_id').'/inf/banner.jpg';
         if(file_exists($banner_path)){
             rename($banner_path, './Nutjs/Home/Public/Image/NutStore/article/works-'.I('post.works_id').'.jpg');
             unlink($banner_path);

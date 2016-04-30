@@ -80,6 +80,6 @@
             }
         );
         // 注册文件上传
-        sign_upload("{:U('Behavior/upload/works_banner')}");
+        sign_upload_banner("{:U('Behavior/upload/works_banner')}");
     })</script>
 </block>

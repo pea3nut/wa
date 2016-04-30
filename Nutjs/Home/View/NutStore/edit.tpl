@@ -33,14 +33,40 @@
                             <tr class="section_row">
                                 <td>
                                     <span class="section_id">{$section.section_id}</span>
-                                    <input type="text" name="section_id" style="display: none;" />
+                                    <input type="text" name="section_id" style="display: none;" value="{$section.section_id}" />
                                     <input type="hidden" name="id" value="{$section.id}" />
                                 </td>
                                 <td>
                                     <span class="section_name">{$section.section_name}</span>
-                                    <input type="text" name="section_name" style="display: none;" />
+                                    <input type="text" name="section_name" style="display: none;" value="{$section.section_name}" />
                                 </td>
-                                <td><a href="{:U('NutStore/read/'.$section['works_id'].'/'.$section['section_id'])}">MarkDown</a></td>
+                                <td>
+                                    <input type="file" name="file" class="hidden section_upload" />
+                                    <php>
+                                        $no=$has=$change='none';
+                                        if($section['has_edit_md']){
+                                            $change='block';
+                                        }else{
+                                            if($section['has_md']){
+                                                $has='block';
+                                            }else{
+                                                $no='block';
+                                            };
+                                        };
+                                    </php>
+                                    <div class="segr-secgr-no" style="display: {$no};">
+                                        <button class="btn btn-default btn-xs section_upload_btn">上传章节</button>
+                                    </div>
+                                    <div class="segr-secgr-has" style="display: {$has};">
+                                        <a href="{:U('NutStore/read/'.$section['works_id'].'/'.$section['section_id'])}">查看</a>
+                                        <button class="btn btn-default btn-xs section_upload_btn">重新上传</button>
+                                    </div>
+                                    <div class="segr-secgr-change" style="display: {$change};">
+                                        <a href="{$section['has_edit_md']}">查看</a>
+                                        <button class="btn btn-default btn-xs section_upload_btn">重新上传</button>
+                                        <button class="btn btn-danger btn-xs section_upload_btn">还原改动</button>
+                                    </div>
+                                </td>
                                 <td>
                                     <div class="segr-btngr-default">
                                         <button class="btn btn-info btn-xs section_edit">编辑</button>
@@ -58,6 +84,7 @@
                                 </td>
                             </tr>
                         </volist>
+                        
                     </tbody>
                 </table>
             </div>
@@ -109,9 +136,59 @@
             function(){location.reload();}
         );
         //注册上传
-        sign_upload("{:U('Behavior/upload/works_banner/'.$_data['works']['inf']['id'])}");
+        sign_upload_banner("{:U('Behavior/upload/works_banner')}" ,"{$_data.works.inf.id}");
         //注册章节操作
         
+        
+        //上传章节Markdown
+        $(".section_list").delegate(".section_upload_btn" ,"click" ,function(event){
+            var sendElt =$(this);
+            var eltGroup =sendElt.parents(".section_row");
+            var fileInput =eltGroup.find(".section_upload");
+            
+            var $url ="{:U('Behavior/upload/works_section/')}";
+            var $works_id ="{$_data['works']['inf']['id']}";
+            var $section_id =eltGroup.find("[name='section_id']").val();
+            
+            eltGroup.dmUploader({
+                "url"             : $url,
+                "dataType"        : "json",
+                "maxFileSize"     : 102400,
+                "extFilter"       : "md",
+                "onUploadSuccess" : function($id ,$data){
+                    if($data.errcode == '1200'){
+                        eltGroup.find(".segr-secgr-has").hide();
+                        eltGroup.find(".segr-secgr-no").hide();
+                        eltGroup.find(".segr-secgr-change").show();
+                    }else {
+                        $(".section_errmsg").html($data.errmsg).show();
+                    }
+                    $(".upload_msg").hide();
+                },
+                "onUploadError"   : function(id, message){
+                    $(".section_errmsg").html(message).show();
+                },
+                "onFileSizeError" : function(file){
+                    $(".section_errmsg").html("文件过大，请上传100k以下的md文件").show();
+                },
+                "onFileExtError"  : function(file){
+                    $(".upload_msg").html("仅支持md文件").show();
+                },
+                "onBeforeUpload"  : function(id){
+                    console.log(sendElt);
+                    sendElt.prop("disabled",true);
+                },
+                "onComplete"      : function(){
+                    sendElt.prop("disabled",false);
+                },
+                "extraData"       : {
+                    "works_id"  :$works_id,
+                    "section_id":$section_id
+                }
+            });
+            
+            fileInput.click();
+        });
         //清除按钮禁用
         $(".section_list button").removeProp("disabled");
         //创建章节表单
@@ -207,7 +284,7 @@
             ajax_req.fieldData["works_id"]="{$_data.works.inf.id}";
             ajax_req.send();
         });
-        //删除日志
+        //删除章节
         $(".section_list").delegate(".section_del" ,"click" ,function(event){
             var sendElt =$(this);
             var eltGroup =sendElt.parents(".section_row");

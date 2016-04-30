@@ -13,10 +13,10 @@ class BehaviorController extends Controller {
      * @param String $type 本次上传的标识
      * @param Mixed $data 附件的数据
      * */
-    public function upload($type ,$data=''){
+    public function upload($type ,$data=''){sleep(5);
         # 该方法是敏感的，需要登陆Token和字段过滤
         test_token()                 or drop(false);
-        preg_match('/^\w*$/', $data) or drop(false);
+        preg_match('/^[\w,]*$/', $data) or drop(false);
         # 实例化Upload类
         $upload = new \Think\Upload();
         $upload  ->rootPath = './Nutjs/Upload/';
@@ -25,24 +25,39 @@ class BehaviorController extends Controller {
         # 根据$type值执行对应操作
         switch ($type){
             case 'works_banner':
-                if(empty($data)){
-                    $file_name ='works-banner-submit.jpg';
+                $works_id =(int)I('post.works_id');
+                if(empty($works_id)){
+                    $upload  ->savePath = cookie('uid').'/works/auto/inf/';
                 }else{
-                    $file_name ="works-banner-{$data}.jpg";
+                    $upload  ->savePath = cookie('uid')."/works/{$works_id}/inf/";
                 };
-                $this->worksBanner($upload ,$file_name);
+                $this->worksBanner($upload);
+                break;
+            case 'works_section':
+                $works_id =(int)I('post.works_id');
+                $section_id =(int)I('post.section_id');
+                if(empty($section_id) && I('post.section_id') !=='0'){
+                    $upload  ->savePath = cookie('uid')."/works/{$works_id}/section/auto/";
+                }else{
+                    $upload  ->savePath = cookie('uid')."/works/{$works_id}/section/{$section_id}/";
+                };
+                $this->worksSection($upload);
+                break;
+            default:
+                drop(false);
                 break;
         }
     }
     /**
      * 作品上传Banner
-     * @access protr
+     * @param $upload Upload对象
+     * @access protected
      * */
-    protected function worksBanner($upload ,$file_name){
+    protected function worksBanner($upload){
         # 初始化
+        $file_name ='banner.jpg';
         $upload  ->maxSize  = 2097152 ;
         $upload  ->exts     = array('jpg', 'gif', 'png', 'jpeg');
-        $upload  ->savePath = cookie('uid').'/';
         # 上传文件
         $info = $upload->uploadOne($_FILES['file']);
         if(!$info) {// 上传错误提示错误信息
@@ -57,8 +72,26 @@ class BehaviorController extends Controller {
             ## 删除源文件
             unlink($img_dir.$info['savename']);
             # 返回信息
-            $img_url   =substr($img_dir.$file_name ,1);
-            echo drop('1200,'.URL_ROOT.$img_url ,true ,null ,true);
+            $img_url   =toURL($img_dir.$file_name);
+            echo drop('1200,'.$img_url ,true ,null ,true);
+        };
+    }
+    /**
+     * 作品上传章节
+     * @param $upload Upload对象
+     * @access protected
+     * */
+    protected function worksSection($upload){
+        # 初始化
+        $upload  ->maxSize  = 102400 ;
+        $upload  ->exts     = array('md');
+        $upload  ->saveName = 'section';
+        # 上传文件
+        $info = $upload->uploadOne($_FILES['file']);
+        if(!$info) {// 上传错误提示错误信息
+            drop('1201,'.$upload->getError());
+        }else{// 上传成功
+            drop(true);
         };
     }
     /*! =====特殊方法=====*/

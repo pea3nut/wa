@@ -5,8 +5,18 @@ use Think\Model;
 
 
 
-
-
+/**
+ * 将路径转换为URL路径
+ * @param String $path 要转换的路径，支持相对和绝对路径
+ * @return String 可以直接被使用的URL
+ * */
+function toURL($path){
+    $project_root =realpath('./');
+    $target_path =realpath($path);
+    $url =str_replace($project_root, URL_ROOT, $target_path);
+    $url=str_replace('\\','/',$url);
+    return $url;
+};
 /**
  * 检查用户是否有效登陆
  * 若未登录则直接跳转到登陆页面
@@ -17,9 +27,6 @@ function test_control_login(){
         test_token() or $this->error('请重新登录' ,'sign_in');
     };
 };
-
-
-
 /**
  * 生成给定长度的随机字符串
  * @param string $code 用户输入的验证码字符串

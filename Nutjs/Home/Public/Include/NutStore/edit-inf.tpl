@@ -19,13 +19,11 @@
         <div class="form-group upload_group">
             <label class="col-sm-3 control-label" for="banner">Banner</label>
             <div class="col-sm-8">
-                <img alt="Upload img" class="img-responsive upload_img upload_call_file" />
-                <script type="text/javascript">
-                    //图片加载失败
-                    $(".upload_img").on('error',function(){
-                        this.src="__PUBLIC__/Library/Image/no-image.png";
-                    }).prop("src",NUT.URL_ROOT+"/Nutjs/Upload/{$_data.user.uid}/works-banner-{$_data.works.inf.id}.jpg");
-                </script>
+                <empty name="_data.works.inf.edit_banner">
+                    <img alt="Upload img" class="img-responsive upload_img upload_call_file" src="{$_data.works.inf.banner|default='__PUBLIC__/Library/Image/no-image.png'}" />
+                <else />
+                    <img alt="Upload img" class="img-responsive upload_img upload_call_file" src="{$_data.works.inf.edit_banner}" />
+                </empty>
                 <div class="progress works-banner-progress-shell" style="display: none;">
                     <div class="works-banner-progress progress-bar progress-bar-striped progress-bar-success active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;">
                         0%

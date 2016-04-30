@@ -53,7 +53,7 @@ function sign_ajax($field ,$url ,$onSuccsee){
     });
 };
 
-function sign_upload($url){
+function sign_upload_banner($url ,$works_id){
     $(".upload_call_file").prop("disabled",false);
     $(".upload_group").dmUploader({
         "url"             : $url,
@@ -94,6 +94,9 @@ function sign_upload($url){
         },
         "onComplete"      : function(){
             $(".upload_call_file").prop("disabled",false);
+        },
+        "extraData"       : {
+            "works_id"  :$works_id
         }
     });
     $(".upload_call_file").on("click",function(){

@@ -41,7 +41,7 @@ class NsCreateWorksService{
             drop(EC_4A51.$worksMo->getError());
         }
         //移动Banner
-        $banner_path ='./Nutjs/Upload/'.cookie('uid').'/works-banner-real.jpg';
+        $banner_path ='./Nutjs/Upload/'.cookie('uid').'/works/auto/inf/banner.jpg';
         if(file_exists($banner_path)){
             rename($banner_path, './Nutjs/Home/Public/Image/NutStore/article/works-'.$insetId.'.jpg');
             unlink($banner_path);

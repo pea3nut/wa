@@ -28,4 +28,4 @@ define('Long_Date'       ,date('Y-m-d H:i:s') ,true);
 //其他常量
 define('Project_Version' ,'5.0.1' ,true);
 //站点URL根路径
-define('URL_ROOT', dirname($_SERVER['SCRIPT_NAME']));
+define('URL_ROOT', dirname('http://'.$_SERVER['HTTP_HOST'].$_SERVER['SCRIPT_NAME']));
