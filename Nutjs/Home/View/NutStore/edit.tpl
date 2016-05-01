@@ -62,7 +62,7 @@
                                         <button class="btn btn-default btn-xs section_upload_btn">重新上传</button>
                                     </div>
                                     <div class="segr-secgr-change" style="display: {$change};">
-                                        <a href="{$section['has_edit_md']}">查看</a>
+                                        <a href="{$section['has_edit_md']}">未保存的章节</a>
                                         <button class="btn btn-default btn-xs section_upload_btn">重新上传</button>
                                         <button class="btn btn-danger btn-xs section_upload_btn">还原改动</button>
                                     </div>

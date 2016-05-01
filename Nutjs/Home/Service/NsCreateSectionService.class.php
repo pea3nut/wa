@@ -29,6 +29,13 @@ class NsCreateSectionService{
         };
         //获取数据库返回值
         $id =$sectionMo->add() or drop(EC_4D52);
+        //移动章节md文件
+        $section_id =isset(I('post.section_id'))?I('post.section_id'):'auto';
+        $section_path ='./Nutjs/Upload/'.cookie('uid').'/works/'.I('post.works_id').'/section/'.$section_id.'/section.md';
+        if(file_exists($section_path)){
+            rename($section_path, './Nutjs/Home/Public/Include/NutStore/article/'.I('post.works_id')."/section-{$section_id}.md");
+            unlink($section_path);
+        };
         echo drop('1200,'.$sectionMo->section_id ,true,array('id'=>$id));
     }
     /**
