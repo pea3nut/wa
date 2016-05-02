@@ -33,6 +33,9 @@ class NsDeleteSectionService{
         if (C('Not_Submit_To_Database')) {
             echo $sql;
         };
+        //删除章节对应的Markdown
+        $section_path='./Nutjs/Home/Public/Include/NutStore/article/'.I('post.works_id').'/section-'.I('post.section_id').'.md';
+        unlink($section_path);
         drop(true);
     }
     /**

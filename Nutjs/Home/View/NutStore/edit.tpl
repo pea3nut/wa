@@ -54,6 +54,7 @@
                                             };
                                         };
                                     </php>
+                                    <div class="">{$section['has_md']}</div>
                                     <div class="segr-secgr-no" style="display: {$no};">
                                         <button class="btn btn-default btn-xs section_upload_btn">上传章节</button>
                                     </div>
@@ -64,15 +65,15 @@
                                     <div class="segr-secgr-change" style="display: {$change};">
                                         <a href="{$section['has_edit_md']}">未保存的章节</a>
                                         <button class="btn btn-default btn-xs section_upload_btn">重新上传</button>
-                                        <button class="btn btn-danger btn-xs section_upload_btn">还原改动</button>
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="segr-btngr-default">
+                                    
+                                    <div class="segr-btngr-default" style="display: {$no=='block'?$no:$has};">
                                         <button class="btn btn-info btn-xs section_edit">编辑</button>
                                         <button class="btn btn-danger btn-xs section_del">删除</button>
                                     </div>
-                                    <div class="segr-btngr-edit" style="display: none;">
+                                    <div class="segr-btngr-edit" style="display: {$change};">
                                         <button class="btn btn-success btn-xs section_save">保存</button>
                                         <button class="btn btn-default btn-xs section_cancel">取消</button>
                                     </div>
@@ -88,6 +89,7 @@
                     </tbody>
                 </table>
             </div>
+            {:var_dump($_data['works']['edit'])}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1 class="panel-title">更新日志</h1>
@@ -166,13 +168,13 @@
                     $(".upload_msg").hide();
                 },
                 "onUploadError"   : function(id, message){
-                    $(".section_errmsg").html(message).show();
+                    eltGroup.find(".section_errmsg").html(message).show();
                 },
                 "onFileSizeError" : function(file){
-                    $(".section_errmsg").html("文件过大，请上传100k以下的md文件").show();
+                    eltGroup.find(".section_errmsg").html("文件过大，请上传100k以下的md文件").show();
                 },
                 "onFileExtError"  : function(file){
-                    $(".upload_msg").html("仅支持md文件").show();
+                    eltGroup.find(".upload_msg").html("仅支持md文件").show();
                 },
                 "onBeforeUpload"  : function(id){
                     console.log(sendElt);
@@ -247,6 +249,18 @@
             eltGroup.find(".segr-btngr-edit").hide();
             eltGroup.find("[name='section_id']").hide();
             eltGroup.find("[name='section_name']").hide();
+            // 删除已上传但未保存的章节
+            $.ajax({
+                "dataType"  :'json',
+                "data"      :{
+                    "works_id"    :"{$_data.works.inf.id}",
+                    "section_id"  :eltGroup.find("[name='section_id']").val(),
+                },
+                "url"       :"{:U('Behavior/delete/works_section')}",
+                "type"      :"post",
+            });
+            //显示按钮组
+            
         });
         //创建新章节
         $(".section_list").delegate(".section_create" ,"click" ,function(event){

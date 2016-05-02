@@ -9,6 +9,38 @@ require './Public/Library/Repository/Image-master/autoload.php';
  * */
 class BehaviorController extends Controller {
     /**
+     * 删除文件行为
+     * */
+    public function delete($type){
+        # 该方法是敏感的，需要登陆Token和字段过滤
+        test_token()                 or drop(false);
+        # 白名单行为
+        switch ($type){
+            case 'works_banner':
+                $works_id =(int)I('post.works_id');
+                if(!empty($works_id)){
+                    unlink('./Nutjs/Upload/'.cookie('uid')."/works/{$works_id}/inf/banner.jpg");
+                    echo drop(true);
+                }else{
+                    drop(false);
+                };
+                break;
+            case 'works_section':
+                $works_id =(int)I('post.works_id');
+                $section_id =(int)I('post.section_id');
+                if(!empty($works_id) && (!empty($section_id) || I('post.section_id') ==='0')){
+                    unlink('./Nutjs/Upload/'.cookie('uid')."/works/{$works_id}/section/{$section_id}/section.md");
+                    echo drop(true);
+                }else{
+                    drop(false);
+                };
+                break;
+            default:
+                drop(false);
+                break;
+        };
+    }
+    /**
      * 响应上传行为
      * @param String $type 本次上传的标识
      * @param Mixed $data 附件的数据
