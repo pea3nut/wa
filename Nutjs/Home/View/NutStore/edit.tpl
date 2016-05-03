@@ -10,6 +10,9 @@
             border-top-left-radius:0;
             border-top-right-radius:0;
         }
+        .segr{
+            display:none;
+        }
     </style>
 </block>
 <block name="body">
@@ -31,65 +34,12 @@
                     <tbody class="section_list">
                         <volist name="_data.works.section" id="section">
                             <tr class="section_row">
-                                <td>
-                                    <span class="section_id">{$section.section_id}</span>
-                                    <input type="text" name="section_id" style="display: none;" value="{$section.section_id}" />
-                                    <input type="hidden" name="id" value="{$section.id}" />
-                                </td>
-                                <td>
-                                    <span class="section_name">{$section.section_name}</span>
-                                    <input type="text" name="section_name" style="display: none;" value="{$section.section_name}" />
-                                </td>
-                                <td>
-                                    <input type="file" name="file" class="hidden section_upload" />
-                                    <php>
-                                        $no=$has=$change='none';
-                                        if($section['has_edit_md']){
-                                            $change='block';
-                                        }else{
-                                            if($section['has_md']){
-                                                $has='block';
-                                            }else{
-                                                $no='block';
-                                            };
-                                        };
-                                    </php>
-                                    <div class="">{$section['has_md']}</div>
-                                    <div class="segr-secgr-no" style="display: {$no};">
-                                        <button class="btn btn-default btn-xs section_upload_btn">上传章节</button>
-                                    </div>
-                                    <div class="segr-secgr-has" style="display: {$has};">
-                                        <a href="{:U('NutStore/read/'.$section['works_id'].'/'.$section['section_id'])}">查看</a>
-                                        <button class="btn btn-default btn-xs section_upload_btn">重新上传</button>
-                                    </div>
-                                    <div class="segr-secgr-change" style="display: {$change};">
-                                        <a href="{$section['has_edit_md']}">未保存的章节</a>
-                                        <button class="btn btn-default btn-xs section_upload_btn">重新上传</button>
-                                    </div>
-                                </td>
-                                <td>
-                                    
-                                    <div class="segr-btngr-default" style="display: {$no=='block'?$no:$has};">
-                                        <button class="btn btn-info btn-xs section_edit">编辑</button>
-                                        <button class="btn btn-danger btn-xs section_del">删除</button>
-                                    </div>
-                                    <div class="segr-btngr-edit" style="display: {$change};">
-                                        <button class="btn btn-success btn-xs section_save">保存</button>
-                                        <button class="btn btn-default btn-xs section_cancel">取消</button>
-                                    </div>
-                                    <div class="segr-btngr-create" style="display: none;">
-                                        <button class="btn btn-success btn-xs section_create">保存</button>
-                                        <button class="btn btn-danger btn-xs section_del_form">删除</button>
-                                    </div>
-                                    <div class="section_errmsg text-danger"></div>
-                                </td>
+                                <include file="__INCLUDE__/edit-section_row.tpl" />
                             </tr>
                         </volist>
-                        
                     </tbody>
                 </table>
             </div>
-            {:var_dump($_data['works']['edit'])}
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h1 class="panel-title">更新日志</h1>
@@ -140,18 +90,40 @@
         //注册上传
         sign_upload_banner("{:U('Behavior/upload/works_banner')}" ,"{$_data.works.inf.id}");
         //注册章节操作
+
+        //根据raw-data，初始显示效果
+        $.each($(".section_row") ,init_section_display);
+        function init_section_display(){
+            var section_row=$(this);
+            var raw =section_row.find(".raw-data");
+            
+            $(".segr").hide();
+            if(raw.attr("has-edit-md")){
+                section_row.find(".segr-btngr-edit").show();
+                section_row.find(".segr-secgr-edit").show();
+            }else{
+                if(raw.attr("has-md")){
+                    section_row.find(".segr-btngr-default").show();
+                    section_row.find(".segr-secgr-default").show();
+                }else{
+                    section_row.find(".segr-btngr-create").show();
+                    section_row.find(".segr-secgr-create").show();
+                };
+            };
+        };
+
         
-        
+
         //上传章节Markdown
         $(".section_list").delegate(".section_upload_btn" ,"click" ,function(event){
             var sendElt =$(this);
             var eltGroup =sendElt.parents(".section_row");
             var fileInput =eltGroup.find(".section_upload");
-            
+
             var $url ="{:U('Behavior/upload/works_section/')}";
             var $works_id ="{$_data['works']['inf']['id']}";
             var $section_id =eltGroup.find("[name='section_id']").val();
-            
+
             eltGroup.dmUploader({
                 "url"             : $url,
                 "dataType"        : "json",
@@ -159,12 +131,11 @@
                 "extFilter"       : "md",
                 "onUploadSuccess" : function($id ,$data){
                     if($data.errcode == '1200'){
-                        eltGroup.find(".segr-secgr-has").hide();
-                        eltGroup.find(".segr-secgr-no").hide();
-                        eltGroup.find(".segr-secgr-change").show();
+                        eltGroup.find(".raw-data").attr("has-edit-md" ,$data.errmsg);
+                        init_section_display.call(eltGroup);
                     }else {
                         $(".section_errmsg").html($data.errmsg).show();
-                    }
+                    };
                     $(".upload_msg").hide();
                 },
                 "onUploadError"   : function(id, message){
@@ -188,7 +159,7 @@
                     "section_id":$section_id
                 }
             });
-            
+
             fileInput.click();
         });
         //清除按钮禁用
@@ -232,10 +203,15 @@
         //进入编辑章节状态
         $(".section_list").delegate(".section_edit" ,"click" ,function(event){
             var eltGroup=$(this).parents(".section_row");
+            // 在raw_data中标明编辑状态
+            eltGroup.find(".raw-data").attr("state","edit");
+            init_section_display.call(eltGroup);
+            # 未完成
+            
             var section_id =eltGroup.find(".section_id").hide().html();
             var section_name =eltGroup.find(".section_name").hide().html();
             eltGroup.find(".segr-btngr-default").hide();
-            
+
             eltGroup.find(".segr-btngr-edit").show();
             eltGroup.find("[name='section_id']").show().val(section_id);
             eltGroup.find("[name='section_name']").show().val(section_name);
@@ -243,12 +219,9 @@
         //退出编辑章节状态
         $(".section_list").delegate(".section_cancel" ,"click" ,function(event){
             var eltGroup=$(this).parents(".section_row");
-            eltGroup.find(".section_id").show();
-            eltGroup.find(".section_name").show();
-            eltGroup.find(".segr-btngr-default").show();
-            eltGroup.find(".segr-btngr-edit").hide();
-            eltGroup.find("[name='section_id']").hide();
-            eltGroup.find("[name='section_name']").hide();
+            // 在raw_data中删除
+            eltGroup.find(".raw-data").removeAttr("has-edit-md");
+            init_section_display.call(eltGroup);
             // 删除已上传但未保存的章节
             $.ajax({
                 "dataType"  :'json',
@@ -260,7 +233,7 @@
                 "type"      :"post",
             });
             //显示按钮组
-            
+
         });
         //创建新章节
         $(".section_list").delegate(".section_create" ,"click" ,function(event){
@@ -354,17 +327,17 @@
             ajax_req.fieldData["id"]=eltGroup.find("[name='id']").val();
             ajax_req.send();
         });
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
+
+
+
+
+
+
+
+
+
+
         //注册日志操作
         sign_log_event(
             "{:U('Service/ns_create_works_log')}",

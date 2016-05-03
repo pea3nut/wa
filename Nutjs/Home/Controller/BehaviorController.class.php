@@ -45,7 +45,7 @@ class BehaviorController extends Controller {
      * @param String $type 本次上传的标识
      * @param Mixed $data 附件的数据
      * */
-    public function upload($type ,$data=''){sleep(5);
+    public function upload($type ,$data=''){sleep(1);
         # 该方法是敏感的，需要登陆Token和字段过滤
         test_token()                 or drop(false);
         preg_match('/^[\w,]*$/', $data) or drop(false);
@@ -123,7 +123,9 @@ class BehaviorController extends Controller {
         if(!$info) {// 上传错误提示错误信息
             drop('1201,'.$upload->getError());
         }else{// 上传成功
-            drop(true);
+            $md_url   =$upload->rootPath .$upload->savePath .$info['savename'];
+            $md_url   =toURL($md_url);
+            echo drop('1200,'.$md_url ,true ,null ,true);
         };
     }
     /*! =====特殊方法=====*/
