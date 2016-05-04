@@ -30,8 +30,6 @@ class NsEditSectionService{
             var_dump($sectionMo->data());
             $sectionMo->fetchSql(true);
         };
-        //写入数据库
-        ($sectionMo->save() !==false)    or drop(EC_4E51.$sectionMo->getError());
         # 移动章节md文件
         ## 通过section的记录ID获取原section_id和works_id
         $works_id_old=$section_id_old='';
@@ -48,13 +46,19 @@ class NsEditSectionService{
             $works_id_new =$works_id_old;
         };
         ## 移动成新的md文件
+        ### 检查新上传的md文件
         $section_path ='./Nutjs/Upload/'.cookie('uid')."/works/$works_id_old/section/$section_id_old/section.md";
         if(file_exists($section_path)){
             $new_path="./Nutjs/Home/Public/Include/NutStore/article/{$works_id_new}/section-{$section_id_new}.md";
             rename($section_path, $new_path);
-            unlink($section_path);
+        }elseif($section_id_old !== $section_id_new){
+            $old_path="./Nutjs/Home/Public/Include/NutStore/article/{$works_id_old}/section-{$section_id_old}.md";
+            $new_path="./Nutjs/Home/Public/Include/NutStore/article/{$works_id_new}/section-{$section_id_new}.md";
+            rename($old_path, $new_path);
         };
-        drop(true);
+        //写入数据库
+        ($sectionMo->save() !==false)    or drop(EC_4E51.$sectionMo->getError());
+        echo drop(true);
     }
     /**
      * 通过章节的记录ID，获取对应的作品和章节ID

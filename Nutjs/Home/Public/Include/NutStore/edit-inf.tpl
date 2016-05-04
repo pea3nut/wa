@@ -19,6 +19,7 @@
         <div class="form-group upload_group">
             <label class="col-sm-3 control-label" for="banner">Banner</label>
             <div class="col-sm-8">
+                <div class="hide raw_data" has-banner="{$_data.works.inf.banner}" has-edit-banner="{$_data.works.inf.edit_banner}"></div>
                 <empty name="_data.works.inf.edit_banner">
                     <img alt="Upload img" class="img-responsive upload_img upload_call_file" src="{$_data.works.inf.banner|default='__PUBLIC__/Library/Image/no-image.png'}" />
                 <else />

@@ -96,23 +96,33 @@
         function init_section_display(){
             var section_row=$(this);
             var raw =section_row.find(".raw-data");
-            
+
             $(".segr").hide();
             if(raw.attr("has-edit-md")){
                 section_row.find(".segr-btngr-edit").show();
                 section_row.find(".segr-secgr-edit").show();
             }else{
+                section_row.find(".segr-btngr-default").show();
                 if(raw.attr("has-md")){
-                    section_row.find(".segr-btngr-default").show();
                     section_row.find(".segr-secgr-default").show();
                 }else{
-                    section_row.find(".segr-btngr-create").show();
                     section_row.find(".segr-secgr-create").show();
                 };
             };
-        };
 
-        
+            if(raw.attr("state") === 'edit'){
+                $("[name='section_id']")   .val( $(".section_id").hide()   .html() ) .show();
+                $("[name='section_name']") .val( $(".section_name").hide() .html() ) .show();
+                section_row.find(".segr-btngr").hide();
+                section_row.find(".segr-btngr-edit").show();
+            }else if(raw.attr("state") === 'show'){
+                $(".section_id")   .html( $("[name='section_id']").hide()   .val() ) .show();
+                $(".section_name") .html( $("[name='section_name']").hide() .val() ) .show();
+                section_row.find(".segr-btngr").hide();
+                section_row.find(".segr-btngr-default").show();
+                section_row.find(".section-read").prop("href","{:U('NutStore/read/'.$section['works_id'])}/"+ $("[name='section_id']").val());
+            };
+        };
 
         //上传章节Markdown
         $(".section_list").delegate(".section_upload_btn" ,"click" ,function(event){
@@ -206,21 +216,12 @@
             // 在raw_data中标明编辑状态
             eltGroup.find(".raw-data").attr("state","edit");
             init_section_display.call(eltGroup);
-            # 未完成
-            
-            var section_id =eltGroup.find(".section_id").hide().html();
-            var section_name =eltGroup.find(".section_name").hide().html();
-            eltGroup.find(".segr-btngr-default").hide();
-
-            eltGroup.find(".segr-btngr-edit").show();
-            eltGroup.find("[name='section_id']").show().val(section_id);
-            eltGroup.find("[name='section_name']").show().val(section_name);
         });
         //退出编辑章节状态
         $(".section_list").delegate(".section_cancel" ,"click" ,function(event){
             var eltGroup=$(this).parents(".section_row");
             // 在raw_data中删除
-            eltGroup.find(".raw-data").removeAttr("has-edit-md");
+            eltGroup.find(".raw-data").removeAttr("has-edit-md").attr("state","show");;
             init_section_display.call(eltGroup);
             // 删除已上传但未保存的章节
             $.ajax({
@@ -299,18 +300,15 @@
         $(".section_list").delegate(".section_save" ,"click" ,function(event){
             var sendElt =$(this);
             var eltGroup =sendElt.parents(".section_row");
+            var raw =eltGroup.find(".raw-data");
             //禁用按钮
             sendElt.prop("disabled",true);
             var ajax_req =new $.NutjsAjax({
                 "field"     :[eltGroup.find("[name='section_name']"),eltGroup.find("[name='section_id']")],
                 "reqUrl"    :"{:U('Service/ns_edit_section')}",
                 "onSuccsee" :function($data){
-                    //将表单转换为文本
-                    var section_id   =eltGroup.find("[name='section_id']").val();
-                    var section_name =eltGroup.find("[name='section_name']").val();
-                    eltGroup.find(".section_id").html(section_id);
-                    eltGroup.find(".section_name").html(section_name);
-                    eltGroup.find(".section_cancel").click();
+                    raw.removeAttr("has-edit-md").attr("state","show");;
+                    init_section_display.call(eltGroup);
                 },
                 "showMsgFn" :function($msg){
                     eltGroup.find(".section_errmsg").html($msg).show();
@@ -324,7 +322,7 @@
             });
             // 计算字段，发送
             ajax_req.countField();
-            ajax_req.fieldData["id"]=eltGroup.find("[name='id']").val();
+            ajax_req.fieldData["id"]=raw.attr("section-id");
             ajax_req.send();
         });
 
