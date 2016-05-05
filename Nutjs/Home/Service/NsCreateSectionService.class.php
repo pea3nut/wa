@@ -33,11 +33,16 @@ class NsCreateSectionService{
         $section_id=I('post.section_id');
         $section_id =isset($section_id)?$section_id:'auto';
         $section_path ='./Nutjs/Upload/'.cookie('uid').'/works/'.I('post.works_id').'/section/'.$section_id.'/section.md';
+        $real_section_path ='';
         if(file_exists($section_path)){
-            rename($section_path, './Nutjs/Home/Public/Include/NutStore/article/'.I('post.works_id')."/section-{$section_id}.md");
-            unlink($section_path);
+            $real_section_path ='./Nutjs/Home/Public/Include/NutStore/article/'.I('post.works_id')."/section-{$section_id}.md";
+            rename($section_path, $real_section_path);
         };
-        echo drop('1200,'.$sectionMo->section_id ,true,array('id'=>$id));
+        echo drop(true ,true ,array(
+            'id'         =>$id,
+            'section_id' =>$sectionMo->section_id,
+            'has-md'     =>$real_section_path,
+        ));
     }
     /**
      * 检测是否是作品作者

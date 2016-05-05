@@ -98,7 +98,7 @@ function log_in($uid){
  *
  * @param $return Bool 若为true，则将格式好的信息返回，不打印也不退出
  * @param $extra Array 额外添加的数据
- * @param $noToLower Boll 不进行强制小写转换
+ * @param $noToLower Bool 不进行强制小写转换
  * @return String/Void 若$return为true则返回Json字符串
  * */
 function drop($msg ,$return=false ,$extra=null ,$noToLower=false){
@@ -109,10 +109,10 @@ function drop($msg ,$return=false ,$extra=null ,$noToLower=false){
     //读取布尔参数
     if(is_bool($msg)){
         if($msg){
-            echo drop('1200,ok',true);
+            echo drop('1200,ok',true ,$extra ,$noToLower);
             return;
         }else{
-            return drop('1201,error');
+            return drop('1201,error' ,$extra ,$noToLower);
         };
     //读取字符串参数
     }else if(is_string($msg)){

@@ -10,6 +10,8 @@
     has-md="{$section['has_md']}" 
     has-edit-md="{$section['has_edit_md']}"
     section-id="{$section.id}"
+    sectionid="{$section.section_id}"
+    state=""
 ></td>
 <td>
     <input type="file" name="file" class="hidden section_upload" />
@@ -18,11 +20,11 @@
         <button class="btn btn-default btn-xs section_upload_btn">上传章节</button>
     </div>
     <div class="segr segr-secgr-default">
-        <a class="section-read" href="{:U('NutStore/read/'.$section['works_id'].'/'.$section['section_id'])}">查看</a>
+        <a class="section-md" href="{:U('NutStore/read/'.$_data['works']['inf']['id'].'/'.$section['section_id'])}">查看</a>
         <button class="btn btn-default btn-xs section_upload_btn">重新上传</button>
     </div>
     <div class="segr segr-secgr-edit">
-        <a href="{$section['has_edit_md']}">未保存的章节</a>
+        <a class="section-edit-md" href="{$section['has_edit_md']}">未保存的章节</a>
         <button class="btn btn-default btn-xs section_upload_btn">重新上传</button>
     </div>
 </td>
