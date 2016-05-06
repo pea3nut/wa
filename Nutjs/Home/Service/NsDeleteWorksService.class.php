@@ -18,7 +18,7 @@ class NsDeleteWorksService{
         $worksMo->field('id,works_state');
         $worksMo ->create(
             array(
-                'id'         =>I('get.works_id'),
+                'id'         =>I('post.works_id'),
                 'works_state'=>0,
             ),
             Model::MODEL_UPDATE
@@ -26,7 +26,7 @@ class NsDeleteWorksService{
         //校验是否有权限进行此操作
         $this->checkPermissions() or drop(EC_4C42);
         //定位修改的记录
-        $worksMo->where(array('id'=>I('get.works_id')));
+        $worksMo->where(array('id'=>I('post.works_id')));
         //若开启Not_Submit_To_Database则不提交数据库
         if (C('Not_Submit_To_Database')) {
             var_dump($worksMo->data());
@@ -44,7 +44,7 @@ class NsDeleteWorksService{
     protected function checkPermissions(){
         $mo =new NsWorksListModel();
         $mo ->where(array(
-            'id'         =>I('get.works_id'),
+            'id'         =>I('post.works_id'),
             'author_uid' =>cookie('uid')
         ));
         $data =$mo->find();

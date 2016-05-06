@@ -76,6 +76,28 @@
             <include file="__INCLUDE__/edit-inf.tpl" />
         </div>
     </div>
+    
+    
+    <!-- 删除作品的警告框 -->
+    <div class="modal fade" id="del_works" tabindex="-1" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">删除整个作品</h4>
+                </div>
+                <div class="modal-body">
+                    <p>你确定你要删除整个作品吗？</p>
+                    <p>这将是不可逆的，你将丢失作品中的所有章节与日志！！</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                    <button type="button" class="btn btn-danger del-works-all">确定删除！</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script src="__PUBLIC__/PeA_nut/js/nutjs_ajax/NutjsAjax.class.js" type="text/javascript" charset="utf-8"></script>
     <script src="__PUBLIC__/PeA_nut/js/nutjs_ajax/errcode.json.js" type="text/javascript" charset="utf-8"></script>
     <script src="__PUBLIC__/Library/uploader/src/dmuploader.min.js" type="text/javascript" charset="utf-8"></script>
@@ -112,5 +134,29 @@
             "{:U('Service/ns_delete_works_log')}",
             "{$_data.works.inf.id}"
         );
+
+        //注册删除章节
+        $(".del-works-all").on("click",function () {
+            var sendElt =$(this);
+            var ajax_req =new $.NutjsAjax({
+                "reqMode"   :"post",
+                "reqUrl"    :"{:U('Service/ns_delete_works')}",
+                "onSuccsee" :function(){
+                    location.href="{:U('member')}";
+                },
+                "showMsgFn" :function($msg){
+                    eltGroup.find(".log_errmsg").html($msg).show();
+                },
+                "callBack"  :function($data){
+                    // 恢复按钮样式
+                    sendElt.removeProp("disabled");
+                    // 执行默认的回调函数
+                    this.defaultCallBack($data);
+                }
+            });
+            ajax_req.fieldData["works_id"]="{$_data.works.inf.id}";
+            ajax_req.send();
+        });
+        // 计算字段，发送
     })</script>
 </block>

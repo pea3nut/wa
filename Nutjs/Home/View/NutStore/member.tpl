@@ -5,6 +5,9 @@
 <block name="body">
 <div class="container my-body">
 
+    <php>
+        $works_state_msg =array('已删除' ,'连载中' ,'已完结');
+    </php>
     <article class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
         <div class="panel panel-default">
             <div class="panel-heading">已购买的课程</div>
@@ -28,7 +31,7 @@
                         </empty>
                         <td>{$buyInf.works.inf.id}</td>
                         <td>{$buyInf.works.inf.price} 果仁</td>
-                        <td>{$buyInf.works.inf.works_state}</td>
+                        <td>{$buyInf['works']['inf']['works_state']}</td>
                     </tr>
                 </volist>
             </table>
@@ -49,7 +52,7 @@
                         <td>{$submit.inf.id}</td>
                         <td>{$submit.inf.works_name}</td>
                         <td>{$submit.inf.price} 果仁</td>
-                        <td>{$submit.inf.works_state}</td>
+                        <td>{$works_state_msg[$submit['inf']['works_state']]}</td>
                         <td>
                             <a href="{:U('works')}/{$submit.inf.id}">查看</a>
                             <eq name="_data.target_user.uid" value="$_data.user.uid">
