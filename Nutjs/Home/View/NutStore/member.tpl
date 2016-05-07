@@ -7,6 +7,7 @@
 
     <php>
         $works_state_msg =array('已删除' ,'连载中' ,'已完结');
+        $works_state_col =array('text-danger' ,'text-success' ,'');
     </php>
     <article class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
         <div class="panel panel-default">
@@ -52,7 +53,7 @@
                         <td>{$submit.inf.id}</td>
                         <td>{$submit.inf.works_name}</td>
                         <td>{$submit.inf.price} 果仁</td>
-                        <td>{$works_state_msg[$submit['inf']['works_state']]}</td>
+                        <td class="{$works_state_col[$submit['inf']['works_state']]}">{$works_state_msg[$submit['inf']['works_state']]}</td>
                         <td>
                             <a href="{:U('works')}/{$submit.inf.id}">查看</a>
                             <eq name="_data.target_user.uid" value="$_data.user.uid">

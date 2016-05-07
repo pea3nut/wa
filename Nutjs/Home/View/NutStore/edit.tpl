@@ -9,9 +9,14 @@
         .works-banner-progress-shell{
             border-top-left-radius:0;
             border-top-right-radius:0;
+            margin-bottom: 0;
         }
         .segr{
             display:none;
+        }
+        .has-edit-banner-msg{
+            margin:3px 0px 15px 0px;
+            text-align: center;
         }
     </style>
 </block>
@@ -87,8 +92,8 @@
                     <h4 class="modal-title">删除整个作品</h4>
                 </div>
                 <div class="modal-body">
-                    <p>你确定你要删除整个作品吗？</p>
-                    <p>这将是不可逆的，你将丢失作品中的所有章节与日志！！</p>
+                    <p>你确定你要删除作品吗？</p>
+                    <p>此操作将不会真正删除你的作品，只是将作品<strong>隐藏</strong>起来，除作者和已购买的用户外，它将是不可见的。</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
@@ -101,62 +106,13 @@
     <script src="__PUBLIC__/PeA_nut/js/nutjs_ajax/NutjsAjax.class.js" type="text/javascript" charset="utf-8"></script>
     <script src="__PUBLIC__/PeA_nut/js/nutjs_ajax/errcode.json.js" type="text/javascript" charset="utf-8"></script>
     <script src="__PUBLIC__/Library/uploader/src/dmuploader.min.js" type="text/javascript" charset="utf-8"></script>
-    <script src="__SCRIPT__/sign_log_event.function.js" type="text/javascript" charset="utf-8"></script>
-    <script src="__SCRIPT__/sign_section_event.function.js" type="text/javascript" charset="utf-8"></script>
-    <script type="text/javascript">$(function(){
-        //注册Ajax
-        sign_ajax(
-            [
-                "[name='works_name']" ,"[name='works_intro']",
-                "[name='price']"      ,"[name='works_id']",
-                "[name='works_state']"
-            ],
-            NUT.URL_ROOT+"/Service/ns_edit_works",
-            function(){location.reload();}
-        );
-        //注册上传
-        sign_upload_banner("{:U('Behavior/upload/works_banner')}" ,"{$_data.works.inf.id}");
-
-        //注册章节操作
-        sign_section_event(
-            "{$_data['works']['inf']['id']}",
-            "{:U('Behavior/upload/works_section/')}",
-            "{:U('Service/ns_edit_section')}",
-            "{:U('NutStore/read/'.$_data['works']['inf']['id'])}/",
-            "{:U('Behavior/delete/works_section')}",
-            "{:U('Service/ns_create_section')}",
-            "{:U('Service/ns_delete_section')}"
-        );
-
-        //注册日志操作
-        sign_log_event(
-            "{:U('Service/ns_create_works_log')}",
-            "{:U('Service/ns_delete_works_log')}",
-            "{$_data.works.inf.id}"
-        );
-
-        //注册删除章节
-        $(".del-works-all").on("click",function () {
-            var sendElt =$(this);
-            var ajax_req =new $.NutjsAjax({
-                "reqMode"   :"post",
-                "reqUrl"    :"{:U('Service/ns_delete_works')}",
-                "onSuccsee" :function(){
-                    location.href="{:U('member')}";
-                },
-                "showMsgFn" :function($msg){
-                    eltGroup.find(".log_errmsg").html($msg).show();
-                },
-                "callBack"  :function($data){
-                    // 恢复按钮样式
-                    sendElt.removeProp("disabled");
-                    // 执行默认的回调函数
-                    this.defaultCallBack($data);
-                }
-            });
-            ajax_req.fieldData["works_id"]="{$_data.works.inf.id}";
-            ajax_req.send();
-        });
-        // 计算字段，发送
-    })</script>
+    <!-- PHP数据转换为JS全局变量 -->
+    <include file="__INCLUDE__/RAW.js.tpl" />
+    <!-- 日志操作 -->
+    <script src="__SCRIPT__/sign_log_event.closures.js" type="text/javascript" charset="utf-8"></script>
+    <!-- 章节操作 -->
+    <script src="__SCRIPT__/sign_section_event.closures.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__SCRIPT__/sign_upload_banner.closures.js" type="text/javascript" charset="utf-8"></script>
+    <!-- 作品操作 -->
+    <script src="__SCRIPT__/sign_works_event.closures.js" type="text/javascript" charset="utf-8"></script>
 </block>

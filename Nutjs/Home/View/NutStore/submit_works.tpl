@@ -70,6 +70,9 @@
     <script src="__PUBLIC__/PeA_nut/js/nutjs_ajax/NutjsAjax.class.js" type="text/javascript" charset="utf-8"></script>
     <script src="__PUBLIC__/PeA_nut/js/nutjs_ajax/errcode.json.js" type="text/javascript" charset="utf-8"></script>
     <script src="__PUBLIC__/Library/uploader/src/dmuploader.min.js" type="text/javascript" charset="utf-8"></script>
+    <!-- PHP数据转换为JS全局变量 -->
+    <include file="__INCLUDE__/RAW.js.tpl" />
+    
     <script type="text/javascript">$(function(){
         // 注册Ajax事件
         sign_ajax(
@@ -82,4 +85,5 @@
         // 注册文件上传
         sign_upload_banner("{:U('Behavior/upload/works_banner')}");
     })</script>
+    <script src="__SCRIPT__/sign_upload_banner.closures.js" type="text/javascript" charset="utf-8"></script>
 </block>

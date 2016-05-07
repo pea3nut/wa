@@ -1,10 +1,4 @@
-/**
- * 注册更新日志增删操作
- * @param {String} create_url 创建日志的请求链接地址
- * @param {String} delete_url 删除日志的请求链接地址
- * @param {Number} works_id 请求的works_id
- * */
-function sign_log_event(create_url ,delete_url,works_id){
+(function(){
 //清除按钮禁用
 $(".log_list button").removeProp("disabled");
 //创建日志表单
@@ -36,7 +30,7 @@ $(".log_list").delegate(".log_del" ,"click" ,function(event){
     var ajax_req =new $.NutjsAjax({
         "field"     :[eltGroup.find("[name='log_id']")],
         "reqMode"   :"post",
-        "reqUrl"    :delete_url,
+        "reqUrl"    :RAW.U["Service/ns_delete_works_log"],
         "onSuccsee" :function(){
             eltGroup.find(".log_del")
                 .removeClass("log_del")
@@ -56,6 +50,7 @@ $(".log_list").delegate(".log_del" ,"click" ,function(event){
     });
     // 计算字段，发送
     ajax_req.countField();
+    ajax_req.fieldData["works_id"]=RAW.D["works.inf.id"];
     ajax_req.send();
 });
 //保存日志
@@ -66,7 +61,7 @@ $(".log_list").delegate(".log_submit" ,"click" ,function(event){
     sendElt.prop("disabled",true);
     var ajax_req =new $.NutjsAjax({
         "field"     :[eltGroup.find("[name='log']"),eltGroup.find("[name='date']")],
-        "reqUrl"    :create_url,
+        "reqUrl"    :RAW.U["Service/ns_create_works_log"],
         "onSuccsee" :function($data){
             //将表单转换为文本
             for(var i=0;i<this.field.length;i++){
@@ -96,7 +91,10 @@ $(".log_list").delegate(".log_submit" ,"click" ,function(event){
     });
     // 计算字段，发送
     ajax_req.countField();
-    ajax_req.fieldData["works_id"]=works_id;
+    ajax_req.fieldData["works_id"]=RAW.D["works.inf.id"];
     ajax_req.send();
 });
-};
+
+
+
+})();

@@ -67,11 +67,6 @@ class WorksViewData extends RelationModel{
                 unset($data[$key]);
             };
         };
-        # 获取作品Banner
-        $banner_path ='./Nutjs/Home/Public/Image/NutStore/article/works-'.$data['inf']['id'].'.jpg';
-        if(file_exists($banner_path)){
-            $data['inf']['banner']=toURL($banner_path);
-        };
         # 获取章节信息
         ## 在原数据追加has_md字段
         for($i=0 ;$i<count($data['section']) ;$i++){
@@ -93,11 +88,17 @@ class WorksViewData extends RelationModel{
         # 获取编辑信息
         $data['edit']=array();
         ## Banner编辑信息
+        ### 获取作品Banner
+        $banner_path ='./Nutjs/Home/Public/Image/NutStore/article/works-'.$data['inf']['id'].'.jpg';
+        if(file_exists($banner_path)){
+            $data['inf']['has-banner']=toURL($banner_path);
+        };
+        ### 获取未保存的Banner
         $banner_edit_path ='./Nutjs/Upload/'.$data['inf']['author_uid'].'/works/'.$data['inf']['id'].'/inf/banner.jpg';
         if(file_exists($banner_edit_path)){
             $data['edit']['banner']=toURL($banner_edit_path);
             ### 拷贝一份引用到作品信息数据集中
-            $data['inf']['edit_banner'] =&$data['edit']['banner'];
+            $data['inf']['has-edit-banner'] =&$data['edit']['banner'];
         };
         ## Section编辑信息
         $edit_section=array();

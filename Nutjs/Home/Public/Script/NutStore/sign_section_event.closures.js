@@ -1,5 +1,6 @@
+(function (){
 
-function sign_section_event ($works_id ,$upload_url ,$edit_url ,$read_url ,$delmd_url ,$create_url ,$delsec_url){
+
 //根据raw-data，初始显示效果
 $.each($(".section_row") ,init_section_display);
 function init_section_display(){
@@ -20,7 +21,7 @@ function init_section_display(){
         if(raw.attr("has-md")){
             $$(".segr-secgr-default").show();
             
-            var md_url =$read_url+ $$("[name='section_id']").val();
+            var md_url =RAW.U["NutStore/read/self"]+ $$("[name='section_id']").val();
             $$(".section-md").prop("href" ,md_url);
         }else{
             $$(".segr-secgr-create").show();
@@ -85,7 +86,7 @@ $(".section_list").delegate(".section_upload_btn" ,"click" ,function(event){
     }
 
     eltGroup.dmUploader({
-        "url"             : $upload_url,
+        "url"             : RAW.U["Behavior/upload/works_section"],
         "dataType"        : "json",
         "maxFileSize"     : 102400,
         "extFilter"       : "md",
@@ -115,7 +116,7 @@ $(".section_list").delegate(".section_upload_btn" ,"click" ,function(event){
             sendElt.prop("disabled",false);
         },
         "extraData"       : {
-            "works_id"  :$works_id,
+            "works_id"  :RAW.D["works.inf.id"],
             "section_id":$section_id
         }
     });
@@ -148,20 +149,18 @@ $(".section_list").delegate(".section_edit" ,"click" ,function(event){
 $(".section_list").delegate(".section_cancel" ,"click" ,function(event){
     var eltGroup=$(this).parents(".section_row");
     // 在raw_data中删除
-    eltGroup.find(".raw-data").removeAttr("has-edit-md").attr("state","show");;
+    eltGroup.find(".raw-data").removeAttr("has-edit-md").attr("state","show");
     init_section_display.call(eltGroup);
     // 删除已上传但未保存的章节
     $.ajax({
         "dataType"  :'json',
         "data"      :{
-            "works_id"    :$works_id,
+            "works_id"    :RAW.D["works.inf.id"],
             "section_id"  :eltGroup.find("[name='section_id']").val(),
         },
-        "url"       :$delete_md,
+        "url"       :RAW.U["Behavior/delete/works_section"],
         "type"      :"post",
     });
-    //显示按钮组
-
 });
 //创建新章节
 $(".section_list").delegate(".section_create" ,"click" ,function(event){
@@ -172,7 +171,7 @@ $(".section_list").delegate(".section_create" ,"click" ,function(event){
     sendElt.prop("disabled",true);
     var ajax_req =new $.NutjsAjax({
         "field"     :[eltGroup.find("[name='section_name']"),eltGroup.find("[name='section_id']")],
-        "reqUrl"    :$create_url,
+        "reqUrl"    :RAW.U["Service/ns_create_section"],
         "onSuccsee" :function($data){
             raw.attr("section-id" ,$data.id);
             raw.attr("sectionid"  ,$data.section_id);
@@ -193,7 +192,7 @@ $(".section_list").delegate(".section_create" ,"click" ,function(event){
     });
     // 计算字段，发送
     ajax_req.countField();
-    ajax_req.fieldData["works_id"]=$works_id;
+    ajax_req.fieldData["works_id"]=RAW.D["works.inf.id"];
     ajax_req.send();
 });
 //删除章节
@@ -205,7 +204,7 @@ $(".section_list").delegate(".section_del" ,"click" ,function(event){
     //实例化Ajax请求
     var ajax_req =new $.NutjsAjax({
         "reqMode"   :"post",
-        "reqUrl"    :$delete_url,
+        "reqUrl"    :RAW.U["Service/ns_delete_section"],
         "onSuccsee" :function(){
             eltGroup.find(".section_del_form").click();
         },
@@ -214,7 +213,7 @@ $(".section_list").delegate(".section_del" ,"click" ,function(event){
         },
     });
     //手动设置发送信息
-    ajax_req.fieldData.works_id   =$works_id;
+    ajax_req.fieldData.works_id   =RAW.D["works.inf.id"];
     console.log(eltGroup.find(".section_id"));
     ajax_req.fieldData.section_id =eltGroup.find(".section_id").html();
     // 发送
@@ -229,7 +228,7 @@ $(".section_list").delegate(".section_save" ,"click" ,function(event){
     sendElt.prop("disabled",true);
     var ajax_req =new $.NutjsAjax({
         "field"     :[eltGroup.find("[name='section_name']"),eltGroup.find("[name='section_id']")],
-        "reqUrl"    :$edit_url,
+        "reqUrl"    :RAW.U["Service/ns_edit_section"],
         "onSuccsee" :function($data){
             if(raw.attr("has-edit-md")){
                 raw.attr("has-md" ,raw.attr("has-edit-md"));
@@ -256,4 +255,4 @@ $(".section_list").delegate(".section_save" ,"click" ,function(event){
 
 
 
-};//函数结束
+})();//函数结束

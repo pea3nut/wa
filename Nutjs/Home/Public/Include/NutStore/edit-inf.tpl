@@ -1,3 +1,7 @@
+<div class="hide raw-data works-inf-raw"
+    has-banner="{$_data.works.inf.has-banner}"
+    has-edit-banner="{$_data.works.inf.has-edit-banner}"
+></div>
 <div class="panel panel-default">
     <div class="panel-heading">
         <h1 class="panel-title">修改作品信息</h1>
@@ -19,16 +23,22 @@
         <div class="form-group upload_group">
             <label class="col-sm-3 control-label" for="banner">Banner</label>
             <div class="col-sm-8">
-                <div class="hide raw_data" has-banner="{$_data.works.inf.banner}" has-edit-banner="{$_data.works.inf.edit_banner}"></div>
-                <empty name="_data.works.inf.edit_banner">
-                    <img alt="Upload img" class="img-responsive upload_img upload_call_file" src="{$_data.works.inf.banner|default='__PUBLIC__/Library/Image/no-image.png'}" />
+                <div class="hide raw_data" has-banner="{$_data.works.inf.banner}" has-edit-banner="{$_data.works.inf.has-edit-banner}"></div>
+                <empty name="_data.works.inf.has-edit-banner">
+                    <img alt="Upload img" class="img-responsive upload_img upload_call_file" src="{$_data.works.inf.has-banner|default='__PUBLIC__/Library/Image/no-image.png'}" />
                 <else />
-                    <img alt="Upload img" class="img-responsive upload_img upload_call_file" src="{$_data.works.inf.edit_banner}" />
+                    <img alt="Upload img" class="img-responsive upload_img upload_call_file" src="{$_data.works.inf.has-edit-banner}" />
                 </empty>
                 <div class="progress works-banner-progress-shell" style="display: none;">
                     <div class="works-banner-progress progress-bar progress-bar-striped progress-bar-success active" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="min-width: 2em;">
                         0%
                     </div>
+                </div>
+                <div class="has-edit-banner-msg" style="display:
+                    <empty name="_data.works.inf.has-edit-banner">none;</empty>
+                ">
+                    <span class="glyphicon glyphicon-refresh"></span> 未保存的Banner
+                    <button class="btn btn-default btn-xs banner-del">还原改动</button>
                 </div>
                 <input type="file" name="banner" title="640px * 360px" id="banner" class="hidden upload_file">
                 <div class="upload_msg upload-msg alert alert-danger" style="display: none;">上传失败</div>
@@ -44,6 +54,7 @@
             <label class="col-sm-3 control-label" for="price">作品状态</label>
             <div class="col-sm-8">
                 <select name="works_state" id="works_state" class="form-control">
+                    <option>x^x</option>
                     <option value="1">更新中</option>
                     <option value="2">已完结</option>
                 </select>
@@ -59,6 +70,9 @@
                 <button class="btn btn-danger btn-block" type="button" data-toggle="modal" data-target="#del_works">删除</button>
                 <button id="_goAjax" class="btn btn-success btn-block" type="button">Ctrl + S</button>
             </div>
+        </div>
+        <div class="form-group">
+            <div class="edit-works-inf-msg text-success text-right col-sm-10 center-block no-float"></div>
         </div>
     </div>
     <div class="clearfix"></div>
