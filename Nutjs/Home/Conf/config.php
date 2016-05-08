@@ -38,7 +38,8 @@ return array(
     'URL_ROUTER_ON' => true,
     //定义路由规则
     'URL_ROUTE_RULES'=>array(
-//        '' => '',
+        'NutStore/index'    => 'NutStore/works_list',
+        '/NutStore\/?$/'          => 'NutStore/works_list',
     ),
     //关闭多模块访问，使用单模块设计
     'MULTI_MODULE' => false,
@@ -55,4 +56,7 @@ return array(
     'READ_DATA_MAP'=>true,
     //页面调试工具
     'SHOW_PAGE_TRACE' =>false,
+
+    'LOG_RECORD' => true, // 开启日志记录
+    'LOG_LEVEL' =>'EMERG,ALERT,CRIT,ERR', // 只记录EMERG ALERT CRIT ERR 错误
 );

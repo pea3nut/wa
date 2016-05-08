@@ -30,18 +30,17 @@ class NsCreateSectionService{
         //获取数据库返回值
         $id =$sectionMo->add() or drop(EC_4D52);
         //移动章节md文件
-        $section_id=I('post.section_id');
-        $section_id =isset($section_id)?$section_id:'auto';
+        $section_id =(I('post.section_id') === '') ?'auto' :I('post.section_id');
         $section_path ='./Nutjs/Upload/'.cookie('uid').'/works/'.I('post.works_id').'/section/'.$section_id.'/section.md';
         $real_section_path ='';
         if(file_exists($section_path)){
-            $real_section_path ='./Nutjs/Home/Public/Include/NutStore/article/'.I('post.works_id')."/section-{$section_id}.md";
+            $real_section_path ='./Nutjs/Home/Public/Include/NutStore/article/'.I('post.works_id')."/section-{$sectionMo->section_id}.md";
             rename($section_path, $real_section_path);
         };
         echo drop(true ,true ,array(
             'id'         =>$id,
             'section_id' =>$sectionMo->section_id,
-            'has-md'     =>$real_section_path,
+            'has-md'     =>toURL($real_section_path),
         ));
     }
     /**

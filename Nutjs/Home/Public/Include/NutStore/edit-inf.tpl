@@ -55,6 +55,7 @@
             <div class="col-sm-8">
                 <select name="works_state" id="works_state" class="form-control">
                     <option>x^x</option>
+                    <option value="0">已隐藏</option>
                     <option value="1">更新中</option>
                     <option value="2">已完结</option>
                 </select>

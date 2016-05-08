@@ -1,5 +1,6 @@
 <extend name="./Nutjs/Home/Public/Include/basic.tpl" />
 <block name="head">
+    <title>购买 - {$_data.works.inf.works_name}</title>
     <load href="__STYLE__/basic.css" />
     <style>
         .tb-show-inf{
@@ -56,15 +57,17 @@
             </div>
         </article>
     </div>
-    
-    
+
+<!-- PHP数据转换为JS全局变量 --><include file="__INCLUDE__/RAW.js.tpl" />
 <script src="__PUBLIC__/PeA_nut/js/nutjs_ajax/NutjsAjax.class.js" type="text/javascript" charset="utf-8"></script>
 <script src="__PUBLIC__/PeA_nut/js/nutjs_ajax/errcode.json.js" type="text/javascript" charset="utf-8"></script>
 <script type="text/javascript">$(function(){
 sign_ajax(
     null,
     NUT.URL_ROOT+"/Service/ns_buy_works/"+"?works_id={$_data.works.inf.id}",
-    NUT.URL_ROOT
+    function(){
+        location.href =RAW.U['NutStore/works']+RAW.D["works.inf.id"];
+    }
 );
 })</script>
 </block>

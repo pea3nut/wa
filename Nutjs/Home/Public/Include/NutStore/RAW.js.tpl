@@ -5,6 +5,8 @@
     };
     RAW.U={
         "NutStore/read/self"            :"{:U('NutStore/read/'.$_data['works']['inf']['id'])}/",
+        "NutStore/member"               :"{:U('NutStore/member')}/",
+        "NutStore/works"                :"{:U('NutStore/works')}/",
         "Behavior/upload/works_banner"  :"{:U('Behavior/upload/works_banner')}",
         "Behavior/upload/works_section" :"{:U('Behavior/upload/works_section')}",
         "Behavior/delete/works_banner"  :"{:U('Behavior/delete/works_banner')}",

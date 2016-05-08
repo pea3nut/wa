@@ -10,24 +10,30 @@ function init_section_display(){
     };
     var raw =$$(".raw-data");
 
+    // #将raw中数据同步至表单
+    $$("section_id").html(raw.attr("sectionid"));
+    $$("[name='section_id']").val(raw.attr("sectionid"));
+
+    // #更新查看Markdown链接
     $$(".segr").hide();
     if(raw.attr("has-edit-md")){
         $$(".segr-btngr-edit").show();
         $$(".segr-secgr-edit").show();
-        
+
         $$(".section-edit-md").prop("href" ,raw.attr("has-edit-md"));
     }else{
         $$(".segr-btngr-default").show();
         if(raw.attr("has-md")){
             $$(".segr-secgr-default").show();
-            
-            var md_url =RAW.U["NutStore/read/self"]+ $$("[name='section_id']").val();
+
+            var md_url =RAW.U["NutStore/read/self"] +raw.attr("sectionid");
             $$(".section-md").prop("href" ,md_url);
         }else{
             $$(".segr-secgr-create").show();
         };
     };
 
+    // #根据state更新表单状态
     if(raw.attr("state") === 'edit'){
         var textSectionId =$$(".section_id");
         var textSectionName =$$(".section_name");
@@ -63,10 +69,10 @@ function init_section_display(){
     }else if(raw.attr("state") === 'create'){
         $$("[name='section_name']").show();
         $$("[name='section_id']").show();
-        
+
         $$(".section_id").hide();
         $$(".section_name").hide();
-        
+
         $$(".segr-btngr").hide();
         $$(".segr-btngr-create").show();
     };

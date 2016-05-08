@@ -1,0 +1,16 @@
+.upload_img{
+    cursor:pointer;
+    border: 1px solid #ddd;
+}
+.works-banner-progress-shell{
+    border-top-left-radius:0;
+    border-top-right-radius:0;
+    margin-bottom: 0;
+}
+.segr{
+    display:none;
+}
+.has-edit-banner-msg{
+    margin:3px 0px 15px 0px;
+    text-align: center;
+}

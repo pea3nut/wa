@@ -42,6 +42,7 @@ class MemberViewData extends RelationModel{
         for($i=0 ;$i<count($buy_list) ;$i++){
             //### 通过购买记录的works_id获取作品信息
             $works_da =new \Home\ViewData\WorksViewData();
+            echo $buy_list[$i]['works_id'],"\n";
             $buy_works =$works_da ->find($buy_list[$i]['works_id']);
             //### 添加到数组
             array_push($reObj['buy'], array(

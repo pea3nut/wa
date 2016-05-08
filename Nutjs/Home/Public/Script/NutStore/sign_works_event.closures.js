@@ -26,19 +26,10 @@ $(".del-works-all").on("click",function () {
         "reqMode"   :"post",
         "reqUrl"    :RAW.U["Service/ns_delete_works"],
         "onSuccsee" :function(){
-            location.href="{:U('member')}";
-        },
-        "showMsgFn" :function($msg){
-            eltGroup.find(".log_errmsg").html($msg).show();
-        },
-        "callBack"  :function($data){
-            // 恢复按钮样式
-            sendElt.removeProp("disabled");
-            // 执行默认的回调函数
-            this.defaultCallBack($data);
+            location.href=RAW.U["NutStore/member"];
         }
     });
-    ajax_req.fieldData["works_id"]="{$_data.works.inf.id}";
+    ajax_req.fieldData["works_id"] =RAW.D["works.inf.id"];
     ajax_req.send();
 });
 //删除未保存的Banner

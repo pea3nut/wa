@@ -1,10 +1,30 @@
 <?php
 use Think\Model;
+use Think\Log;
 
-
-
-
-
+/**
+ * 删除目录和文件
+ * @param String $dirName 要删除的文件路径
+ * @return Bool 成功返回true
+ * */
+function del_file_all($dirName){
+    if ($handle =opendir($dirName)){
+        while (false !==($item = readdir($handle))){
+            if ($item != "." && $item != ".."){
+                if(is_dir("$dirName/$item")){
+                    del_file_all("$dirName/$item");
+                }else{
+                    unlink("$dirName/$item");
+                }
+            }
+        }
+        closedir($handle);
+        rmdir($dirName);
+        return true;
+    }else{
+        return false;
+    };
+};
 /**
  * 将路径转换为URL路径
  * @param String $path 要转换的路径，支持相对和绝对路径
@@ -121,6 +141,20 @@ function drop($msg ,$return=false ,$extra=null ,$noToLower=false){
         //赋值返回数组
         $reArray['errcode']=$msg[1];
         $reArray['errmsg']=$msg[2];
+        //检测是否是严重错误，记录日志
+        $errlv =substr($reArray['errcode'], 2 ,1);
+        if($errlv >= 4){
+            $loglv =array(4=>'ALERT' ,5=>'EMERG');
+            $logmsg ="drop抛出{$reArray['errcode']}错误码\n".
+                "-GET:"
+                .print_r($_GET,true).
+                "-POST:"
+                .print_r($_POST,true).
+                "-Cookie:"
+                .print_r($_COOKIE,true)
+            ;
+            Log::write($logmsg ,$loglv[$errlv] );
+        };
     };
     //检测添加额外的数组
     if (is_array($extra)){

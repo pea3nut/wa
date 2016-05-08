@@ -139,41 +139,45 @@ $.NutjsAjax.prototype.errcode ={
         "showMsg"   :"记录签到时发生错误，请联系网站管理员",
         "errElt"    :true,
     },
-    
+
     "4A41":siObj,
     "4A51":{
         "showMsg"   :"新建作品失败，请联系网站管理员",
         "errElt"    :true,
     },
-    
+
     "4B41":siObj,
     "4B42":accObj,
     "4B51":{
         "showMsg"   :"资料更新失败，请联系网站管理员",
         "errElt"    :true,
     },
-    
+
+    "4C31":{
+        "showMsg"   :"章节ID格式不正确",
+        "errElt"    :"[name='works_id']",
+    },
     "4C41":siObj,
     "4C42":accObj,
     "4C51":{
         "showMsg"   :"作品删除失败，请联系网站管理员",
         "errElt"    :true,
     },
-    
+
     "4D41":siObj,
     "4D42":accObj,
     "4D51":{
         "showMsg"   :"提交章节失败，请联系网站管理员",
         "errElt"    :true,
     },
-    
+
     "4E41":siObj,
     "4E42":accObj,
     "4E51":{
         "showMsg"   :"章节修改失败，请联系网站管理员",
         "errElt"    :true,
     },
-    
+
     "4F31":widObj,
     "4F32":{
         "showMsg"   :"章节ID格式不正确",
@@ -185,11 +189,11 @@ $.NutjsAjax.prototype.errcode ={
         "showMsg"   :"提交章节失败，请联系网站管理员",
         "errElt"    :true,
     },
-    
+
     "4G41":siObj,
     "4G42":{
         "errElt"    :true,
-        "showMsg"   :"额，你的果仁好像不太够",
+        "showMsg"   :"额，你的果仁好像不太够...",
     },
     "4G43":{
         "showMsg"   :"没有该ID的作品",
@@ -211,14 +215,14 @@ $.NutjsAjax.prototype.errcode ={
         "showMsg"   :"成功扣除果仁，但是购买失败，请联系网站管理员，要不然你就吃亏喽~~",
         "errElt"    :true,
     },
-    
+
     "4H41":siObj,
     "4H42":accObj,
     "4H51":{
         "showMsg"   :"日志创建失败，请联系网站管理员",
         "errElt"    :true,
     },
-    
+
     "4J31":{
         "showMsg"   :"日志ID格式不正确",
         "errElt"    :"[name='log_id']",
@@ -233,7 +237,7 @@ $.NutjsAjax.prototype.errcode ={
         "showMsg"   :"日志删除失败，请联系网站管理员",
         "errElt"    :true,
     },
-    
+
     "4K41":siObj,
     "4K42":accObj,
     "4K51":{
@@ -339,7 +343,7 @@ $.NutjsAjax.prototype.errcode ={
         "showMsg"   :"作品ID格式不正确",
         "errElt"    :["[name='works_id']","[name='id']"]
     },
-    
+
     "5A31":uidObj,
     "5A32":{
         "showMsg"   :"作品ID格式不正确",
@@ -357,7 +361,7 @@ $.NutjsAjax.prototype.errcode ={
         "showMsg"   :"购买记录ID格式不正确",
         "errElt"    :["[name='buy_id']","[name='id']"]
     },
-    
+
     "5B31":widObj,
     "5B32":{
         "showMsg"   :"章节名称格式不正确",
@@ -375,7 +379,7 @@ $.NutjsAjax.prototype.errcode ={
         "showMsg"   :"该章节已存在，请重新指定或启用自动增长",
         "errElt"    :"[name='section_id']"
     },
-    
+
     "5C31":widObj,
     "5C32":{
         "showMsg"   :"果仁数量格式不正确",

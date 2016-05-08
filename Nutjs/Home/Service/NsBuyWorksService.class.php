@@ -29,11 +29,11 @@ class NsBuyWorksService{
             Model::MODEL_INSERT
         ) or drop($buyMo->getError());
         //检查用户果仁够不够
-        $this->checkNuts() or drop(EC_4G42);
+        $this->checkNuts()      or drop(EC_4G42);
         //检查用户是否已购买此作品
-        $this->checkRepeat() or drop(EC_4G44);
+        $this->checkRepeat()    or drop(EC_4G44);
         //检查用户是否正在购买自己的作品
-        $this->checkRepeat() or drop(EC_4G45);
+        $this->checkSelf()      or drop(EC_4G45);
         //尝试创建扣除果仁数据对象
         $nutsMo =new NutsModel();
         $nutsMo ->create(

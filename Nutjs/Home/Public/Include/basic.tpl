@@ -19,7 +19,7 @@
                 <span class="icon-bar"></span>
             </button>
         </div>
-        
+
         <div class="collapse navbar-collapse" id="nav-list">
             <if condition="!$_data['isLogged']">
                 <p class="navbar-text navbar-right">
@@ -59,9 +59,9 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{:U('NutStore/submit_works')}" target="_self">投稿新课程</a></li>
-                        <li role="separator" class="divider"></li>
                         <li><a href="{:U('NutStore/works_list')}" target="_self">商店首页</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="{:U('NutStore/submit_works')}" target="_self">投稿新课程</a></li>
                         <li><a href="{:U('NutStore/member')}" target="_self">我的课程</a></li>
                     </ul>
                 </li>

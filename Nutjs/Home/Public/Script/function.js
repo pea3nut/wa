@@ -34,12 +34,13 @@ function sign_ajax($field ,$url ,$onSuccsee){
             this.defaultCallBack($data);
         }
     });
-    $($field[$field.length-1]).on("keyup",function(event){
-        if(event.keyCode ==13){
-            sendElt.click();
-        };
-    });
-    
+    if($field){
+        $($field[$field.length-1]).on("keyup",function(event){
+            if(event.keyCode ==13){
+                sendElt.click();
+            };
+        });
+    };
     sendElt.on('click',function(){
         // 防止多次触发该事件
         if(sendElt.attr("disabled") ==='disabled') return;

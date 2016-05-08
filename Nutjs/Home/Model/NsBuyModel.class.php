@@ -14,7 +14,7 @@ use Think\Model\RelationModel;
  * <dd>char(5) 购买者的协会编号</dd>
  *
  * <dt>score</dt>
- * <dd>int 购买者的评分，未评分则显示-1，评分范围为0-10</dd>
+ * <dd>int 购买者的评分，评分范围为0-10|null</dd>
  * */
 class NsBuyModel extends RelationModel{
     /**
@@ -92,7 +92,7 @@ class NsBuyModel extends RelationModel{
 	 * @return bool
      * */
     protected function setScore ($score){
-        return empty($score) ? -1 : $score;
+        return empty($score) ? null : $score;
     }
     /**
      * 校验score字段

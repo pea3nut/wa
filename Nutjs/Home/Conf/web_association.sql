@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: 2016-03-24 08:09:56
+-- Generation Time: 2016-05-08 12:30:40
 -- 服务器版本： 5.6.17
 -- PHP Version: 5.5.12
 
@@ -19,6 +19,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `web_association`
 --
+CREATE DATABASE IF NOT EXISTS `web_association` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+USE `web_association`;
 
 -- --------------------------------------------------------
 
@@ -70,9 +72,9 @@ CREATE TABLE IF NOT EXISTS `wa_ns_buy` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '字段的ID只',
   `works_id` bigint(20) unsigned NOT NULL COMMENT '课程ID',
   `uid` char(5) NOT NULL COMMENT '购买者的协会编号',
-  `score` int(1) NOT NULL DEFAULT '-1' COMMENT '作品评分',
+  `score` int(1) DEFAULT NULL COMMENT '作品评分',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='用户购买课程信息' AUTO_INCREMENT=20 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='用户购买课程信息' AUTO_INCREMENT=8 ;
 
 -- --------------------------------------------------------
 
@@ -87,7 +89,7 @@ CREATE TABLE IF NOT EXISTS `wa_ns_section` (
   `section_name` varchar(64) NOT NULL COMMENT '章节名称',
   `update_date` date NOT NULL COMMENT '最后改动时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='作品章节列表' AUTO_INCREMENT=6 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='作品章节列表' AUTO_INCREMENT=49 ;
 
 -- --------------------------------------------------------
 
@@ -120,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `wa_ns_works_list` (
   `update_date` date NOT NULL COMMENT '最后更新时间',
   `create_date` date NOT NULL COMMENT '创建时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='NutStore作品信息表' AUTO_INCREMENT=16 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COMMENT='NutStore作品信息表' AUTO_INCREMENT=21 ;
 
 -- --------------------------------------------------------
 

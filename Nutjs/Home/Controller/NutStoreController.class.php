@@ -90,9 +90,13 @@ class NutStoreController extends Controller {
                 $this->error('阅读章节请先登录',U('Member/sign_in'));
             }
         };
-        # 渲染章节Markdown
+        # 章节信息
+        $this->_data['section'] =array();
+        ## 拷贝原章节数据
+        $this->_data['section'] =$this->_data['works']['section'][$section];
+        ## 渲染章节Markdown
         $mdFile =MODULE_PATH.'Public/Include/'.CONTROLLER_NAME."/article/{$works_id}/section-{$section}.md";
-        if(file_exists($mdFile)) $this->_data['section_value']=decode_markdown($mdFile);
+        if(file_exists($mdFile)) $this->_data['section']['section_value']=decode_markdown($mdFile);
         $this->display();
     }
     //购买作品

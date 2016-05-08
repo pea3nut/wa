@@ -1,5 +1,6 @@
 <extend name="./Nutjs/Home/Public/Include/basic.tpl" />
 <block name="head">
+    <title>{$_data.works.inf.works_name}</title>
     <load href="__STYLE__/basic.css" />
     <style type="text/css">
         #preface .panel-body{
@@ -41,7 +42,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">作者信息</div>
             <div class="panel-body">
-                <img src="__IMAGE__/article/{$_data.works.inf.id}.jpg" class="img-responsive" />
+                <img src="{$_data.works.inf.has-banner|default='__PUBLIC__/Library/Image/no-image.png'}" class="img-responsive" />
             </div>
             <ul class="list-group">
                 <li class="list-group-item">课程作者：

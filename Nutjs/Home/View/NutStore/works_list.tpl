@@ -1,5 +1,6 @@
 <extend name="./Nutjs/Home/Public/Include/basic.tpl" />
 <block name="head">
+    <title>果仁商店 - 课程列表</title>
     <load href="__STYLE__/basic.css" />
     <style type="text/css">
         .author-inf{
@@ -67,7 +68,7 @@
         <div class="col-sm-6 col-md-4 col-lg-3">
             <div class="thumbnail">
                 <a href="{:U(CONTROLLER_NAME.'/works/'.$works['inf']['id'])}">
-                    <img src="__IMAGE__/article/works-{$works.inf.id}.jpg" alt="banner" class="img-banner" />
+                    <img src="{$works.inf.has-banner|default='__PUBLIC__/Library/Image/no-image.png'}" alt="banner" class="img-banner" />
                 </a>
                 <div class="caption">
                     <h3 class="works-name">{$works.inf.works_name}</h3>
@@ -112,10 +113,6 @@
 
 
 <script type="text/javascript">
-    //图片加载失败
-    $("img.img-banner").on('error',function(){
-        this.src="__PUBLIC__/Library/Image/no-image.png";
-    });
     //文本裁剪
     $(".works-intro").dotdotdot({
         "ellipsis"    : ' [...]',

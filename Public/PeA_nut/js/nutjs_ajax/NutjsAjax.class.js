@@ -21,6 +21,8 @@ jQuery.NutjsAjax.prototype ={
     "varsion"           :"1.0.0",
     //计算各个字段，生成要发送是JSON对象
     "countField"        :function(){
+        //# 若field不存在则直接返回
+        if(!this.field) return;
         //# 清空历史信息
         this.fieldData={};
         //# 若是裸字符串，包装成数组
@@ -70,6 +72,17 @@ jQuery.NutjsAjax.prototype ={
             if(this.fieldData[key]==='') delete this.fieldData[key];
         };
     },
+    //发送Ajax请求
+    "send"              :function(){
+        $.ajax({
+            "success"   :this.callBack,
+            "context"   :this,
+            "dataType"  :'json',
+            "data"      :this.fieldData,
+            "url"       :this.reqUrl,
+            "type"      :this.reqMode,
+        });
+    },
     //默认的Ajax回调函数
     "defaultCallBack"   :function($data){
         //获取动作指令
@@ -85,17 +98,6 @@ jQuery.NutjsAjax.prototype ={
         //解析动作指令
         this.analytic(actionObj);
         if($data["errcode"] =='1200')this.onSuccsee.call(this ,$data);
-    },
-    //发送Ajax请求
-    "send"              :function(){
-        $.ajax({
-            "success"   :this.callBack,
-            "context"   :this,
-            "dataType"  :'json',
-            "data"      :this.fieldData,
-            "url"       :this.reqUrl,
-            "type"      :this.reqMode,
-        });
     },
     //解析服务器返回值
     "analytic"          :function($action){
