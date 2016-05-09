@@ -2,7 +2,6 @@
 <html>
 <head>
     <include file="./Public/PeA_nut/inc/tpl/head1.tpl" />
-    <meta charset="utf-8" />
     <block name="head"></block>
 </head>
 <body>
@@ -71,7 +70,7 @@
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
-                        <li><a href="{:U('NutStore/rules')}" target="_self">协会历史</a></li>
+                        <li><a href="{:U('Index/history')}" target="_self">协会历史</a></li>
                         <li><a href="{:U('NutStore/rules')}" target="_self">公告查看</a></li>
                         <li><a href="{:U('NutStore/rules')}" target="_self">手机资料片</a></li>
                         <li><a href="{:U('NutStore/rules')}" target="_self">Markdown渲染</a></li>
