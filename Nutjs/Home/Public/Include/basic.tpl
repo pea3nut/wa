@@ -54,7 +54,7 @@
                 </li>
                 <li class="dropdown">
                     <a role="button" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <span class="glyphicon glyphicon-briefcase"></span> 果仁商店
+                        <span class="glyphicon glyphicon-shopping-cart"></span> 果仁商店
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
@@ -66,13 +66,22 @@
                 </li>
                 <li class="dropdown">
                     <a role="button" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                        <span class="glyphicon glyphicon-briefcase"></span> 其他
+                        <span class="glyphicon glyphicon-briefcase"></span> 协会
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu">
                         <li><a href="{:U('Index/history')}" target="_self">协会历史</a></li>
+                        <li><a href="{:U('Index/profit')}" target="_self">收支情况</a></li>
                         <li><a href="{:U('NutStore/rules')}" target="_self">公告查看</a></li>
                         <li><a href="{:U('NutStore/rules')}" target="_self">手机资料片</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a role="button" aria-haspopup="true" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                        <span class="glyphicon glyphicon-th-large"></span> 其他
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu">
                         <li><a href="{:U('NutStore/rules')}" target="_self">Markdown渲染</a></li>
                     </ul>
                 </li>

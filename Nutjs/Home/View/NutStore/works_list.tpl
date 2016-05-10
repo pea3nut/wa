@@ -41,7 +41,7 @@
             font-size: 12px;
         }
     </style>
-    <script src="__PUBLIC__/Library/jQuery.dotdotdot-1.8.1/src/jquery.dotdotdot.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="__PUBLIC__/Library/Repository/jQuery.dotdotdot-1.8.1/src/jquery.dotdotdot.min.js" type="text/javascript" charset="utf-8"></script>
 </block>
 <block name="body">
 

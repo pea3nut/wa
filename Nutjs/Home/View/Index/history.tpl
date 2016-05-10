@@ -22,7 +22,7 @@
 </head>
 <body>
     <div id="main">
-        <a href="{:U('Index/index')}"><img src="__IMAGE__/history/foot.png" /><br />点击这里返回首页</a>
+        <a href="{:U('Index/index')}" target="_self"><img src="__IMAGE__/history/foot.png" /><br />点击这里返回首页</a>
         <div id="tree">
             <img id="tree_head" src="__IMAGE__/history/tree_head.jpg" />
             <div id="tree_body"></div>
