@@ -76,7 +76,7 @@ class NutStoreController extends Controller {
         # 页面权限判断
         if($section !== 0){//如果请求的不是第0章节
             if(test_token()){//如果已登录
-                if($this->_data['works']['author_uid'] !== cookie('uid')){//如果不是课程作者
+                if($this->_data['works']['inf']['author_uid'] !== cookie('uid')){//如果不是课程作者
                     $mo =new \Home\Model\NsBuyModel();
                     $mo ->where(array(
                         'works_id'  =>(int)$works_id,

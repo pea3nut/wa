@@ -88,10 +88,10 @@
 sign_ajax(
     [
         "[name='name']"     ,"[name='age']",
-        "[name='phone']"    ,"[name='wechat']" ,
-        "[name='nickname']"],"select":"[name='school']",
-        "[name='gender']"
-    ]
+        "[name='phone']"     ,"[name='gender']",
+        "[name='nickname']","[name='school']",
+        "[name='wechat']"
+    ],
     NUT.URL_ROOT+"/Service/sign_up_1",
     NUT.URL_ROOT
 );

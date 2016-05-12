@@ -48,6 +48,9 @@ abstract class Controller {
         $this->_data['isLogged'] =(int)test_token();
         if($this->_data['isLogged']){
             $da =new \Home\ViewData\UserViewData(cookie('uid'));
+            //var_dump($da->options);
+            //var_dump($da->find());
+
             $this->_data['user'] =array_merge($this->_data['user'] ,$da->find());
         }
         //原控制器方法

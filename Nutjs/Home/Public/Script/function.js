@@ -7,6 +7,10 @@
 function sign_ajax($field ,$url ,$onSuccsee){
     var sendElt =$("#_goAjax");
     sendElt.attr("disabled",false);
+    if(typeof $onSuccsee === 'string'){
+        target_url=$onSuccsee;
+        $onSuccsee=function(){location.href=target_url};
+    };
     var ajax_req =new $.NutjsAjax({
         "field"     :$field,
         "reqMode"   :"post",

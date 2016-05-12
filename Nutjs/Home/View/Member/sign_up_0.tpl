@@ -80,7 +80,7 @@
         </div>
         <div class="clearfix"></div>
     </div>
-            
+
 </div>
 
 <script src="__PUBLIC__/PeA_nut/js/nutjs_ajax/NutjsAjax.class.js" type="text/javascript" charset="utf-8"></script>
@@ -89,7 +89,7 @@
     sign_ajax(
         ["[name='qq']" ,"[name='password']" ,"[name='re_password']" ,"[name='invite_code']" ,"[name='verifycode']"],
         NUT.URL_ROOT+"/Service/sign_up_0",
-        NUT.URL_ROOT+"Member/sign_up_1"
+        NUT.URL_ROOT+"/Member/sign_up_1"
     );
     //设定主部分高度
     $('#my-body').css("min-height",innerHeight);
@@ -101,4 +101,4 @@
     //版权声明反色
     $("#_foot").css("backgroundColor","#020224").css("color","#85dcf8");
 });</script>
-</block> 
+</block>

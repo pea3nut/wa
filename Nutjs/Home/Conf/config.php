@@ -55,7 +55,7 @@ return array(
     //开启Model字段映射
     'READ_DATA_MAP'=>true,
     //页面调试工具
-    'SHOW_PAGE_TRACE' =>false,
+    'SHOW_PAGE_TRACE' =>true,
 
     'LOG_RECORD' => true, // 开启日志记录
     'LOG_LEVEL' =>'EMERG,ALERT,CRIT,ERR', // 只记录EMERG ALERT CRIT ERR 错误

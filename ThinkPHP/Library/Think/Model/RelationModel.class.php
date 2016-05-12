@@ -215,7 +215,7 @@ class RelationModel extends Model {
                                 // 支持直接把关联的字段值映射成数据对象中的某个字段
                                 // 仅仅支持HAS_ONE BELONGS_TO
                                 if($val['as_fields'] === '*'){//PeA:当为*时取所有字段
-                                    $result =array_merge($relationData,$result);
+                                    if(is_array($relationData)) $result =array_merge($result ,$relationData);
                                 }else{
                                     $fields =   explode(',',$val['as_fields']);
                                     foreach ($fields as $field){
